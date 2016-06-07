@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         }
 
         internal void Load(string jsonLine) {
-            RawDocument rawDocument = JsonConvert.DeserializeObject<RawDocument>(jsonLine);
+            Debug.WriteLine("TEXT: " + jsonLine);
+            RawDocument rawDocument = JsonConvert.DeserializeObject<RawDocument>("{\"Id\": \"1101162413930\",\"Title\": \"Alderwood to probe voting machines\",\"Author\": \"Ellie Olmsen\",\"Time\": \"11 / 16 / 2004\",\"Content\": \"\\\"I pledge that I will answer every question as soon as I possibly can in the proper fashion\"}");
             this.rawDocument = rawDocument;
         }
         /// <summary>

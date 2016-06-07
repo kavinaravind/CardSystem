@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
 {
@@ -14,10 +16,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         /// Add a document from a json line
         /// </summary>
         /// <param name="jsonLine"></param>
-        internal void AddDocument(string jsonLine) {
-            Document doc = new Document();
-            doc.Load(jsonLine);
-            Debug.WriteLine(doc.GetContent());//Debug
+        internal void AddDocument(Document doc) {
+            list.Add(doc.DocID, doc);
         }
         /// <summary>
         /// Remove the document with "docID" from the list
