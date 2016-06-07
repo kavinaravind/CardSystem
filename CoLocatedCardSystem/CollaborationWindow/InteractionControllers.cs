@@ -1,16 +1,11 @@
 ﻿using CoLocatedCardSystem.CollaborationWindow.DocumentModule;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoLocatedCardSystem.CollaborationWindow
 {
     /// <summary>
     /// A central controller for all other controllers
     /// </summary>
-    class InteractionControllers
+    public class InteractionControllers
     {
         DocumentController documentController;
         /// <summary>

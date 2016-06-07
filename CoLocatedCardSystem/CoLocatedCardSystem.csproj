@@ -110,7 +110,27 @@
     <Compile Include="CollaborationWindow\DocumentModule\StopwordMarker.cs" />
     <Compile Include="CollaborationWindow\DocumentModule\Token.cs" />
     <Compile Include="CollaborationWindow\DocumentModule\WordType.cs" />
+    <Compile Include="CollaborationWindow\GestureModule\Gesture.cs" />
+    <Compile Include="CollaborationWindow\GestureModule\GestureController.cs" />
+    <Compile Include="CollaborationWindow\GestureModule\GestureListener.cs" />
+    <Compile Include="CollaborationWindow\GestureModule\ListenerController.cs" />
+    <Compile Include="CollaborationWindow\GestureModule\Sorting\SortingGesture.cs" />
+    <Compile Include="CollaborationWindow\GestureModule\GestureEventArgs.cs" />
+    <Compile Include="CollaborationWindow\GestureModule\GestureStatus.cs" />
+    <Compile Include="CollaborationWindow\GestureModule\Sorting\SortingListener.cs" />
     <Compile Include="CollaborationWindow\InteractionControllers.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\Card\Card.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\Card\CardController.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\Card\SemanticCard.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\Card\SemanticCardList.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\Card\SemanticLayers\Layer1.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\Card\SemanticLayers\Layer2.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\Card\SemanticLayers\Layer3.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\Card\SemanticLayers\Layer4.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\Card\SemanticLayers\LayerBase.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\SortingBox\SortingBox.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\SortingBox\SortingBoxController.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\SortingBox\SortingBoxList.cs" />
     <Compile Include="CollaborationWindow\Layers\BaseLayer\BaseLayer.cs" />
     <Compile Include="CollaborationWindow\Layers\BaseLayer\BaseLayerController.cs" />
     <Compile Include="CollaborationWindow\Layers\CardLayer\CardLayer.cs" />
@@ -123,11 +143,16 @@
     <Compile Include="CollaborationWindow\Layers\SortingBoxLayer\SortingBoxLayerController.cs" />
     <Compile Include="CollaborationWindow\Parameter\FilePath.cs" />
     <Compile Include="CollaborationWindow\Parameter\Screen.cs" />
+    <Compile Include="CollaborationWindow\TouchModule\Touch.cs" />
+    <Compile Include="CollaborationWindow\TouchModule\TouchController.cs" />
+    <Compile Include="CollaborationWindow\TouchModule\TouchList.cs" />
     <Compile Include="CollaborationWindow\ViewControllers.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -160,9 +185,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CollaborationWindow\GestureModule\" />
-    <Folder Include="CollaborationWindow\InteractionModule\" />
-    <Folder Include="CollaborationWindow\TouchModule\" />
     <Folder Include="ControlWindow\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
