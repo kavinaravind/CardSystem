@@ -121,8 +121,8 @@
     <Compile Include="CollaborationWindow\Layers\MenuLayer\MenuLayerController.cs" />
     <Compile Include="CollaborationWindow\Layers\SortingBoxLayer\SortingBoxLayer.cs" />
     <Compile Include="CollaborationWindow\Layers\SortingBoxLayer\SortingBoxLayerController.cs" />
-    <Compile Include="CollaborationWindow\Physical\FilePath.cs" />
-    <Compile Include="CollaborationWindow\Physical\Screen.cs" />
+    <Compile Include="CollaborationWindow\Parameter\FilePath.cs" />
+    <Compile Include="CollaborationWindow\Parameter\Screen.cs" />
     <Compile Include="CollaborationWindow\ViewControllers.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

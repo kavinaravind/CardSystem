@@ -27,7 +27,6 @@ namespace CoLocatedCardSystem
     {
         public MainPage()
         {
-            String hello;
             this.InitializeComponent();
             Init();
         }
