@@ -10,7 +10,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
     class LayerBase:Canvas
     {
-        Card attachedCard = null;
+        protected Card attachedCard = null;
 
         /// <summary>
         /// Load the document to the card
@@ -19,12 +19,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         internal virtual async Task SetArticle(Document doc) {
 
         }
-        /// <summary>
-        /// Initialize the card alyers
-        /// </summary>
-        /// <param name="card"></param>
-        internal virtual void Init(Card card) {
-            this.attachedCard = card;
+        public LayerBase(Card card) {
+            attachedCard = card;
+        }
+
+        internal virtual async Task Init() {
+
         }
     }
 }

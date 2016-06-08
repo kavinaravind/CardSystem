@@ -25,19 +25,18 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="position"></param>
         /// <param name="scale"></param>
         /// <param name="rotation"></param>
-        internal override void Init(string cardID, UserInfo userInfo)
+        internal override async void Init(string cardID, UserInfo userInfo)
         {
             base.Init(cardID, userInfo);
             layers = new LayerBase[LAYER_NUMBER];
-            layers[0] = new Layer1();
-            layers[1] = new Layer2();
-            layers[2] = new Layer3();
-            layers[3] = new Layer4();
+            layers[0] = new Layer1(this);
+            layers[1] = new Layer2(this);
+            layers[2] = new Layer3(this);
+            layers[3] = new Layer4(this);
             foreach (var layer in layers) {
-                layer.Init(this);
+                await layer.Init();
             }
             this.Children.Add(layers[0]);
-
         }
         /// <summary>
         /// Load the document to the card. Set the content to all the layers.

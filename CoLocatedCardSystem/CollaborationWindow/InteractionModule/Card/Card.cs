@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Core;
@@ -16,13 +17,36 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
     public class Card : Canvas
     {
         string cardID = "";
-        Size cardSize = new Size(120, 90);
-        protected Point position = new Point(0, 0);
-        protected double scale = 1;
-        protected double rotation = 0;
+        Point position = new Point(0, 0);
+        double cardScale = 1;
+        double rotation = 0;
         Rectangle background = null;
         int marginWidth = 10;
         CardController cardController;
+        public Point Position
+        {
+            get
+            {
+                return position;
+            }
+        }
+
+        public double CardScale
+        {
+            get
+            {
+                return cardScale;
+            }
+        }
+
+        public double Rotation
+        {
+            get
+            {
+                return rotation;
+            }
+        }
+
         public Card(CardController cardController) {
             this.cardController = cardController;
         }
@@ -45,19 +69,20 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         internal virtual void Init(string cardID, UserInfo info)
         {
             this.cardID = cardID;
-            this.cardSize = info.CardSize;
+            this.Width = info.CardSize.Width;
+            this.Height = info.CardSize.Height;
             this.position = info.CardPosition;
-            this.scale = info.CardScale;
+            this.cardScale = info.CardScale;
             this.rotation = info.CardRotation;
             UpdateTransform();
             background = new Rectangle();
-            background.Width = this.cardSize.Width + marginWidth * 2;
-            background.Height = this.cardSize.Height + marginWidth * 2;
+            background.Width = this.Width + marginWidth * 2;
+            background.Height = this.Height + marginWidth * 2;
             //Move the backgroud rectangle -1/2 width and -1/2 height to the center.
             MatrixTransform mtf = new MatrixTransform();
             mtf.Matrix = new Matrix(1, 0, 0, 1, -0.5 * background.Width, -0.5 * background.Height);
             background.RenderTransform = mtf;
-            background.Fill = new SolidColorBrush(Colors.Black);//For visibility debug
+            background.Fill = new SolidColorBrush(Colors.Yellow);//For visibility debug
             //Register the touch events
             this.Children.Add(background);
             this.PointerEntered += PointerDown;
@@ -66,6 +91,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.PointerCanceled += PointerUp;
             this.PointerReleased += PointerUp;
             this.PointerExited += PointerUp;
+            //For debug
+            Random rand = new Random(DateTime.Now.Millisecond);
+            Move(new Point(rand.Next(1000), rand.Next(800)));
         }
         internal void Deinit()
         {
@@ -100,7 +128,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="scale"></param>
         public void Scale(double scale)
         {
-            this.scale = scale;
+            this.cardScale = scale;
             UpdateTransform();
         }
         /// <summary>
@@ -113,7 +141,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         {
             this.position = position;
             this.rotation = rotation;
-            this.scale = scale;
+            this.cardScale = scale;
             UpdateTransform();
         }
         /// <summary>
@@ -124,13 +152,13 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
              {
                  ScaleTransform st = new ScaleTransform();
-                 st.ScaleX = scale;
-                 st.ScaleY = scale;
+                 st.ScaleX = cardScale;
+                 st.ScaleY = cardScale;
                  RotateTransform rt = new RotateTransform();
-                 rt.Angle = rotation;
+                 rt.Angle = Rotation;
                  TranslateTransform tt = new TranslateTransform();
-                 tt.X = position.X;
-                 tt.Y = position.Y;
+                 tt.X = Position.X;
+                 tt.Y = Position.Y;
                  TransformGroup transGroup = new TransformGroup();
                  transGroup.Children.Add(st);
                  transGroup.Children.Add(rt);
