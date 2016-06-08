@@ -42,12 +42,12 @@ namespace CoLocatedCardSystem.CollaborationWindow
             ApplicationView.PreferredLaunchViewSize = new Size(this.Width, this.Height);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
             viewControllers = new ViewControllers();
-            viewControllers.Init(Screen.WIDTH, Screen.HEIGHT);
+            interactionControllers = new InteractionControllers();
+            viewControllers.Init(Screen.WIDTH, Screen.HEIGHT,interactionControllers);
+            interactionControllers.Init(viewControllers);
+
             Container.Children.Add(viewControllers.GetBaseLayer());
             Container.Children.Add(viewControllers.GetCardLayer());
-
-            interactionControllers = new InteractionControllers();
-            interactionControllers.Init();
         }
         public void Deinit()
         {

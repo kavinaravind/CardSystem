@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
 {
-    class ListenerController
+    class GestureListenerController
     {
         
     }

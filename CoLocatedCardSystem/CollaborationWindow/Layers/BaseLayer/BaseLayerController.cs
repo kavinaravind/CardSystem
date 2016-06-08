@@ -38,7 +38,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         }
         internal void PointerDown(PointerPoint p)
         {
-            viewControllers.PointerDown(typeof(BaseLayer), baseLayer, p);
+            viewControllers.PointerDown(p, baseLayer, typeof(BaseLayer));
         }
         internal void PointerMove(PointerPoint p)
         {

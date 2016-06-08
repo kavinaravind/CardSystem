@@ -11,7 +11,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         DEFAULT,
         PUNCTUATION,
         STOPWORD,
-        NUMBER,
+        IRREGULAR,
         REGULAR
     }
 }

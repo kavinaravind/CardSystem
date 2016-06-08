@@ -25,13 +25,20 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// <param name="position"></param>
         /// <param name="sender"></param>
         /// <param name="type"></param>
-        public Touch(PointerPoint position, object sender, Type type) {
+        public void Init(PointerPoint position, object sender, Type type) {
             this.touchID = position.PointerId;
             this.sender = sender;
             this.type = type;
             this.currentPoint = position;
             this.startPoint = position.Position;
             this.startTime = DateTime.Now;
+        }
+        /// <summary>
+        /// Update a touch point
+        /// </summary>
+        /// <param name="point"></param>
+        public void UpdateTouchPoint(PointerPoint point) {
+
         }
         /// <summary>
         /// Call this method when the finger leave the screen.

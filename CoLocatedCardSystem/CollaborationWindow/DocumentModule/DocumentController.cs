@@ -20,7 +20,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         /// Initialize documents from jsonFile
         /// </summary>
         /// <param name="jsonFilePath"></param>
-        public async void Init(String jsonFilePath) {
+        public async Task Init(String jsonFilePath) {
             list = new DocumentList();
             StorageFolder folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
             StorageFile file = await folder.GetFileAsync(jsonFilePath);

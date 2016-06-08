@@ -9,7 +9,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
 {
     class TouchController
     {
+        InteractionControllers interactionControllers;
         TouchList list;
+        public TouchController(InteractionControllers intrCtlrs) {
+            this.interactionControllers = intrCtlrs;
+        }
         /// <summary>
         /// Initialize the TouchController
         /// </summary>
@@ -38,20 +42,21 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// <param name="sender"></param>
         /// <param name="type"></param>
         public void TouchDown(PointerPoint point, object sender, Type type) {
-
+            list.AddTouchPoint(point, sender, type);
         }
         /// <summary>
         /// Update the touch points
         /// </summary>
         /// <param name="point"></param>
         public void TouchMove(PointerPoint point) {
+            list.UpdateTouchPoint(point);
         }
         /// <summary>
         /// Release the touch points
         /// </summary>
         /// <param name="point"></param>
         public void TouchUp(PointerPoint point) {
-
+            list.RemoveTouchPoint(point);
         }
     }
 }

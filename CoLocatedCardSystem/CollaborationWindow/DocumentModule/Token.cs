@@ -37,8 +37,18 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
                 stemmedWord = value;
             }
         }
-        internal WordType GetWordType() {
-            return type;
+
+        internal WordType Type
+        {
+            get
+            {
+                return type;
+            }
+
+            set
+            {
+                type = value;
+            }
         }
     }
 }

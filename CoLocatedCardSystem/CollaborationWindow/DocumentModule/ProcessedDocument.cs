@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -43,7 +44,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
                 PunctuationMarker.Mark(tk);
                 Stemmer.Stem(tk);
                 StopwordMarker.Mark(tk);
-                NumberMarker.Mark(tk);
+                IrregularMarker.Mark(tk);
             }
             list = tokenList.ToArray<Token>();
         }
@@ -56,11 +57,16 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
             return 0;
         }
         /// <summary>
-        /// Return a string of the whole document, with original form.
+        /// Return a string of the whole document, in processed form.
         /// </summary>
         /// <returns></returns>
-        public override string ToString() {
-            return "";
+        public string GetProcessedDocument() {
+            string result = "";
+            foreach (Token token in list)
+            {
+                result += token.StemmedWord;
+            }
+            return result;
         }
     }
 }

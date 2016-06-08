@@ -9,16 +9,24 @@ using Windows.UI.Input;
 
 namespace CoLocatedCardSystem.CollaborationWindow
 {
-    class ViewControllers
+    public class ViewControllers
     {
+        InteractionControllers interactionControllers;
         BaseLayerController baseLayerController;
         CardLayerController cardLayerController;
         LinkingLayerController linkingLayerController;
         MenuLayerController menuLayerController;
         SortingBoxLayerController sortingBoxController;
-
-        public void Init(int width, int height)
+        
+        /// <summary>
+        /// Initialize the views, including different layers.
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="interactionControllers"></param>
+        public void Init(int width, int height, InteractionControllers interactionControllers)
         {
+            this.interactionControllers = interactionControllers;
             baseLayerController = new BaseLayerController(this);
             baseLayerController.Init(width, height);
             cardLayerController = new CardLayerController(this);
@@ -48,9 +56,9 @@ namespace CoLocatedCardSystem.CollaborationWindow
         /// </summary>
         /// <param name="baseLayer"></param>
         /// <param name="p"></param>
-        internal void PointerDown(Type type, object sender, PointerPoint p)
+        internal void PointerDown(PointerPoint p,object sender, Type type)
         {
-            //Debug.WriteLine("Down:\t" + type.Name + "\t" + p.Position.ToString());
+            interactionControllers.OnTouchDown(p, sender, type);
         }
         /// <summary>
         /// Update the touch
@@ -58,7 +66,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
         /// <param name="p"></param>
         internal void PointerMove(PointerPoint p)
         {
-            //Debug.WriteLine("Move:\t" + p.Position.ToString());
+            interactionControllers.OnTouchMove(p);
         }
 
         /// <summary>
@@ -67,7 +75,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
         /// <param name="p"></param>
         internal void PointerUp(PointerPoint p)
         {
-            //Debug.WriteLine("Up:\t" + p.Position.ToString());
+            interactionControllers.OnTouchUp(p);
         }
     }
 }

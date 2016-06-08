@@ -13,7 +13,17 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         /// </summary>
         /// <param name="token"></param>
         internal static void Mark(Token token) {
-            
+            if (token.OriginalWord.Length == 1)
+            {
+                if (char.IsPunctuation((token.OriginalWord[0])) ||
+                    token.OriginalWord[0] == ' ' ||
+                    token.OriginalWord[0] == '\n' ||
+                    token.OriginalWord[0] == '\r')
+                {
+
+                    token.Type = WordType.IRREGULAR;
+                }
+            }
         }
     }
 }
