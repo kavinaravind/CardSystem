@@ -68,7 +68,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
         /// </summary>
         /// <param name="baseLayer"></param>
         /// <param name="p"></param>
-        internal void PointerDown(PointerPoint p,object sender, Type type)
+        internal void OnTouchDown(PointerPoint p,object sender, Type type)
         {
             interactionControllers.OnTouchDown(p, sender, type);
         }
@@ -76,7 +76,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
         /// Update the touch
         /// </summary>
         /// <param name="p"></param>
-        internal void PointerMove(PointerPoint p)
+        internal void OnTouchMove(PointerPoint p)
         {
             interactionControllers.OnTouchMove(p);
         }
@@ -85,7 +85,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
         /// Release the touch
         /// </summary>
         /// <param name="p"></param>
-        internal void PointerUp(PointerPoint p)
+        internal void OnTouchUp(PointerPoint p)
         {
             interactionControllers.OnTouchUp(p);
         }

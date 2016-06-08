@@ -12,6 +12,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         Document document;
         private const int LAYER_NUMBER= 4;
 
+        public SemanticCard(CardController cardController) : base(cardController)
+        {
+        }
+
         /// <summary>
         /// Initialize a semantic card.
         /// </summary>

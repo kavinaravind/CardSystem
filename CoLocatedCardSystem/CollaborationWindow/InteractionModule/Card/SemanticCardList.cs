@@ -10,16 +10,16 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
     class SemanticCardList
     {
         Dictionary<string, SemanticCard> list=new Dictionary<string, SemanticCard>();
-
+        
         /// <summary>
         /// Add a new card to the user.
         /// </summary>
         /// <param name="doc"></param>
         /// <param name="userInfo"></param>
         /// <returns></returns>
-        internal async Task AddCard(Document doc,UserInfo userInfo) {
+        internal async Task AddCard(Document doc,UserInfo userInfo, CardController cardController) {
             string cardID = Guid.NewGuid().ToString();
-            SemanticCard card = new SemanticCard();
+            SemanticCard card = new SemanticCard(cardController);
             card.Init(cardID, userInfo);
             await card.LoadDocument(doc);
             list.Add(cardID, card);

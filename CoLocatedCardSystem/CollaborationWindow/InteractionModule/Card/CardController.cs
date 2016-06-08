@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Input;
 
 namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
@@ -29,7 +30,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 {
                     foreach (Document doc in documents)
                     {
-                        await list.AddCard(doc, info);
+                        await list.AddCard(doc, info, this);
                     }
                 }
             }
@@ -65,6 +66,22 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <returns></returns>
         public Card[] GetAllCards() {
             return list.GetAllCards();
+        }
+        /// <summary>
+        /// Create a touch layer and pass it to the interaction controller.
+        /// </summary>
+        /// <param name="p"></param>
+        internal void PointerDown(PointerPoint p, Card card, Type type)
+        {
+            interactionControllers.OnTouchDown(p, card, type);
+        }
+        internal void PointerMove(PointerPoint p)
+        {
+            interactionControllers.OnTouchMove(p);
+        }
+        internal void PointerUp(PointerPoint p)
+        {
+            interactionControllers.OnTouchUp(p);
         }
     }
 }

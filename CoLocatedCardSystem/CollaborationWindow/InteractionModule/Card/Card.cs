@@ -22,6 +22,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         protected double rotation = 0;
         Rectangle background = null;
         int marginWidth = 10;
+        CardController cardController;
+        public Card(CardController cardController) {
+            this.cardController = cardController;
+        }
         /// <summary>
         /// Initialize a card
         /// </summary>
@@ -136,6 +140,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         private void PointerDown(object sender, PointerRoutedEventArgs e)
         {
             PointerPoint point = e.GetCurrentPoint(this);
+            cardController.PointerDown(point, this, typeof(Card));
         }
         /// <summary>
         /// Call back method for Pointer move
@@ -145,6 +150,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         private void PointerMove(object sender, PointerRoutedEventArgs e)
         {
             PointerPoint point = e.GetCurrentPoint(this);
+            cardController.PointerMove(point);
         }
         /// <summary>
         /// Call back method for pointer up
@@ -154,6 +160,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         private void PointerUp(object sender, PointerRoutedEventArgs e)
         {
             PointerPoint point = e.GetCurrentPoint(this);
+            cardController.PointerUp(point);
         }
     }
 }
