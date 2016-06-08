@@ -29,6 +29,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
 
         internal void Load(string jsonLine) {
             RawDocument rawDocument = JsonConvert.DeserializeObject<RawDocument>(jsonLine);
+            this.docID = rawDocument.Id;
             this.rawDocument = rawDocument;
             processedDocument = new ProcessedDocument();
             processedDocument.InitTokens(rawDocument.Content);
