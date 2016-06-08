@@ -1,4 +1,5 @@
-﻿using CoLocatedCardSystem.CollaborationWindow.Layers;
+﻿using CoLocatedCardSystem.CollaborationWindow.InteractionModule;
+using CoLocatedCardSystem.CollaborationWindow.Layers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -47,9 +48,20 @@ namespace CoLocatedCardSystem.CollaborationWindow
         {
             return baseLayerController.BaseLayer;
         }
+        /// <summary>
+        /// Get the card layer
+        /// </summary>
+        /// <returns></returns>
         internal CardLayer GetCardLayer()
         {
             return cardLayerController.CardLayer;
+        }
+        /// <summary>
+        /// Add all the cards to the card layer
+        /// </summary>
+        /// <param name="cards"></param>
+        internal async Task LoadCardsToCardLayer(Card[] cards) {
+            await cardLayerController.LoadCards(cards);
         }
         /// <summary>
         /// Pass the PointerPoint to the TouchController

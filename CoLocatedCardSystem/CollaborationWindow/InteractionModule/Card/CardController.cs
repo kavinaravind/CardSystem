@@ -18,17 +18,22 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Initialize the cardController with a list of documents
         /// </summary>
         /// <param name="documents"></param>
-        public void Init(Document[] documents) {
+        public async Task<Card[]> Init(Document[] documents)
+        {
             //To Do: add documents in the list to all LIVE users.
             UserInfo alex = UserInfo.GetUserInfo(User.ALEX);//example to get alex's user info
             list = new SemanticCardList();
-            foreach (Document doc in documents) {
-                foreach (UserInfo info in UserInfo.GetUserInfo()) {
-                    if (info.IsLive) {
-                        list.AddCard(doc, info);
+            foreach (UserInfo info in UserInfo.GetUserInfo())
+            {
+                if (info.IsLive)
+                {
+                    foreach (Document doc in documents)
+                    {
+                        await list.AddCard(doc, info);
                     }
                 }
-            }        
+            }
+            return list.GetAllCards();
         }
         /// <summary>
         /// Destroy the card list

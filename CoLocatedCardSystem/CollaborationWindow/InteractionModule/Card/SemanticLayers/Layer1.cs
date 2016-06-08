@@ -23,9 +23,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Initialize the card layers
         /// </summary>
         /// <param name="doc"></param>
-        internal override async void SetArticle(Document doc)
+        internal override async Task SetArticle(Document doc)
         {
-            base.SetArticle(doc);
+            await base.SetArticle(doc);
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal,() =>
             {
                 titleTextBlock.Text = doc.GetTitle();

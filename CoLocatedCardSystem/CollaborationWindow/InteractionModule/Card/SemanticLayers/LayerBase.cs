@@ -16,7 +16,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Load the document to the card
         /// </summary>
         /// <param name="doc"></param>
-        internal virtual void SetArticle(Document doc) {
+        internal virtual async Task SetArticle(Document doc) {
 
         }
         /// <summary>

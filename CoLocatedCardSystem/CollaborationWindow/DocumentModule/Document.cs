@@ -32,7 +32,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
             this.rawDocument = rawDocument;
             processedDocument = new ProcessedDocument();
             processedDocument.InitTokens(rawDocument.Content);
-            Debug.WriteLine(processedDocument.GetProcessedDocument());
         }
         /// <summary>
         /// Get the title of the article

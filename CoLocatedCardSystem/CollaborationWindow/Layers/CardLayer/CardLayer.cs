@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CoLocatedCardSystem.CollaborationWindow.InteractionModule;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
+using Windows.UI.Core;
 
 namespace CoLocatedCardSystem.CollaborationWindow.Layers
 {
@@ -16,39 +18,38 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
     class CardLayer : Canvas
     {
         CardLayerController cardLayerController;
-        Rectangle rect = new Rectangle();//For test purpose
 
         public CardLayer(CardLayerController clctrl)
         {
             this.cardLayerController = clctrl;
         }
+        /// <summary>
+        /// Initialize the card layer
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         internal void Init(int width, int height)
         {
             this.Width = width;
             this.Height = height;
-
-            #region test
-            rect.Width = 200;
-            rect.Height = 100;
-            rect.Fill = new SolidColorBrush(Colors.Red);
-            ScaleTransform st = new ScaleTransform();
-            st.ScaleX = 1;
-            st.ScaleY = 1;
-            RotateTransform rt = new RotateTransform();
-            rt.Angle = 0;
-            TranslateTransform tt = new TranslateTransform();
-            tt.X = 300;
-            tt.Y = 200;
-            TransformGroup tg = new TransformGroup();
-            tg.Children.Add(st);
-            tg.Children.Add(rt);
-            tg.Children.Add(tt);
-            rect.RenderTransform = tg;
-            this.Children.Add(rect);
-            #endregion
         }
+        /// <summary>
+        /// Add a card to the card layer
+        /// </summary>
+        /// <param name="card"></param>
+        internal async Task AddCard(Card card)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                this.Children.Add(card);
+                SemanticCard sCard = card as SemanticCard;
+                System.Diagnostics.Debug.WriteLine("card loaded: " + sCard.GetDocument().GetTitle());
+            });
+        }
+
         internal void Deinit()
         {
+            this.Children.Clear();
         }
     }
 }

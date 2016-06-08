@@ -3,6 +3,7 @@ using CoLocatedCardSystem.CollaborationWindow.GestureModule;
 using CoLocatedCardSystem.CollaborationWindow.InteractionModule;
 using CoLocatedCardSystem.CollaborationWindow.TouchModule;
 using System;
+using System.Threading.Tasks;
 using Windows.UI.Input;
 
 namespace CoLocatedCardSystem.CollaborationWindow
@@ -25,11 +26,14 @@ namespace CoLocatedCardSystem.CollaborationWindow
         public async void Init(ViewControllers viewControllers) {
             this.viewControllers = viewControllers;
             documentController = new DocumentController(this);
-            await documentController.Init(FilePath.NewsArticle);//Load the document
             cardController = new CardController(this);
-            cardController.Init(documentController.GetDocument());
             touchController = new TouchController(this);
+
+            Document[] docs = await documentController.Init(FilePath.NewsArticle);//Load the document
+            Card[] cards = await cardController.Init(docs);
+            await viewControllers.LoadCardsToCardLayer(cards);
             touchController.Init();
+
         }
         /// <summary>
         /// Destroy the interaction listener

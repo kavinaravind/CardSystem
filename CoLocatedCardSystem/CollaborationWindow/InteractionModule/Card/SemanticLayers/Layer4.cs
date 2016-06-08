@@ -9,9 +9,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
     class Layer4:LayerBase
     {
-        internal override void SetArticle(Document doc)
+        internal override async Task SetArticle(Document doc)
         {
-            base.SetArticle(doc);
+            await base.SetArticle(doc);
         }
     }
 }

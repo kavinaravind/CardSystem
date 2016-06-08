@@ -1,4 +1,5 @@
 ﻿using CoLocatedCardSystem.CollaborationWindow.DocumentModule;
+using System.Threading.Tasks;
 using Windows.Foundation;
 
 namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
@@ -10,7 +11,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         int currentLayer;
         Document document;
         private const int LAYER_NUMBER= 4;
-        
+
         /// <summary>
         /// Initialize a semantic card.
         /// </summary>
@@ -38,12 +39,19 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Load the document to the card. Set the content to all the layers.
         /// </summary>
         /// <param name="document"></param>
-        internal void LoadDocument(Document document) {
+        internal async Task LoadDocument(Document document) {
             this.document = document;
             foreach (var layer in layers)
             {
-                layer.SetArticle(this.document);
+                await layer.SetArticle(this.document);
             }
+        }
+        /// <summary>
+        /// Get the document associated with the card.
+        /// </summary>
+        /// <returns></returns>
+        internal Document GetDocument() {
+            return document;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CoLocatedCardSystem.CollaborationWindow.InteractionModule;
 
 namespace CoLocatedCardSystem.CollaborationWindow.Layers
 {
@@ -42,6 +43,16 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         public void Deinit()
         {
             cardLayer.Deinit();
+        }
+        /// <summary>
+        /// Load the card list to the card layer
+        /// </summary>
+        /// <param name="cards"></param>
+        internal async Task LoadCards(Card[] cards)
+        {
+            foreach (Card card in cards) {
+                await cardLayer.AddCard(card);
+            }
         }
     }
 }

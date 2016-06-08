@@ -17,13 +17,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="doc"></param>
         /// <param name="userInfo"></param>
         /// <returns></returns>
-        internal SemanticCard AddCard(Document doc,UserInfo userInfo) {
+        internal async Task AddCard(Document doc,UserInfo userInfo) {
             string cardID = Guid.NewGuid().ToString();
             SemanticCard card = new SemanticCard();
             card.Init(cardID, userInfo);
-            card.LoadDocument(doc);
+            await card.LoadDocument(doc);
             list.Add(cardID, card);
-            return card;
         }
         /// <summary>
         /// Remove a card based on its id
