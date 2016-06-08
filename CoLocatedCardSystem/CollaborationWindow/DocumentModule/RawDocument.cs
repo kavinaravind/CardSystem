@@ -13,9 +13,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         string author;
         string time;
         string content;
-        //string[] people;
-        //string[] location;
-        //string[] organization;
+        string[] people;
+        string[] location;
+        string[] organization;
 
         public string Id
         {
@@ -82,43 +82,43 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
             }
         }
 
-        //public string[] People
-        //{
-        //    get
-        //    {
-        //        return people;
-        //    }
+        public string[] People
+        {
+            get
+            {
+                return people;
+            }
 
-        //    set
-        //    {
-        //        people = value;
-        //    }
-        //}
+            set
+            {
+                people = value;
+            }
+        }
 
-        //public string[] Location
-        //{
-        //    get
-        //    {
-        //        return location;
-        //    }
+        public string[] Location
+        {
+            get
+            {
+                return location;
+            }
 
-        //    set
-        //    {
-        //        location = value;
-        //    }
-        //}
+            set
+            {
+                location = value;
+            }
+        }
 
-        //public string[] Organization
-        //{
-        //    get
-        //    {
-        //        return organization;
-        //    }
+        public string[] Organization
+        {
+            get
+            {
+                return organization;
+            }
 
-        //    set
-        //    {
-        //        organization = value;
-        //    }
-        //}
+            set
+            {
+                organization = value;
+            }
+        }
     }
 }

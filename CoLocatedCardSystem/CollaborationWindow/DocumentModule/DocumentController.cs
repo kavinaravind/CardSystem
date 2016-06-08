@@ -24,25 +24,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
             list = new DocumentList();
             StorageFolder folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
             StorageFile file = await folder.GetFileAsync(jsonFilePath);
-            var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
-            ulong size = stream.Size;
-
-            using (var inputStream = stream.GetInputStreamAt(0))
-            {
-                using (var dataReader = new Windows.Storage.Streams.DataReader(inputStream))
-                {
-                    uint numBytesLoaded = await dataReader.LoadAsync((uint)size);
-                    string allText = dataReader.ReadString(numBytesLoaded);
-                    string[] lines = allText.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-
-                    foreach(string str in lines) {
-                        Debug.WriteLine("TEXT: " + str);
-                        Document doc = new Document();
-                        doc.Load(str);
-                        //list.AddDocument(doc);
-                        //Debug.WriteLine(doc.GetContent());
-                    }
-                }
+            var lines = await FileIO.ReadLinesAsync(file);
+            foreach (string line in lines) {
+                Document doc = new Document();
+                doc.Load(line);
             }
         }
         /// <summary>

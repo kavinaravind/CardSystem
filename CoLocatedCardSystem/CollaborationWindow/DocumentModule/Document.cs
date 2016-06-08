@@ -28,8 +28,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         }
 
         internal void Load(string jsonLine) {
-            Debug.WriteLine("TEXT: " + jsonLine);
-            RawDocument rawDocument = JsonConvert.DeserializeObject<RawDocument>("{\"Id\": \"1101162413930\",\"Title\": \"Alderwood to probe voting machines\",\"Author\": \"Ellie Olmsen\",\"Time\": \"11 / 16 / 2004\",\"Content\": \"\\\"I pledge that I will answer every question as soon as I possibly can in the proper fashion\"}");
+            RawDocument rawDocument = JsonConvert.DeserializeObject<RawDocument>(jsonLine);
             this.rawDocument = rawDocument;
         }
         /// <summary>
