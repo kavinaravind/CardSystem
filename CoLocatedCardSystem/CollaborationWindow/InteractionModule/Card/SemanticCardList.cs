@@ -21,6 +21,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             string cardID = Guid.NewGuid().ToString();
             SemanticCard card = new SemanticCard();
             card.Init(cardID, userInfo);
+            card.LoadDocument(doc);
             list.Add(cardID, card);
             return card;
         }

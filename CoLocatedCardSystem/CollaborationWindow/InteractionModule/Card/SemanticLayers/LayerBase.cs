@@ -10,8 +10,21 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
     class LayerBase:Canvas
     {
+        Card attachedCard = null;
+
+        /// <summary>
+        /// Load the document to the card
+        /// </summary>
+        /// <param name="doc"></param>
         internal virtual void SetArticle(Document doc) {
 
+        }
+        /// <summary>
+        /// Initialize the card alyers
+        /// </summary>
+        /// <param name="card"></param>
+        internal virtual void Init(Card card) {
+            this.attachedCard = card;
         }
     }
 }

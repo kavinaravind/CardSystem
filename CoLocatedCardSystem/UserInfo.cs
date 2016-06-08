@@ -14,7 +14,7 @@ namespace CoLocatedCardSystem
         /// Use this class to access the default setting of the users.
         /// </summary>
         protected User user = User.ALEX;
-        protected bool isLive = true;
+        private bool isLive = true;
         protected Size cardSize = new Size(120, 90);
         private Size sortingBoxSize = new Size(60, 45);
         protected Color cardColor = Colors.Red;
@@ -107,11 +107,27 @@ namespace CoLocatedCardSystem
             }
         }
 
+        public bool IsLive
+        {
+            get
+            {
+                return isLive;
+            }
+        }
+
+        /// <summary>
+        /// Get the userinfo with User
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public static UserInfo GetUserInfo(User user)
         {
             return userList[user];
         }
-        public UserInfo()
+        public static UserInfo[] GetUserInfo() {
+            return userList.Values.ToArray();
+        }
+        static UserInfo()
         {
             userList.Add(User.ALEX, InitAlex());
             userList.Add(User.BEN, InitBen());
@@ -122,7 +138,7 @@ namespace CoLocatedCardSystem
         /// Initialize Alex's user info
         /// </summary>
         /// <returns></returns>
-        private UserInfo InitAlex()
+        private static UserInfo InitAlex()
         {
             UserInfo userInfo = new UserInfo();
             userInfo.user = User.ALEX;
@@ -141,7 +157,7 @@ namespace CoLocatedCardSystem
         /// Initialize Ben's user info
         /// </summary>
         /// <returns></returns>
-        private UserInfo InitBen()
+        private static UserInfo InitBen()
         {
             UserInfo userInfo = new UserInfo();
             userInfo.user = User.BEN;
@@ -160,7 +176,7 @@ namespace CoLocatedCardSystem
         /// Initialize Chris's user info
         /// </summary>
         /// <returns></returns>
-        private UserInfo InitChris()
+        private static UserInfo InitChris()
         {
             UserInfo userInfo = new UserInfo();
             userInfo.user = User.CHRIS;
@@ -179,7 +195,7 @@ namespace CoLocatedCardSystem
         /// Initialize Danny's user info
         /// </summary>
         /// <returns></returns>
-        private UserInfo InitDanny()
+        private static UserInfo InitDanny()
         {
             UserInfo userInfo = new UserInfo();
             userInfo.user = User.DANNY;

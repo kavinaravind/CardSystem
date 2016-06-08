@@ -21,7 +21,14 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         public void Init(Document[] documents) {
             //To Do: add documents in the list to all LIVE users.
             UserInfo alex = UserInfo.GetUserInfo(User.ALEX);//example to get alex's user info
-            list = new SemanticCardList();        
+            list = new SemanticCardList();
+            foreach (Document doc in documents) {
+                foreach (UserInfo info in UserInfo.GetUserInfo()) {
+                    if (info.IsLive) {
+                        list.AddCard(doc, info);
+                    }
+                }
+            }        
         }
         /// <summary>
         /// Destroy the card list

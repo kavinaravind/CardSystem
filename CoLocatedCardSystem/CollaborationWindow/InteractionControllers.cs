@@ -26,6 +26,8 @@ namespace CoLocatedCardSystem.CollaborationWindow
             this.viewControllers = viewControllers;
             documentController = new DocumentController(this);
             await documentController.Init(FilePath.NewsArticle);//Load the document
+            cardController = new CardController(this);
+            cardController.Init(documentController.GetDocument());
             touchController = new TouchController(this);
             touchController.Init();
         }

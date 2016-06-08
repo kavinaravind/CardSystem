@@ -39,5 +39,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         internal Document GetDocument(string docID) {
             return null;
         }
+
+        internal Document[] GetDocument() {
+            return list.Values.ToArray();
+        }
     }
 }

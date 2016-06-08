@@ -28,7 +28,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             layers[1] = new Layer2();
             layers[2] = new Layer3();
             layers[3] = new Layer4();
+            foreach (var layer in layers) {
+                layer.Init(this);
+            }
             this.Children.Add(layers[0]);
+
         }
         /// <summary>
         /// Load the document to the card. Set the content to all the layers.
@@ -36,6 +40,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="document"></param>
         internal void LoadDocument(Document document) {
             this.document = document;
+            foreach (var layer in layers)
+            {
+                layer.SetArticle(this.document);
+            }
         }
     }
 }

@@ -41,8 +41,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         /// </summary>
         /// <param name="docID"></param>
         /// <returns></returns>
-        Document GetDocument(string docID) {
+        public Document GetDocument(string docID) {
             return list.GetDocument(docID);
+        }
+
+        public Document[] GetDocument() {
+            return list.GetDocument();
         }
     }
 }
