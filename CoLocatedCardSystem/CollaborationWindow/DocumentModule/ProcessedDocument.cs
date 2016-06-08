@@ -42,7 +42,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
             }
             foreach (Token tk in tokenList) {
                 PunctuationMarker.Mark(tk);
-                Stemmer.Stem(tk);
+                Stemmer.Stem(tk); // convert to root form
                 StopwordMarker.Mark(tk);
                 IrregularMarker.Mark(tk);
             }
