@@ -22,7 +22,25 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         double rotation;
         Rectangle background;//Background rectangle
         List<Card> cardList;
+        SortingBoxController sortingBoxController;
         User owner;
+
+        public SortingBox(SortingBoxController sortingBoxController)
+        {
+            this.sortingBoxController = sortingBoxController;
+        }
+
+        public List<Card> CardList
+        {
+            get { return cardList; }
+            set { cardList = value; }
+        }
+        public string SortingBoxID
+        {
+            get { return sortingBoxID; }
+            set { sortingBoxID = value; }
+        }
+
         /// <summary>
         /// Initialize sorting box
         /// </summary>
@@ -34,6 +52,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.rotation = info.SortingBoxRotation;
             this.position = info.SortingBoxPosition;            
             this.owner = info.User;
+            cardList = new List<Card>();
             //initialize the background rectangle
             background = new Rectangle();
             background.Width = sortingBoxSize.Width;
@@ -71,16 +90,14 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Scale the box to scale
         /// </summary>
         /// <param name="scale"></param>
-        public void Scale(double scale)
-        {
+        public void Scale(double scale) {
             this.scale = scale;
             UpdateTransform();
         }
         /// <summary>
         /// Update the rendertransform and show the new states
         /// </summary>
-        private void UpdateTransform()
-        {
+        private void UpdateTransform() {
             throw new NotImplementedException();
         }
         /// <summary>
@@ -88,8 +105,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PointerUp(object sender, PointerRoutedEventArgs e)
-        {
+        private void PointerUp(object sender, PointerRoutedEventArgs e) {
             throw new NotImplementedException();
         }
         /// <summary>
@@ -97,8 +113,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PointerMove(object sender, PointerRoutedEventArgs e)
-        {
+        private void PointerMove(object sender, PointerRoutedEventArgs e) {
             throw new NotImplementedException();
         }
         /// <summary>
@@ -106,8 +121,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PointerDown(object sender, PointerRoutedEventArgs e)
-        {
+        private void PointerDown(object sender, PointerRoutedEventArgs e) {
             throw new NotImplementedException();
         }
         /// <summary>
@@ -115,20 +129,25 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="color"></param>
         public void setBackgroundColor(Color color) {
+
         }
         /// <summary>
         /// Add a card to the sorting box
         /// </summary>
         /// <param name="card"></param>
         public void AddCard(Card card) {
+            cardList.Add(card);
         }
         /// <summary>
         /// Remove a card from the sorting box
         /// </summary>
         /// <param name="card"></param>
         /// <returns></returns>
-        public Card RemoveCard(Card card) {
-            return null;
+        public void RemoveCard(Card card) {
+            if (cardList.Contains(card))
+            {
+                cardList.Remove(card);
+            }
         }
         /// <summary>
         /// Remove all cards from the sorting box

@@ -26,6 +26,13 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         public Card(CardController cardController) {
             this.cardController = cardController;
         }
+
+        public string CardID
+        {
+            get { return cardID; }
+            set { cardID = value; }
+        }
+
         /// <summary>
         /// Initialize a card
         /// </summary>

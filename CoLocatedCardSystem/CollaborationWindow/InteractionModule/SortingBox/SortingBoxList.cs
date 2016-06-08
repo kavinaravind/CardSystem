@@ -14,9 +14,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Add a sorting box to the list
         /// </summary>
         /// <param name="name"></param>
-        internal void AddBox(UserInfo userInfo, string name) {
+        internal void AddBox(UserInfo userInfo, string name, SortingBoxController controller) {
             string sortingBoxID = Guid.NewGuid().ToString();
-            SortingBox box = new SortingBox();
+            SortingBox box = new SortingBox(controller);
             box.Init(sortingBoxID, name, userInfo);
             list.Add(sortingBoxID, box);
         }
@@ -25,41 +25,60 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="box"></param>
         internal void AddBox(SortingBox box) {
+            list.Add(box.SortingBoxID, box);
         }
+
+        /// <summary>
+        /// Add a sorting box to the list if the box does not exist
+        /// </summary>
+        /// <param name="box"></param>
+        internal void AddBox(string name) {
+            // implement
+        }
+
         /// <summary>
         /// Delete a sorting box
         /// </summary>
         /// <param name="box"></param>
         internal void RemoveSortingBox(SortingBox box) {
-
+            list.Remove(box.SortingBoxID);
         }
         /// <summary>
         /// Delete all sorting boxes
         /// </summary>
         internal void Clear() {
+            list.Clear();
         }
         /// <summary>
         /// Return all sorting box that a card belongs to
         /// </summary>
         /// <param name="card"></param>
         /// <returns></returns>
-        internal SortingBox[] GetSortingBoxByCard(Card card) {
-            return null;
+        internal List<SortingBox> GetSortingBoxByCard(Card card) {
+            List<SortingBox> boxes = new List<SortingBox>();
+            foreach (SortingBox box in list.Values.ToList()) {
+                foreach (Card cd in box.CardList) {
+                    if (cd.CardID == card.CardID) {
+                        boxes.Add(box);
+                    }
+                }
+            }
+            return boxes;
         }
         /// <summary>
         /// Get all cards in a sorting box
         /// </summary>
         /// <param name="box"></param>
         /// <returns></returns>
-        internal Card[] GetCardsBySortingBox(SortingBox box) {
-            return null;
+        internal List<Card> GetCardsBySortingBox(SortingBox box) {
+            return box.CardList;
         }
         /// <summary>
         /// Get all sorting boxes.
         /// </summary>
         /// <returns></returns>
-        internal SortingBox[] GetAllSortingBoxes() {
-            return null;
+        internal List<SortingBox> GetAllSortingBoxes() {
+            return list.Values.ToList();
         }
     }
 }
