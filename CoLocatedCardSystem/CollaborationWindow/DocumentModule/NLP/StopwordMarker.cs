@@ -14,7 +14,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         /// <summary>
         /// Load the stopwords from the txt file
         /// </summary>
-        internal static async Task Load()
+        internal static async Task<string[]> Load()
         {
             StorageFolder folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
             StorageFile file = await folder.GetFileAsync(FilePath.StopWords);
@@ -26,6 +26,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
                 stopwordlist.Add(stemmedStopword);
             }
             stopwords = stopwordlist.ToArray();
+            return stopwords;
         }
         /// <summary>
         /// Mark the stop words
@@ -33,8 +34,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         /// <param name="token"></param>
         internal static async void Mark(Token token)
         {
-            if (stopwords == null) {
-                await Load();
+            if (stopwords == null)
+            {
+                stopwords = await Load();
             }
             foreach (String stopword in stopwords)
             {
