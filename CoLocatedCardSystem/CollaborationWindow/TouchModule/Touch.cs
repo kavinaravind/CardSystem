@@ -32,6 +32,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
             this.currentPoint = position;
             this.startPoint = position.Position;
             this.startTime = DateTime.Now;
+            //System.Diagnostics.Debug.WriteLine("Touch created: " + type.Name);
         }
         /// <summary>
         /// Update a touch point

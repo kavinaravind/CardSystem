@@ -40,21 +40,37 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 }
             });
         }
-        internal override void Init(Card card)
+        public Layer1(Card card) : base(card)
         {
-            base.Init(card);
-            titleTextBlock.Width = card.Width;
-            titleTextBlock.Height = card.Height;
-            titleTextBlock.Foreground = new SolidColorBrush(Colors.Black);
-            titleTextBlock.LineHeight = 1;
-            titleTextBlock.TextWrapping = TextWrapping.Wrap;
-            titleTextBlock.FontSize = 20;
-            titleTextBlock.TextAlignment = TextAlignment.Center;
-            titleTextBlock.HorizontalAlignment = HorizontalAlignment.Center;
-            titleTextBlock.VerticalAlignment = VerticalAlignment.Center;
-            titleTextBlock.FontStretch = FontStretch.Normal;
-            titleTextBlock.FontWeight = FontWeights.Bold;
-            this.Children.Add(titleTextBlock);
+        }
+        /// <summary>
+        /// Initialize the layer
+        /// </summary>
+        /// <param name="card"></param>
+        /// <returns></returns>
+        internal override async Task Init()
+        {
+            this.Width = attachedCard.Width;
+            this.Height = attachedCard.Height;
+            //Move the textblock - 1 / 2 width and -1 / 2 height to the center.
+            MatrixTransform mtf = new MatrixTransform();
+            mtf.Matrix = new Matrix(1, 0, 0, 1, -0.5 * attachedCard.Width, -0.5 * attachedCard.Height);
+            this.RenderTransform = mtf;
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                titleTextBlock.Width = attachedCard.Width;
+                titleTextBlock.Height = attachedCard.Height;
+                titleTextBlock.Foreground = new SolidColorBrush(Colors.Black);
+                titleTextBlock.LineHeight = 1;
+                titleTextBlock.TextWrapping = TextWrapping.Wrap;
+                titleTextBlock.FontSize = 20;
+                titleTextBlock.TextAlignment = TextAlignment.Center;
+                titleTextBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                titleTextBlock.VerticalAlignment = VerticalAlignment.Center;
+                titleTextBlock.FontStretch = FontStretch.Normal;
+                titleTextBlock.FontWeight = FontWeights.Bold;
+                this.Children.Add(titleTextBlock);
+            });
         }
     }
 }

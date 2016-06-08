@@ -43,7 +43,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             {
                 this.Children.Add(card);
                 SemanticCard sCard = card as SemanticCard;
-                System.Diagnostics.Debug.WriteLine("card loaded: " + sCard.GetDocument().GetTitle());
             });
         }
 

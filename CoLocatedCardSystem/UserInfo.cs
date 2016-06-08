@@ -15,7 +15,7 @@ namespace CoLocatedCardSystem
         /// </summary>
         protected User user = User.ALEX;
         private bool isLive = true;
-        protected Size cardSize = new Size(120, 90);
+        protected Size cardSize = new Size(160, 120);
         private Size sortingBoxSize = new Size(60, 45);
         protected Color cardColor = Colors.Red;
         protected Point cardPosition = new Point(0, 0);
