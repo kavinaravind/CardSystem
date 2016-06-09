@@ -14,6 +14,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
     {
         CardLayer cardLayer;
         private ViewControllers viewControllers;
+        Dictionary<Card, int> zIndexList = new Dictionary<Card, int>();
 
         internal CardLayer CardLayer
         {
@@ -50,8 +51,31 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// <param name="cards"></param>
         internal async Task LoadCards(Card[] cards)
         {
+            int index = zIndexList.Count();
             foreach (Card card in cards) {
                 await cardLayer.AddCard(card);
+                zIndexList.Add(card, index++);
+                cardLayer.SetZIndex(card, zIndexList[card]);
+            }
+        }
+        /// <summary>
+        /// Update the card zindex in the cardlayer
+        /// </summary>
+        /// <param name="card"></param>
+        internal void MoveCardToTop(Card card)
+        {
+            if (zIndexList.Keys.Contains(card)) {
+                int currentIndex = zIndexList[card];
+                foreach (Card child in cardLayer.Children)
+                {
+                    if (zIndexList[child] > currentIndex)
+                    {
+                        zIndexList[child]--;
+                        cardLayer.SetZIndex(child, zIndexList[child]);
+                    }
+                }
+                zIndexList[card] = zIndexList.Count - 1;
+                cardLayer.SetZIndex(card, zIndexList[card]);
             }
         }
     }

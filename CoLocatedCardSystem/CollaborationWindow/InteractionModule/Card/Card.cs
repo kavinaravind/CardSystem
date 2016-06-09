@@ -23,6 +23,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         Rectangle background = null;
         int marginWidth = 10;
         CardController cardController;
+        Size maxSize = new Size(600, 450);//Max size a card can be zoomed.
+        Size minSize = new Size(80, 60);//Mim size a card can be zoomed
+
         public Point Position
         {
             get
@@ -91,18 +94,27 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.PointerCanceled += PointerUp;
             this.PointerReleased += PointerUp;
             this.PointerExited += PointerUp;
+            //Manipulation
+            this.ManipulationMode = ManipulationModes.All;
+            this.ManipulationStarting += Card_ManipulationStarting;
+            this.ManipulationDelta += Card_ManipulationDelta;
+            this.ManipulationInertiaStarting += Card_ManipulationInertiaStarting;
             //For debug
             Random rand = new Random(DateTime.Now.Millisecond);
             Move(new Point(rand.Next(1000), rand.Next(800)));
         }
+
         internal void Deinit()
         {
-            background.PointerEntered -= PointerDown;
-            background.PointerPressed -= PointerDown;
-            background.PointerMoved -= PointerMove;
-            background.PointerCanceled -= PointerUp;
-            background.PointerReleased -= PointerUp;
-            background.PointerExited -= PointerUp;
+            this.PointerEntered -= PointerDown;
+            this.PointerPressed -= PointerDown;
+            this.PointerMoved -= PointerMove;
+            this.PointerCanceled -= PointerUp;
+            this.PointerReleased -= PointerUp;
+            this.PointerExited -= PointerUp;
+            this.ManipulationStarting -= Card_ManipulationStarting;
+            this.ManipulationDelta -= Card_ManipulationDelta;
+            this.ManipulationInertiaStarting -= Card_ManipulationInertiaStarting;
         }
         /// <summary>
         /// Move the card to the position
@@ -172,7 +184,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PointerDown(object sender, PointerRoutedEventArgs e)
+        protected virtual void PointerDown(object sender, PointerRoutedEventArgs e)
         {
             PointerPoint point = e.GetCurrentPoint(this);
             cardController.PointerDown(point, this, typeof(Card));
@@ -182,7 +194,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PointerMove(object sender, PointerRoutedEventArgs e)
+        protected virtual void PointerMove(object sender, PointerRoutedEventArgs e)
         {
             PointerPoint point = e.GetCurrentPoint(this);
             cardController.PointerMove(point);
@@ -192,10 +204,74 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PointerUp(object sender, PointerRoutedEventArgs e)
+        protected virtual void PointerUp(object sender, PointerRoutedEventArgs e)
         {
             PointerPoint point = e.GetCurrentPoint(this);
             cardController.PointerUp(point);
+        }
+        /// <summary>
+        /// Manipulate the card. Move if the manipulation is valid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void Card_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        {
+            if (IsValideManipulation(e.Delta.Translation, e.Delta.Rotation, e.Delta.Scale)) {
+                this.position.X += e.Delta.Translation.X;
+                this.position.Y += e.Delta.Translation.Y;
+                this.rotation += e.Delta.Rotation;
+                this.cardScale *= e.Delta.Scale;
+                UpdateTransform();
+            }
+        }
+
+       
+
+        /// <summary>
+        /// Check if the manipulation is valid. 
+        /// Cancel the manipulation if the card larger or smaller than the bound, or moved out of the screen.
+        /// </summary>
+        /// <param name="trans"></param>
+        /// <param name="rotat"></param>
+        /// <param name="scale"></param>
+        /// <returns></returns>
+        private bool IsValideManipulation(Point trans, double rotat, double scale)
+        {
+            bool isValid = true;
+            if (scale * this.cardScale * this.Width >= maxSize.Width ||
+                scale * this.cardScale * this.Height >= maxSize.Height ||
+                scale * this.cardScale * this.Width <= minSize.Width ||
+                scale * this.cardScale * this.Height <= minSize.Height)
+            {
+                isValid = false;
+            }
+            if (position.X + trans.X > Screen.WIDTH ||
+                position.X + trans.X < 0 ||
+                position.Y + trans.Y > Screen.HEIGHT ||
+                position.Y + trans.Y < 0)
+            {
+                isValid = false;
+            }
+            return isValid;
+        }
+        /// <summary>
+        /// Update the z index of the focused the card. Put it on the top of other cards.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void Card_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
+        {
+            cardController.MoveCardToTop(this);
+        }
+
+        /// <summary>
+        /// Check if the interia is valid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Card_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingRoutedEventArgs e)
+        {
+            e.TranslationBehavior.DesiredDisplacement = 150f;
         }
     }
 }

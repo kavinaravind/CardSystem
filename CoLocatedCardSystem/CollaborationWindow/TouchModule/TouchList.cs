@@ -17,14 +17,15 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// <param name="position"></param>
         /// <param name="sender"></param>
         /// <param name="type"></param>
-        internal void AddTouchPoint(PointerPoint position, object sender, Type type) {
-            Touch touch = new Touch();
-            touch.Init(position, sender, type);
+        internal void AddTouchPoint(PointerPoint position, object sender, Type type)
+        {
             uint touchID = position.PointerId;
-            if (list.Keys.Contains(touchID)) {
-                list.Remove(touchID);
+            if (!list.Keys.Contains(touchID))
+            {
+                Touch touch = new Touch();
+                touch.Init(position, sender, type);
+                list.Add(position.PointerId, touch);
             }
-            list.Add(position.PointerId, touch);
         }
         /// <summary>
         /// Update a touch point

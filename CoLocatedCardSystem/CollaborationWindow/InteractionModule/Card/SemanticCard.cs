@@ -1,6 +1,8 @@
 ﻿using CoLocatedCardSystem.CollaborationWindow.DocumentModule;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI.Input;
+using Windows.UI.Xaml.Input;
 
 namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
@@ -55,6 +57,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <returns></returns>
         internal Document GetDocument() {
             return document;
+        }
+        protected override void PointerDown(object sender, PointerRoutedEventArgs e)
+        {
+            base.PointerDown(sender, e);
+            PointerPoint p = e.GetCurrentPoint(this);
         }
     }
 }
