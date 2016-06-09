@@ -62,8 +62,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         {
             base.PointerDown(sender, e);
             PointerPoint p = e.GetCurrentPoint(this);
-            if (p.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Touch)
-                System.Diagnostics.Debug.WriteLine("touchDown:" + this.document.GetTitle());
         }
     }
 }
