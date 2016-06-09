@@ -1,6 +1,7 @@
 ﻿using CoLocatedCardSystem.CollaborationWindow.DocumentModule;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI.Input;
 using Windows.UI.Xaml.Input;
 
 namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
@@ -60,7 +61,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         protected override void PointerDown(object sender, PointerRoutedEventArgs e)
         {
             base.PointerDown(sender, e);
-            System.Diagnostics.Debug.WriteLine("touchDown:" + this.document.GetTitle());
+            PointerPoint p = e.GetCurrentPoint(this);
+            if (p.PointerDevice.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Touch)
+                System.Diagnostics.Debug.WriteLine("touchDown:" + this.document.GetTitle());
         }
     }
 }
