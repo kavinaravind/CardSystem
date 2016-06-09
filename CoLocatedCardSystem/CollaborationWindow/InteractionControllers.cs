@@ -32,7 +32,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
 
             Document[] docs = await documentController.Init(FilePath.NewsArticle);//Load the document
             Card[] cards = await cardController.Init(docs);
-            //await viewControllers.LoadCardsToCardLayer(cards);
+            await viewControllers.LoadCardsToCardLayer(cards);
             
             touchController.Init();
             sortingBoxController.Init();
