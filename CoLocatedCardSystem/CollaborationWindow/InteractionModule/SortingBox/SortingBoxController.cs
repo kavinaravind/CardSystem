@@ -34,9 +34,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="name"></param>
         /// <param name="user"></param>
         public void CreateSortingBox(string name, User user) {
-            //TO DO: initialize the sorting box with the user info.
-            UserInfo userInfo = UserInfo.GetUserInfo(user);
-            list.AddBox(userInfo, name, this);
+            list.AddBox(user, name, this);
         }
         /// <summary>
         /// Add a card to the sortingbox
@@ -50,8 +48,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         public void RemoveCardFromSortingBox(Card card, SortingBox box) {
             box.RemoveCard(card);
         }
-
-        List<SortingBox> FindAllSortingBoxesByCard(Card card) {
+        /// <summary>
+        /// Get all sorting box by card
+        /// </summary>
+        /// <param name="card"></param>
+        /// <returns></returns>
+        SortingBox[] FindAllSortingBoxesByCard(Card card) {
             List<SortingBox> boxes = new List<SortingBox>();
             foreach(SortingBox box in list.GetAllSortingBoxes()) {
                 foreach(Card cd in box.CardList) {
@@ -60,7 +62,15 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                     }
                 }
             }
-            return boxes;
+            return boxes.ToArray();
+        }
+        /// <summary>
+        /// Get all sorting boxes in the list
+        /// </summary>
+        /// <returns></returns>
+        internal SortingBox[] GetAllSortingBoxes()
+        {
+            return list.GetAllSortingBoxes();
         }
 
         bool ContainCard(SortingBox box, Card card) {

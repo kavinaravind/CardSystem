@@ -35,8 +35,11 @@ namespace CoLocatedCardSystem.CollaborationWindow
             await viewControllers.LoadCardsToCardLayer(cards);
             
             touchController.Init();
+
+            //For test purpose
             sortingBoxController.Init();
             sortingBoxController.CreateSortingBox("alex", User.ALEX);
+            await viewControllers.LoadSortingBoxesToSortingBoxLayer(sortingBoxController.GetAllSortingBoxes());
 
         }
 

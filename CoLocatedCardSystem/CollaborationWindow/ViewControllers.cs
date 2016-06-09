@@ -83,6 +83,11 @@ namespace CoLocatedCardSystem.CollaborationWindow
         internal async Task LoadCardsToCardLayer(Card[] cards) {
             await cardLayerController.LoadCards(cards);
         }
+        /// <summary>
+        /// Load all the sorting boxes to the sorting box layer
+        /// </summary>
+        /// <param name="boxes"></param>
+        /// <returns></returns>
         internal async Task LoadSortingBoxesToSortingBoxLayer(SortingBox[] boxes) {
             await sortingBoxLayerController.LoadBoxes(boxes);
         }

@@ -10,12 +10,58 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
     class SortingBoxInfo
     {
-        private Size sortingBoxSize = new Size(60, 45);
-        protected Color sortingBoxColor = Colors.Red;
-        protected Point sortingBoxPosition = new Point(0, 0);
-        protected double sortingBoxScale = 1;
-        protected double sortingBoxRotation = 1;
-        protected static Dictionary<User, SortingBoxInfo> sortingBoxInfoList = new Dictionary<User, SortingBoxInfo>();
+        private Size sortingBoxSize = new Size(200, 200);
+        private Color sortingBoxColor = Colors.Red;
+        private Point sortingBoxPosition = new Point(900, 500);
+        private double sortingBoxScale = 1;
+        private double sortingBoxRotation = 1;
+        private static Dictionary<User, SortingBoxInfo> sortingBoxInfoList = new Dictionary<User, SortingBoxInfo>();
+
+        public Size SortingBoxSize
+        {
+            get
+            {
+                return sortingBoxSize;
+            }
+        }
+
+        public Color SortingBoxColor
+        {
+            get
+            {
+                return sortingBoxColor;
+            }
+        }
+
+        public Point SortingBoxPosition
+        {
+            get
+            {
+                return sortingBoxPosition;
+            }
+        }
+
+        public double SortingBoxScale
+        {
+            get
+            {
+                return sortingBoxScale;
+            }
+        }
+
+        public double SortingBoxRotation
+        {
+            get
+            {
+                return sortingBoxRotation;
+            }
+
+            set
+            {
+                sortingBoxRotation = value;
+            }
+        }
+
         static SortingBoxInfo()
         {
             sortingBoxInfoList.Add(User.ALEX, InitAlex());
@@ -23,7 +69,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             sortingBoxInfoList.Add(User.CHRIS, InitChris());
             sortingBoxInfoList.Add(User.DANNY, InitDanny());
         }
-        public static SortingBoxInfo GetCardInfo(User user)
+        public static SortingBoxInfo GetSortingBoxInfo(User user)
         {
             return sortingBoxInfoList[user];
         }
@@ -34,10 +80,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         private static SortingBoxInfo InitAlex()
         {
             SortingBoxInfo sortingBoxInfo = new SortingBoxInfo();
-            sortingBoxInfo.sortingBoxColor = Colors.Red;
-            sortingBoxInfo.sortingBoxPosition = new Point(0, 0);
+            sortingBoxInfo.sortingBoxColor = Colors.Magenta;
+            sortingBoxInfo.sortingBoxPosition = new Point(900, 500);
             sortingBoxInfo.sortingBoxScale = 1;
-            sortingBoxInfo.sortingBoxRotation = 1;
+            sortingBoxInfo.SortingBoxRotation = 1;
             return sortingBoxInfo;
         }
         /// <summary>
@@ -47,10 +93,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         private static SortingBoxInfo InitBen()
         {
             SortingBoxInfo sortingBoxInfo = new SortingBoxInfo();
-            sortingBoxInfo.sortingBoxColor = Colors.Red;
-            sortingBoxInfo.sortingBoxPosition = new Point(0, 0);
+            sortingBoxInfo.sortingBoxColor = Colors.Magenta;
+            sortingBoxInfo.sortingBoxPosition = new Point(900, 500);
             sortingBoxInfo.sortingBoxScale = 1;
-            sortingBoxInfo.sortingBoxRotation = 1;
+            sortingBoxInfo.SortingBoxRotation = 1;
             return sortingBoxInfo;
         }
         /// <summary>
@@ -60,10 +106,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         private static SortingBoxInfo InitChris()
         {
             SortingBoxInfo sortingBoxInfo = new SortingBoxInfo();
-            sortingBoxInfo.sortingBoxColor = Colors.Red;
-            sortingBoxInfo.sortingBoxPosition = new Point(0, 0);
+            sortingBoxInfo.sortingBoxColor = Colors.Magenta;
+            sortingBoxInfo.sortingBoxPosition = new Point(900, 500);
             sortingBoxInfo.sortingBoxScale = 1;
-            sortingBoxInfo.sortingBoxRotation = 1;
+            sortingBoxInfo.SortingBoxRotation = 1;
             return sortingBoxInfo;
         }
         /// <summary>
@@ -73,8 +119,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         private static SortingBoxInfo InitDanny()
         {
             SortingBoxInfo sortingBoxInfo = new SortingBoxInfo();
-            sortingBoxInfo.sortingBoxColor = Colors.Red;
-            sortingBoxInfo.sortingBoxPosition = new Point(0, 0);
+            sortingBoxInfo.sortingBoxColor = Colors.Magenta;
+            sortingBoxInfo.sortingBoxPosition = new Point(900, 500);
             sortingBoxInfo.sortingBoxScale = 1;
             sortingBoxInfo.sortingBoxRotation = 1;
             return sortingBoxInfo;

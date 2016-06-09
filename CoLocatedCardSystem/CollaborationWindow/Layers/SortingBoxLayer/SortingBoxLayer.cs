@@ -13,20 +13,34 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
     {
         private SortingBoxLayerController sortingBoxLayerController;
 
-        public SortingBoxLayer(SortingBoxLayerController sortingBoxLayerController) {
+        public SortingBoxLayer(SortingBoxLayerController sortingBoxLayerController)
+        {
             this.sortingBoxLayerController = sortingBoxLayerController;
         }
-
-        internal void Init(int width, int height) {
+        /// <summary>
+        /// Initialize the sorting box layer
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        internal void Init(int width, int height)
+        {
             this.Width = width;
             this.Height = height;
         }
-
-        internal void Deinit() {
+        /// <summary>
+        /// Destroy the sorting box layer
+        /// </summary>
+        internal void Deinit()
+        {
             this.Children.Clear();
         }
-
-        internal async Task AddBox(SortingBox box) {
+        /// <summary>
+        /// Add a sorting box to the layer
+        /// </summary>
+        /// <param name="box"></param>
+        /// <returns></returns>
+        internal async Task AddBox(SortingBox box)
+        {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 this.Children.Add(box);

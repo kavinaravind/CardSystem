@@ -14,10 +14,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Add a sorting box to the list
         /// </summary>
         /// <param name="name"></param>
-        internal void AddBox(UserInfo userInfo, string name, SortingBoxController controller) {
+        internal void AddBox(User user, string name, SortingBoxController controller) {
             string sortingBoxID = Guid.NewGuid().ToString();
             SortingBox box = new SortingBox(controller);
-            box.Init(sortingBoxID, name, userInfo);
+            box.Init(sortingBoxID, name, user);
             list.Add(sortingBoxID, box);
         }
         /// <summary>
@@ -77,8 +77,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Get all sorting boxes.
         /// </summary>
         /// <returns></returns>
-        internal List<SortingBox> GetAllSortingBoxes() {
-            return list.Values.ToList();
+        internal SortingBox[] GetAllSortingBoxes() {
+            return list.Values.ToArray();
         }
     }
 }

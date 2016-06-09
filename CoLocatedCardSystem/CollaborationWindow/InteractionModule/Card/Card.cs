@@ -234,8 +234,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             }
         }
 
-       
-
         /// <summary>
         /// Check if the manipulation is valid. 
         /// Cancel the manipulation if the card larger or smaller than the bound, or moved out of the screen.

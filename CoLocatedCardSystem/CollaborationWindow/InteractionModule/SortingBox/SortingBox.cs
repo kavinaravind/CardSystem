@@ -58,14 +58,16 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
        /*
         * Initialize sorting box
         */
-        internal void Init(string sortingBoxID, string name, UserInfo info) {
+        internal void Init(string sortingBoxID, string name, User user) {
             this.sortingBoxID = sortingBoxID;
             this.name = name;
+            SortingBoxInfo info = SortingBoxInfo.GetSortingBoxInfo(user);
             this.sortingBoxSize = info.SortingBoxSize;
             this.sortingBoxScale = info.SortingBoxScale;
             this.rotation = info.SortingBoxRotation;
-            this.position = info.SortingBoxPosition;            
-            this.owner = info.User;
+            this.position = info.SortingBoxPosition;
+            UpdateTransform();          
+            this.owner = user;
             cardList = new List<Card>();
 
             //initialize the background rectangle
@@ -98,11 +100,19 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             background.PointerReleased -= PointerUp;
             background.PointerExited -= PointerUp;
         }
-
+        /// <summary>
+        /// Move the sorting box by vector.
+        /// </summary>
+        /// <param name="vector"></param>
+        public void Move(Point vector) {
+            this.position.X += vector.X;
+            this.position.Y += vector.Y;
+            UpdateTransform();
+        }
         /*
          * Move the box to the position
          */
-        public void Move(Point position) {
+        public void MoveTo(Point position) {
             this.position = position;
             UpdateTransform();
         }
@@ -151,7 +161,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 transGroup.Children.Add(st);
                 transGroup.Children.Add(rt);
                 transGroup.Children.Add(tt);
-
                 this.RenderTransform = transGroup;
             });
         }
@@ -203,16 +212,18 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             }
         }
 
-       /*
-        * Remove all cards from the sorting box
-        */
+        /// <summary>
+        /// Remove all cards from the sorting box
+        /// </summary>
         public void Clear() {
             cardList.Clear();
         }
 
-       /*
-        * Check if a point is intersected with the sorting box.
-        */
+        /// <summary>
+        ///  Check if a point is intersected with the sorting box.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
         public bool isIntersected(Point p) {
             return position.Equals(p);
         }
