@@ -176,7 +176,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PointerDown(object sender, PointerRoutedEventArgs e)
+        protected virtual void PointerDown(object sender, PointerRoutedEventArgs e)
         {
             PointerPoint point = e.GetCurrentPoint(this);
             cardController.PointerDown(point, this, typeof(Card));
@@ -186,7 +186,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PointerMove(object sender, PointerRoutedEventArgs e)
+        protected virtual void PointerMove(object sender, PointerRoutedEventArgs e)
         {
             PointerPoint point = e.GetCurrentPoint(this);
             cardController.PointerMove(point);
@@ -196,17 +196,17 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PointerUp(object sender, PointerRoutedEventArgs e)
+        protected virtual void PointerUp(object sender, PointerRoutedEventArgs e)
         {
             PointerPoint point = e.GetCurrentPoint(this);
             cardController.PointerUp(point);
         }
-        private void Card_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        protected virtual void Card_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
 
-        private void Card_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
+        protected virtual void Card_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("start");
             cardController.MoveCardToTop(this);
