@@ -72,6 +72,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
         {
             interactionControllers.OnTouchDown(p, sender, type);
         }
+
         /// <summary>
         /// Update the touch
         /// </summary>
@@ -88,6 +89,15 @@ namespace CoLocatedCardSystem.CollaborationWindow
         internal void OnTouchUp(PointerPoint p)
         {
             interactionControllers.OnTouchUp(p);
+        }
+
+        /// <summary>
+        /// Move the card to the top in the card layer.
+        /// </summary>
+        /// <param name="card"></param>
+        internal void MoveCardToTop(Card card)
+        {
+            cardLayerController.MoveCardToTop(card);
         }
     }
 }

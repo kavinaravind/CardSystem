@@ -33,6 +33,15 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             this.Width = width;
             this.Height = height;
         }
+        
+        /// <summary>
+        /// Destroy the card layer
+        /// </summary>
+        internal void Deinit()
+        {
+            this.Children.Clear();
+        }
+
         /// <summary>
         /// Add a card to the card layer
         /// </summary>
@@ -46,9 +55,13 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             });
         }
 
-        internal void Deinit()
-        {
-            this.Children.Clear();
+        /// <summary>
+        /// Set the z index of the card
+        /// </summary>
+        /// <param name="card"></param>
+        /// <param name="zindex"></param>
+        internal void SetZIndex(Card card, int zindex) {
+            Canvas.SetZIndex(card, zindex);
         }
     }
 }

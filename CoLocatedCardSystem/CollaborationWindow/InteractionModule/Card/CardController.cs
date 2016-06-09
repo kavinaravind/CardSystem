@@ -68,20 +68,36 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             return list.GetAllCards();
         }
         /// <summary>
-        /// Create a touch layer and pass it to the interaction controller.
+        /// Create a touch and pass it to the interaction controller.
         /// </summary>
         /// <param name="p"></param>
         internal void PointerDown(PointerPoint p, Card card, Type type)
         {
             interactionControllers.OnTouchDown(p, card, type);
         }
+        /// <summary>
+        /// Update the touch point
+        /// </summary>
+        /// <param name="p"></param>
         internal void PointerMove(PointerPoint p)
         {
             interactionControllers.OnTouchMove(p);
         }
+        /// <summary>
+        /// Lift the touch layer
+        /// </summary>
+        /// <param name="p"></param>
         internal void PointerUp(PointerPoint p)
         {
             interactionControllers.OnTouchUp(p);
+        }
+        /// <summary>
+        /// Update the ZIndex of the card. Move the card to the top.
+        /// </summary>
+        /// <param name="card"></param>
+        internal void MoveCardToTop(Card card)
+        {
+            interactionControllers.MoveCardToTop(card);
         }
     }
 }

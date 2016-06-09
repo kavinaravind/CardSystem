@@ -65,5 +65,13 @@ namespace CoLocatedCardSystem.CollaborationWindow
         internal void OnTouchUp(PointerPoint point) {
             touchController.TouchUp(point);
         }
+        /// <summary>
+        /// Move the card to the top
+        /// </summary>
+        /// <param name="card"></param>
+        internal void MoveCardToTop(Card card)
+        {
+            viewControllers.MoveCardToTop(card);
+        }
     }
 }

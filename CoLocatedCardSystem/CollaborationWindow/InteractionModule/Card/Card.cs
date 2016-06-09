@@ -91,10 +91,14 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.PointerCanceled += PointerUp;
             this.PointerReleased += PointerUp;
             this.PointerExited += PointerUp;
+            //Manipulation
+            this.ManipulationStarting += Card_ManipulationStarting;
+            this.ManipulationDelta += Card_ManipulationDelta;
             //For debug
             Random rand = new Random(DateTime.Now.Millisecond);
             Move(new Point(rand.Next(1000), rand.Next(800)));
         }
+
         internal void Deinit()
         {
             background.PointerEntered -= PointerDown;
@@ -196,6 +200,16 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         {
             PointerPoint point = e.GetCurrentPoint(this);
             cardController.PointerUp(point);
+        }
+        private void Card_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Card_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("start");
+            cardController.MoveCardToTop(this);
         }
     }
 }
