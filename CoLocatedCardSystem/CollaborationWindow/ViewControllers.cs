@@ -17,7 +17,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
         CardLayerController cardLayerController;
         LinkingLayerController linkingLayerController;
         MenuLayerController menuLayerController;
-        SortingBoxLayerController sortingBoxController;
+        SortingBoxLayerController sortingBoxLayerController;
         
         /// <summary>
         /// Initialize the views, including different layers.
@@ -28,18 +28,28 @@ namespace CoLocatedCardSystem.CollaborationWindow
         public void Init(int width, int height, InteractionControllers interactionControllers)
         {
             this.interactionControllers = interactionControllers;
+
             baseLayerController = new BaseLayerController(this);
             baseLayerController.Init(width, height);
+
             cardLayerController = new CardLayerController(this);
             cardLayerController.Init(width, height);
+
+            sortingBoxLayerController = new SortingBoxLayerController(this);
+            sortingBoxLayerController.Init(width, height);
         }
         public void Deinit()
         {
-            cardLayerController.Deinit();
-            cardLayerController = null;
             baseLayerController.Deinit();
             baseLayerController = null;
+
+            cardLayerController.Deinit();
+            cardLayerController = null;
+
+            sortingBoxLayerController.Deinit();
+            sortingBoxLayerController = null;
         }
+
         /// <summary>
         /// Get the base layer
         /// </summary>
@@ -56,6 +66,16 @@ namespace CoLocatedCardSystem.CollaborationWindow
         {
             return cardLayerController.CardLayer;
         }
+
+        /// <summary>
+        /// Get the sortingbox layer
+        /// </summary>
+        /// <returns></returns>
+        internal SortingBoxLayer GetSortingBoxLayer()
+        {
+            return sortingBoxLayerController.SortingBoxLayer;
+        }
+
         /// <summary>
         /// Add all the cards to the card layer
         /// </summary>
@@ -63,6 +83,10 @@ namespace CoLocatedCardSystem.CollaborationWindow
         internal async Task LoadCardsToCardLayer(Card[] cards) {
             await cardLayerController.LoadCards(cards);
         }
+        internal async Task LoadSortingBoxesToSortingBoxLayer(SortingBox[] boxes) {
+            await sortingBoxLayerController.LoadBoxes(boxes);
+        }
+
         /// <summary>
         /// Pass the PointerPoint to the TouchController
         /// </summary>
