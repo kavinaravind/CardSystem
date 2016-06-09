@@ -21,20 +21,17 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="documents"></param>
         public async Task<Card[]> Init(Document[] documents)
         {
-            //To Do: add documents in the list to all LIVE users.
-            UserInfo alex = UserInfo.GetUserInfo(User.ALEX);//example to get alex's user info
             list = new SemanticCardList();
-            foreach (UserInfo info in UserInfo.GetUserInfo())
+            foreach (User user in UserInfo.GetLiveUsers())
             {
-                if (info.IsLive)
+                foreach (Document doc in documents)
                 {
-                    foreach (Document doc in documents)
-                    {
-                        await list.AddCard(doc, info, this);
-                    }
+                    await list.AddCard(doc, user, this);
                 }
+                Card[] cardsToBePlaced = GetCard(user);
+                CardLayoutGenerator.ApplyLayout(cardsToBePlaced, user);
             }
-            return list.GetAllCards();
+            return list.GetCard();
         }
         /// <summary>
         /// Destroy the card list
@@ -64,8 +61,16 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Get all the cards.
         /// </summary>
         /// <returns></returns>
-        public Card[] GetAllCards() {
-            return list.GetAllCards();
+        public Card[] GetCard() {
+            return list.GetCard();
+        }
+        /// <summary>
+        /// Get all the cards belong to a user. The returned results are references.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public Card[] GetCard(User user) {
+            return list.GetCard(user);
         }
         /// <summary>
         /// Create a touch and pass it to the interaction controller.

@@ -69,9 +69,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="position"></param>
         /// <param name="scale"></param>
         /// <param name="rotation"></param>
-        internal virtual void Init(string cardID, UserInfo info)
+        internal virtual void Init(string cardID, User user)
         {
             this.cardID = cardID;
+            CardInfo info = CardInfo.GetCardInfo(user);
             this.Width = info.CardSize.Width;
             this.Height = info.CardSize.Height;
             this.position = info.CardPosition;
@@ -85,7 +86,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             MatrixTransform mtf = new MatrixTransform();
             mtf.Matrix = new Matrix(1, 0, 0, 1, -0.5 * background.Width, -0.5 * background.Height);
             background.RenderTransform = mtf;
-            background.Fill = new SolidColorBrush(Colors.Yellow);//For visibility debug
+            background.Fill = new SolidColorBrush(info.CardColor);
             //Register the touch events
             this.Children.Add(background);
             this.PointerEntered += PointerDown;
@@ -98,10 +99,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.ManipulationMode = ManipulationModes.All;
             this.ManipulationStarting += Card_ManipulationStarting;
             this.ManipulationDelta += Card_ManipulationDelta;
-            this.ManipulationInertiaStarting += Card_ManipulationInertiaStarting;
-            //For debug
-            Random rand = new Random(DateTime.Now.Millisecond);
-            Move(new Point(rand.Next(1000), rand.Next(800)));
+            ////For debug
+            //Random rand = new Random(DateTime.Now.Millisecond);
+            //Move(new Point(rand.Next(1000), rand.Next(800)));
         }
 
         internal void Deinit()
@@ -114,13 +114,22 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.PointerExited -= PointerUp;
             this.ManipulationStarting -= Card_ManipulationStarting;
             this.ManipulationDelta -= Card_ManipulationDelta;
-            this.ManipulationInertiaStarting -= Card_ManipulationInertiaStarting;
+        }
+        /// <summary>
+        /// Move the card by the vector 
+        /// </summary>
+        /// <param name="point"></param>
+        public void Move(Point vector)
+        {
+            this.position.X += vector.X;
+            this.position.Y += vector.Y;
+            UpdateTransform();
         }
         /// <summary>
         /// Move the card to the position
         /// </summary>
         /// <param name="position"></param>
-        public void Move(Point position)
+        public void MoveTo(Point position)
         {
             this.position = position;
             UpdateTransform();
@@ -262,16 +271,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         protected virtual void Card_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
         {
             cardController.MoveCardToTop(this);
-        }
-
-        /// <summary>
-        /// Check if the interia is valid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Card_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingRoutedEventArgs e)
-        {
-            e.TranslationBehavior.DesiredDisplacement = 150f;
         }
     }
 }

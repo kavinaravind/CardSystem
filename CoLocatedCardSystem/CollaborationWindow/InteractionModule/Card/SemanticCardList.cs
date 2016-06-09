@@ -15,12 +15,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Add a new card to the user.
         /// </summary>
         /// <param name="doc"></param>
-        /// <param name="userInfo"></param>
+        /// <param name="cardInfo"></param>
         /// <returns></returns>
-        internal async Task AddCard(Document doc,UserInfo userInfo, CardController cardController) {
+        internal async Task AddCard(Document doc,User user, CardController cardController) {
             string cardID = Guid.NewGuid().ToString();
             SemanticCard card = new SemanticCard(cardController);
-            card.Init(cardID, userInfo);
+            card.Init(cardID, user);
             await card.LoadDocument(doc);
             list.Add(cardID, card);
         }
@@ -49,9 +49,18 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Return all card instances
         /// </summary>
         /// <returns></returns>
-        internal Card[] GetAllCards()
+        internal Card[] GetCard()
         {
             return list.Values.ToArray<Card>();
+        }
+        /// <summary>
+        /// Get references to all cards belong to a specific user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        internal Card[] GetCard(User user) {
+            var cardList =list.Values.Where(a => a.Owner.Equals(user));
+            return cardList.ToArray<Card>();
         }
     }
 }

@@ -121,6 +121,8 @@
     <Compile Include="CollaborationWindow\InteractionControllers.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\Card\Card.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\Card\CardController.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\Card\CardInfo.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\Card\CardLayoutGenerator.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\Card\SemanticCard.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\Card\SemanticCardList.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\Card\SemanticLayers\Layer1.cs" />
@@ -130,6 +132,7 @@
     <Compile Include="CollaborationWindow\InteractionModule\Card\SemanticLayers\LayerBase.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\SortingBox\SortingBox.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\SortingBox\SortingBoxController.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\SortingBox\SortingBoxInfo.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\SortingBox\SortingBoxList.cs" />
     <Compile Include="CollaborationWindow\Layers\BaseLayer\BaseLayer.cs" />
     <Compile Include="CollaborationWindow\Layers\BaseLayer\BaseLayerController.cs" />

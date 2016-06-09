@@ -15,12 +15,8 @@ namespace CoLocatedCardSystem
         /// </summary>
         protected User user = User.ALEX;
         private bool isLive = true;
-        protected Size cardSize = new Size(160, 120);
         private Size sortingBoxSize = new Size(60, 45);
-        protected Color cardColor = Colors.Red;
-        protected Point cardPosition = new Point(0, 0);
-        protected double cardScale = 1;
-        protected double cardRotation = 1;
+        
         protected Color sortingBoxColor = Colors.Red;
         protected Point sortingBoxPosition = new Point(0, 0);
         protected double sortingBoxScale = 1;
@@ -34,34 +30,7 @@ namespace CoLocatedCardSystem
                 return user;
             }
         }
-        public Color CardColor
-        {
-            get
-            {
-                return cardColor;
-            }
-        }
-        public Point CardPosition
-        {
-            get
-            {
-                return cardPosition;
-            }
-        }
-        public double CardScale
-        {
-            get
-            {
-                return cardScale;
-            }
-        }
-        public double CardRotation
-        {
-            get
-            {
-                return cardRotation;
-            }
-        }
+       
         public Color SortingBoxColor
         {
             get
@@ -91,14 +60,6 @@ namespace CoLocatedCardSystem
             }
         }
 
-        public Size CardSize
-        {
-            get
-            {
-                return cardSize;
-            }
-        }
-
         public Size SortingBoxSize
         {
             get
@@ -116,7 +77,7 @@ namespace CoLocatedCardSystem
         }
 
         /// <summary>
-        /// Get the userinfo with User
+        /// Get the userinfo of a User
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
@@ -124,8 +85,18 @@ namespace CoLocatedCardSystem
         {
             return userList[user];
         }
-        public static UserInfo[] GetUserInfo() {
-            return userList.Values.ToArray();
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <returns></returns>
+        public static User[] GetLiveUsers() {
+            List<User> users = new List<User>();
+            foreach (UserInfo ui in userList.Values) {
+                if (ui.isLive) {
+                    users.Add(ui.user);
+                }
+            }
+            return users.ToArray();
         }
         static UserInfo()
         {
@@ -143,10 +114,6 @@ namespace CoLocatedCardSystem
             UserInfo userInfo = new UserInfo();
             userInfo.user = User.ALEX;
             userInfo.isLive = true;
-            userInfo.cardColor = Colors.Red;
-            userInfo.cardPosition = new Point(0, 0);
-            userInfo.cardScale = 1;
-            userInfo.cardRotation = 1;
             userInfo.sortingBoxColor = Colors.Red;
             userInfo.sortingBoxPosition = new Point(0, 0);
             userInfo.sortingBoxScale = 1;
@@ -162,10 +129,6 @@ namespace CoLocatedCardSystem
             UserInfo userInfo = new UserInfo();
             userInfo.user = User.BEN;
             userInfo.isLive = true;
-            userInfo.cardColor = Colors.Red;
-            userInfo.cardPosition = new Point(0, 0);
-            userInfo.cardScale = 1;
-            userInfo.cardRotation = 1;
             userInfo.sortingBoxColor = Colors.Red;
             userInfo.sortingBoxPosition = new Point(0, 0);
             userInfo.sortingBoxScale = 1;
@@ -181,10 +144,6 @@ namespace CoLocatedCardSystem
             UserInfo userInfo = new UserInfo();
             userInfo.user = User.CHRIS;
             userInfo.isLive = true;
-            userInfo.cardColor = Colors.Red;
-            userInfo.cardPosition = new Point(0, 0);
-            userInfo.cardScale = 1;
-            userInfo.cardRotation = 1;
             userInfo.sortingBoxColor = Colors.Red;
             userInfo.sortingBoxPosition = new Point(0, 0);
             userInfo.sortingBoxScale = 1;
@@ -199,11 +158,7 @@ namespace CoLocatedCardSystem
         {
             UserInfo userInfo = new UserInfo();
             userInfo.user = User.DANNY;
-            userInfo.isLive = false;
-            userInfo.cardColor = Colors.Red;
-            userInfo.cardPosition = new Point(0, 0);
-            userInfo.cardScale = 1;
-            userInfo.cardRotation = 1;
+            userInfo.isLive = true;
             userInfo.sortingBoxColor = Colors.Red;
             userInfo.sortingBoxPosition = new Point(0, 0);
             userInfo.sortingBoxScale = 1;

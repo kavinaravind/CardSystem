@@ -14,6 +14,19 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         Document document;
         private const int LAYER_NUMBER= 4;
 
+        public User Owner
+        {
+            get
+            {
+                return owner;
+            }
+
+            set
+            {
+                owner = value;
+            }
+        }
+
         public SemanticCard(CardController cardController) : base(cardController)
         {
         }
@@ -27,9 +40,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="position"></param>
         /// <param name="scale"></param>
         /// <param name="rotation"></param>
-        internal override async void Init(string cardID, UserInfo userInfo)
+        internal override async void Init(string cardID, User user)
         {
-            base.Init(cardID, userInfo);
+            base.Init(cardID, user);
+            this.owner = user;
             layers = new LayerBase[LAYER_NUMBER];
             layers[0] = new Layer1(this);
             layers[1] = new Layer2(this);
