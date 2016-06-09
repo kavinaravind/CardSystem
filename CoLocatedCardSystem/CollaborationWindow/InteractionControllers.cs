@@ -27,14 +27,19 @@ namespace CoLocatedCardSystem.CollaborationWindow
             this.viewControllers = viewControllers;
             documentController = new DocumentController(this);
             cardController = new CardController(this);
+            sortingBoxController = new SortingBoxController(this);
             touchController = new TouchController(this);
 
             Document[] docs = await documentController.Init(FilePath.NewsArticle);//Load the document
             Card[] cards = await cardController.Init(docs);
-            await viewControllers.LoadCardsToCardLayer(cards);
+            //await viewControllers.LoadCardsToCardLayer(cards);
+            
             touchController.Init();
+            sortingBoxController.Init();
+            sortingBoxController.CreateSortingBox("alex", User.ALEX);
 
         }
+
         /// <summary>
         /// Destroy the interaction listener
         /// </summary>

@@ -12,8 +12,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         SortingBoxList list;
         InteractionControllers interactionControllers;
 
-        public SortingBoxController(InteractionControllers interactionControllers)
-        {
+        public SortingBoxController(InteractionControllers interactionControllers) {
             this.interactionControllers = interactionControllers;
         }
 
@@ -21,7 +20,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Initialize the sorting box controller
         /// </summary>
         public void Init() {
-            list = new SortingBoxList();           
+            list = new SortingBoxList();
         }
         /// <summary>
         /// Destroy all sorting boxes
@@ -74,11 +73,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         }
 
         void DestroyBox(SortingBox box) {
-            box = null;
+            list.RemoveSortingBox(box);
         }
 
-        internal void PointerDown(PointerPoint p, Card card, Type type) {
-            interactionControllers.OnTouchDown(p, card, type);
+        internal void PointerDown(PointerPoint p, SortingBox box, Type type) {
+            interactionControllers.OnTouchDown(p, box, type);
         }
 
         internal void PointerMove(PointerPoint p) {

@@ -9,6 +9,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Input;
+using Windows.UI.Core;
 
 namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
@@ -16,43 +18,56 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
     {
         string sortingBoxID;
         string name;
-        Size sortingBoxSize;
-        Point position;
-        double scale;
+        double sortingBoxScale;
         double rotation;
-        Rectangle background;//Background rectangle
-        List<Card> cardList;
-        SortingBoxController sortingBoxController;
-        User owner;
 
-        public SortingBox(SortingBoxController sortingBoxController)
-        {
+        User owner;
+        Size sortingBoxSize;
+        List<Card> cardList;
+        Point position = new Point(0, 0);
+        SortingBoxController sortingBoxController;
+        Rectangle background; // Background rectangle
+
+        public SortingBox(SortingBoxController sortingBoxController) {
             this.sortingBoxController = sortingBoxController;
         }
-
-        public List<Card> CardList
-        {
-            get { return cardList; }
-            set { cardList = value; }
-        }
-        public string SortingBoxID
-        {
+        public string SortingBoxID {
             get { return sortingBoxID; }
             set { sortingBoxID = value; }
         }
 
-        /// <summary>
-        /// Initialize sorting box
-        /// </summary>
+        public string SortingBoxName {
+            get { return name; }
+        }
+        public double SortingBoxScale {
+            get { return sortingBoxScale; }
+        }
+
+        public double Rotation {
+            get { return rotation; }
+        }
+
+        public List<Card> CardList {
+            get { return cardList; }
+        }
+
+        public Point Position {
+            get { return position; }
+        }
+
+       /*
+        * Initialize sorting box
+        */
         internal void Init(string sortingBoxID, string name, UserInfo info) {
             this.sortingBoxID = sortingBoxID;
             this.name = name;
             this.sortingBoxSize = info.SortingBoxSize;
-            this.scale = info.SortingBoxScale;
+            this.sortingBoxScale = info.SortingBoxScale;
             this.rotation = info.SortingBoxRotation;
             this.position = info.SortingBoxPosition;            
             this.owner = info.User;
             cardList = new List<Card>();
+
             //initialize the background rectangle
             background = new Rectangle();
             background.Width = sortingBoxSize.Width;
@@ -62,6 +77,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             background.RenderTransform = mtf;
             background.Fill = new SolidColorBrush(info.SortingBoxColor);
             this.Children.Add(background);
+
             //Register the touch events
             this.PointerEntered += PointerDown;
             this.PointerPressed += PointerDown;
@@ -70,98 +86,135 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.PointerReleased += PointerUp;
             this.PointerExited += PointerUp;
         }
-        /// <summary>
-        /// Move the box to the position
-        /// </summary>
-        /// <param name="position"></param>
+
+       /*
+        * Deinitialize sorting box
+        */
+        internal void Deinit() {
+            background.PointerEntered -= PointerDown;
+            background.PointerPressed -= PointerDown;
+            background.PointerMoved -= PointerMove;
+            background.PointerCanceled -= PointerUp;
+            background.PointerReleased -= PointerUp;
+            background.PointerExited -= PointerUp;
+        }
+
+        /*
+         * Move the box to the position
+         */
         public void Move(Point position) {
             this.position = position;
             UpdateTransform();
         }
-        /// <summary>
-        /// Increase the box rotation by angle
-        /// </summary>
-        /// <param name="angle"></param>
+
+       /*
+        * Increase the box rotation by angle
+        */
         public void Rotate(double angle) {
             this.rotation += angle;
             UpdateTransform();
         }
-        /// <summary>
-        /// Scale the box to scale
-        /// </summary>
-        /// <param name="scale"></param>
+
+       /*
+        * Scale the box to scale
+        */
         public void Scale(double scale) {
-            this.scale = scale;
+            this.sortingBoxScale = scale;
             UpdateTransform();
         }
-        /// <summary>
-        /// Update the rendertransform and show the new states
-        /// </summary>
-        private void UpdateTransform() {
-            throw new NotImplementedException();
-        }
-        /// <summary>
-        /// Call back method for pointer up
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PointerUp(object sender, PointerRoutedEventArgs e) {
-            throw new NotImplementedException();
-        }
-        /// <summary>
-        /// Call back method for pointer move
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PointerMove(object sender, PointerRoutedEventArgs e) {
-            throw new NotImplementedException();
-        }
-        /// <summary>
-        /// Call back method for pointer down
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PointerDown(object sender, PointerRoutedEventArgs e) {
-            throw new NotImplementedException();
-        }
-        /// <summary>
-        /// Change the background color of the box
-        /// </summary>
-        /// <param name="color"></param>
-        public void setBackgroundColor(Color color) {
 
+       /*
+        * Move the card to the new position with new rotation and scale value
+        */
+        public void ApplyNewTransform(Point position, double rotation, double scale)
+        {
+            this.position = position;
+            this.rotation = rotation;
+            this.sortingBoxScale = scale;
+            UpdateTransform();
         }
-        /// <summary>
-        /// Add a card to the sorting box
-        /// </summary>
-        /// <param name="card"></param>
+        /*
+         * Update the rendertransform and show the new states
+         */
+        private async void UpdateTransform() {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                ScaleTransform st = new ScaleTransform();
+                st.ScaleX = sortingBoxScale;
+                st.ScaleY = sortingBoxScale;
+                RotateTransform rt = new RotateTransform();
+                rt.Angle = Rotation;
+                TranslateTransform tt = new TranslateTransform();
+                tt.X = Position.X;
+                tt.Y = Position.Y;
+                TransformGroup transGroup = new TransformGroup();
+                transGroup.Children.Add(st);
+                transGroup.Children.Add(rt);
+                transGroup.Children.Add(tt);
+
+                this.RenderTransform = transGroup;
+            });
+        }
+
+       /*
+        * Call back method for pointer up
+        */
+        private void PointerUp(object sender, PointerRoutedEventArgs e) {
+            PointerPoint point = e.GetCurrentPoint(this);
+            sortingBoxController.PointerUp(point);
+        }
+
+       /*
+        * Call back method for pointer move
+        */
+        private void PointerMove(object sender, PointerRoutedEventArgs e) {
+            PointerPoint point = e.GetCurrentPoint(this);
+            sortingBoxController.PointerMove(point);
+        }
+
+       /*
+        * Call back method for pointer down
+        */
+        private void PointerDown(object sender, PointerRoutedEventArgs e) {
+            PointerPoint point = e.GetCurrentPoint(this);
+            sortingBoxController.PointerDown(point, this, typeof(Card));
+        }
+
+       /*
+        * Change the background color of the box
+        */
+        public void setBackgroundColor(Color color) {
+            background.Fill = new SolidColorBrush(color);
+        }
+
+       /*
+        * Add a card to the sorting box
+        */
         public void AddCard(Card card) {
             cardList.Add(card);
         }
-        /// <summary>
-        /// Remove a card from the sorting box
-        /// </summary>
-        /// <param name="card"></param>
-        /// <returns></returns>
+
+       /*
+        * Remove a card from the sorting box
+        */
         public void RemoveCard(Card card) {
-            if (cardList.Contains(card))
-            {
+            if (cardList.Contains(card)) {
                 cardList.Remove(card);
             }
         }
-        /// <summary>
-        /// Remove all cards from the sorting box
-        /// </summary>
-        public void Clear() {
 
+       /*
+        * Remove all cards from the sorting box
+        */
+        public void Clear() {
+            cardList.Clear();
         }
-        /// <summary>
-        /// Check if a point is intersected with the sorting box.
-        /// </summary>
-        /// <param name="p"></param>
-        /// <returns></returns>
+
+       /*
+        * Check if a point is intersected with the sorting box.
+        */
         public bool isIntersected(Point p) {
-            return false;
+            return position.Equals(p);
         }
     }
 }
