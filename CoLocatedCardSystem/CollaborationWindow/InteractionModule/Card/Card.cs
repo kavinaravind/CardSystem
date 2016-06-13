@@ -17,9 +17,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
     public class Card : Canvas
     {
         string cardID = "";
-        Point position = new Point(0, 0);
-        double cardScale = 1;
-        double rotation = 0;
+        Point position = new Point(0, 0);//The position of the card on the screen
+        double cardScale = 1;//The scale ratio of the card
+        double rotation = 0;//The degree of the rotation
         Rectangle background = null;
         int marginWidth = 10;
         CardController cardController;
@@ -99,9 +99,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.ManipulationMode = ManipulationModes.All;
             this.ManipulationStarting += Card_ManipulationStarting;
             this.ManipulationDelta += Card_ManipulationDelta;
-            ////For debug
-            //Random rand = new Random(DateTime.Now.Millisecond);
-            //Move(new Point(rand.Next(1000), rand.Next(800)));
         }
 
         internal void Deinit()
@@ -225,12 +222,16 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="e"></param>
         protected virtual void Card_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
-            if (IsValideManipulation(e.Delta.Translation, e.Delta.Rotation, e.Delta.Scale)) {
+            if (IsValideManipulation(e.Delta.Translation, e.Delta.Rotation, e.Delta.Scale))
+            {
                 this.position.X += e.Delta.Translation.X;
                 this.position.Y += e.Delta.Translation.Y;
                 this.rotation += e.Delta.Rotation;
                 this.cardScale *= e.Delta.Scale;
                 UpdateTransform();
+            }
+            else {
+                e.Complete();
             }
         }
 

@@ -34,8 +34,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// Get a copy of all the touch points
         /// </summary>
         /// <returns></returns>
-        public Touch[] GetTouchList() {
-            return list.GetAllTouch();
+        public List<Touch> GetAllTouches() {
+            return list.GetAllTouches();
         }
         /// <summary>
         /// Add a new touch to the touch list. Two parameters control the pointertye. 
