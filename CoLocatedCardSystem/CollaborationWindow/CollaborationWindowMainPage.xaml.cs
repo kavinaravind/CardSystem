@@ -49,6 +49,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
             Container.Children.Add(viewControllers.GetBaseLayer());
             Container.Children.Add(viewControllers.GetCardLayer());
             Container.Children.Add(viewControllers.GetSortingBoxLayer());
+            Container.Children.Add(viewControllers.GetMenuLayer());
         }
         public void Deinit()
         {

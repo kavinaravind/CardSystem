@@ -142,6 +142,8 @@
     <Compile Include="CollaborationWindow\Layers\CardLayer\CardLayerController.cs" />
     <Compile Include="CollaborationWindow\Layers\LinkingLayer\LinkingLayer.cs" />
     <Compile Include="CollaborationWindow\Layers\LinkingLayer\LinkingLayerController.cs" />
+    <Compile Include="CollaborationWindow\Layers\MenuLayer\MenuBar.cs" />
+    <Compile Include="CollaborationWindow\Layers\MenuLayer\MenuBarInfo.cs" />
     <Compile Include="CollaborationWindow\Layers\MenuLayer\MenuLayer.cs" />
     <Compile Include="CollaborationWindow\Layers\MenuLayer\MenuLayerController.cs" />
     <Compile Include="CollaborationWindow\Layers\SortingBoxLayer\SortingBoxLayer.cs" />
@@ -170,6 +172,7 @@
     <Content Include="Assets\data\vast2006.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\menu_bg.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
