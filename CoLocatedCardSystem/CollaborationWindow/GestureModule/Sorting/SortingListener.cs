@@ -17,8 +17,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
         public override void TerminateGesture(object sender, GestureEventArgs e)
         {
             base.TerminateGesture(sender, e);
-            System.Diagnostics.Debug.WriteLine("Sort");
-
         }
     }
 }

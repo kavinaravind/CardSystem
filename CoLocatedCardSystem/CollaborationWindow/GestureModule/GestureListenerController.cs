@@ -21,7 +21,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
             list = new GestureListenerList(this);
         }
         /// <summary>
-        /// Return a sorting listener object.
+        /// Return a sorting listener object. All gestures share one listener object
         /// </summary>
         /// <returns></returns>
         public SortingListener GetSortingListener() {

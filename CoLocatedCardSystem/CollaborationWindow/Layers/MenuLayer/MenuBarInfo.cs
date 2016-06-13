@@ -13,8 +13,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         private Point position = new Point(0, 0);
         private double scale = 1;
         private double rotate = 1;
+        KeyboardButtonAttr keyboardButtonInfo=new KeyboardButtonAttr();
         protected static Dictionary<User, MenuBarInfo> menubarInfoList = new Dictionary<User, MenuBarInfo>();
-
         internal Size Size
         {
             get
@@ -22,7 +22,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
                 return size;
             }
         }
-
         internal Point Position
         {
             get
@@ -30,7 +29,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
                 return position;
             }
         }
-
         internal double Scale
         {
             get
@@ -38,12 +36,18 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
                 return scale;
             }
         }
-
         internal double Rotate
         {
             get
             {
                 return rotate;
+            }
+        }
+        internal KeyboardButtonAttr KeyboardButtonInfo
+        {
+            get
+            {
+                return keyboardButtonInfo;
             }
         }
 
@@ -71,8 +75,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         {
             MenuBarInfo info = new MenuBarInfo();
             info.size = new Size(800, 60);
-            info.position = new Point(info.Size.Height,
-                (Screen.HEIGHT - info.Size.Width) / 2);
+            info.position = new Point(info.Size.Height, (Screen.HEIGHT - info.Size.Width) / 2);
             info.scale = 1;
             info.rotate = 90;
             return info;
@@ -85,8 +88,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         {
             MenuBarInfo info = new MenuBarInfo();
             info.size = new Size(800, 60);
-            info.position = new Point((Screen.WIDTH - info.size.Width) / 2,
-                Screen.HEIGHT - info.size.Height);
+            info.position = new Point((Screen.WIDTH - info.size.Width) / 2, Screen.HEIGHT - info.size.Height);
             info.scale = 1;
             info.rotate = 0;
             return info;
@@ -99,8 +101,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         {
             MenuBarInfo info = new MenuBarInfo();
             info.size = new Size(800, 60);
-            info.position = new Point(Screen.WIDTH - info.size.Height,
-                (Screen.HEIGHT + info.Size.Width) / 2);
+            info.position = new Point(Screen.WIDTH - info.size.Height, (Screen.HEIGHT + info.Size.Width) / 2);
             info.scale = 1;
             info.rotate = 270;
             return info;
@@ -113,11 +114,40 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         {
             MenuBarInfo info = new MenuBarInfo();
             info.size = new Size(800, 60);
-            info.position = new Point((Screen.WIDTH + info.Size.Width) / 2,
-                info.Size.Height);
+            info.position = new Point((Screen.WIDTH + info.Size.Width) / 2, info.Size.Height);
             info.scale = 1;
             info.rotate = 180;
             return info;
+        }
+
+        internal class KeyboardButtonAttr
+        {
+            Point position = new Point(50, 10);
+            Size size = new Size(150, 40);
+            public Point Position
+            {
+                get
+                {
+                    return position;
+                }
+
+                set
+                {
+                    position = value;
+                }
+            }
+            public Size Size
+            {
+                get
+                {
+                    return size;
+                }
+
+                set
+                {
+                    size = value;
+                }
+            }
         }
     }
 }
