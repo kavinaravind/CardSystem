@@ -26,7 +26,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
             SortingGesture gesture = null;
             foreach (Touch touch in touchList)
             {
-                if (touch.Type == typeof(Card)&&!usedTouches.Contains(touch))
+                if (touch.Type == typeof(Card) && !usedTouches.Contains(touch))
                 {
                     Card card = touch.Sender as Card;
                     SortingBox[] boxes = interactionControllers.GetAllSortingBoxs();
@@ -43,8 +43,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
                                 }
                             }
                             gesture = new SortingGesture(interactionControllers.GestureController);
-                            gesture.AssociatedTouches=usedTouches;
+                            gesture.AssociatedTouches = usedTouches;
                             gesture.AssociatedObjects = new List<object>() { card, box };
+                            gesture.AssociatedObjectTypes = new List<Type>() { typeof(Card), typeof(SortingBox) };
                             SortingListener listener = interactionControllers.ListenerController.GetSortingListener();
                             RegisterListener(gesture, listener);// Register the gesture and add the gesture to the gesture list.
                         }
@@ -62,7 +63,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
         /// <returns>true: continue, false: terminated or failed</returns>
         protected override async Task<bool> CheckContinue()
         {
-            if (AssociatedTouches == null || AssociatedTouches.Count() == 0) {
+            if (AssociatedTouches == null || AssociatedTouches.Count() == 0)
+            {
                 return false;
             }
             bool isIntersect = await (AssociatedObjects[1] as SortingBox).IsIntersected((AssociatedObjects[0] as Card).Position);

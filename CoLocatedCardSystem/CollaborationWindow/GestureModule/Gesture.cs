@@ -35,6 +35,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
                 associatedObjects = value;
             }
         }
+        internal List<Type> AssociatedObjectTypes;
         public GestureStatus Status
         {
             get
@@ -133,6 +134,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
             GestureEventArgs args = new GestureEventArgs();
             args.Touches = gesture.AssociatedTouches.ToArray();
             args.Senders = gesture.AssociatedObjects.ToArray();
+            args.Types = gesture.AssociatedObjectTypes.ToArray();
             gesture.OnRegistered(args);
             gesture.gestureController.AddGesture(gesture);
         }

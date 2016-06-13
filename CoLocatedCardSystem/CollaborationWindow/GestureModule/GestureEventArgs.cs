@@ -11,6 +11,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
     {
         private Touch[] touches;
         private object[] senders;
+        private Type[] types;
 
         public Touch[] Touches
         {
@@ -35,6 +36,19 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
             set
             {
                 senders = value;
+            }
+        }
+
+        public Type[] Types
+        {
+            get
+            {
+                return types;
+            }
+
+            set
+            {
+                types = value;
             }
         }
     }

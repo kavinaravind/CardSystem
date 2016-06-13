@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoLocatedCardSystem.CollaborationWindow.InteractionModule;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
         public override void TerminateGesture(object sender, GestureEventArgs e)
         {
             base.TerminateGesture(sender, e);
+            SemanticCard card = (SemanticCard)e.Senders[0];
+            SortingBox box = (SortingBox)e.Senders[1];
+            System.Diagnostics.Debug.WriteLine(card.Document.GetTitle());
         }
     }
 }
