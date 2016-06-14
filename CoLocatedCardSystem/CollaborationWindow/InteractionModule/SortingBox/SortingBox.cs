@@ -126,8 +126,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.PointerExited += PointerUp;
 
             this.ManipulationMode = ManipulationModes.All;
-            this.ManipulationStarting += Card_ManipulationStarting;
-            this.ManipulationDelta += Card_ManipulationDelta;
+            this.ManipulationStarting += SortingBox_ManipulationStarting;
+            this.ManipulationDelta += SortingBox_ManipulationDelta;
         }
 
         /// <summary>
@@ -309,11 +309,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         }
 
         /// <summary>
-        /// Manipulate the card. Move if the manipulation is valid.
+        /// Manipulate the sorting box. Move if the manipulation is valid.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected virtual void Card_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        protected virtual void SortingBox_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
             if (IsValideManipulation(e.Delta.Translation, e.Delta.Rotation, e.Delta.Scale))
             {
@@ -327,7 +327,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 
         /// <summary>
         /// Check if the manipulation is valid. 
-        /// Cancel the manipulation if the card larger or smaller than the bound, or moved out of the screen.
+        /// Cancel the manipulation if the sorting box is larger or smaller than the bound, or moved out of the screen.
         /// </summary>
         /// <param name="trans"></param>
         /// <param name="rotat"></param>
@@ -353,11 +353,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             return isValid;
         }
         /// <summary>
-        /// Update the z index of the focused the card. Put it on the top of other cards.
+        /// Update the z index of the focused the sorting box. Put it on the top.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected virtual void Card_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
+        protected virtual void SortingBox_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
         {
             sortingBoxController.MoveSortingBoxToTop(this);
         }
