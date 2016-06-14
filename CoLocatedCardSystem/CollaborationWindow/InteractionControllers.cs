@@ -106,9 +106,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
 
             //Load the sorting box and add them to the sorting box layer
             sortingBoxController.Init();
-
-            //For debug... 
-            sortingBoxController.CreateSortingBox("alex", User.ALEX);
+            
             await viewControllers.LoadSortingBoxesToSortingBoxLayer(sortingBoxController.GetAllSortingBoxes());
 
             touchController.Init();
@@ -150,7 +148,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
         /// Get all sorting boxes.
         /// </summary>
         /// <returns></returns>
-        internal SortingBox[] GetAllSortingBoxs() {
+        internal SortingBox[] GetAllSortingBoxes() {
             return sortingBoxController.GetAllSortingBoxes();
         }
         /// <summary>
@@ -192,6 +190,13 @@ namespace CoLocatedCardSystem.CollaborationWindow
         internal void MoveSortingBoxToTop(SortingBox box)
         {
             viewControllers.MoveSortingBoxToTop(box);
+        }
+        /// <summary>
+        /// Load all sortingboxes to screen
+        /// </summary>
+        internal async void AddSortingBoxes(SortingBox newBox)
+        {
+            await viewControllers.LoadSortingBoxesToSortingBoxLayer(new SortingBox[] {newBox});
         }
     }
 }

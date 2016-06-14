@@ -80,12 +80,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.rotation = info.CardRotation;
             UpdateTransform();
             background = new Rectangle();
-            background.Width = this.Width + marginWidth * 2;
-            background.Height = this.Height + marginWidth * 2;
             //Move the backgroud rectangle -1/2 width and -1/2 height to the center.
-            MatrixTransform mtf = new MatrixTransform();
-            mtf.Matrix = new Matrix(1, 0, 0, 1, -0.5 * background.Width, -0.5 * background.Height);
-            background.RenderTransform = mtf;
+            UIHelper.InitializeUI(
+                new Point(-0.5 * (this.Width + marginWidth * 2), -0.5 * (this.Height + marginWidth * 2)), 0, 1, 
+                new Size(this.Width + marginWidth * 2, this.Height + marginWidth * 2), 
+                background);
             background.Fill = new SolidColorBrush(info.CardColor);
             //Register the touch events
             this.Children.Add(background);

@@ -34,7 +34,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="name"></param>
         /// <param name="user"></param>
         public void CreateSortingBox(string name, User user) {
-            list.AddBox(user, name, this);
+            SortingBox box=list.AddBox(user, name, this);
+            interactionControllers.AddSortingBoxes(box);
         }
         /// <summary>
         /// Add a card to the sortingbox

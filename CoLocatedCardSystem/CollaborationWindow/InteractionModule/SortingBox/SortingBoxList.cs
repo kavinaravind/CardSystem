@@ -11,14 +11,15 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
     {
         Dictionary<string, SortingBox> list=new Dictionary<string, SortingBox>();
         /// <summary>
-        /// Add a sorting box to the list
+        /// Add a sorting box to the list. Return the added box
         /// </summary>
         /// <param name="name"></param>
-        internal void AddBox(User user, string name, SortingBoxController controller) {
+        internal SortingBox AddBox(User user, string name, SortingBoxController controller) {
             string sortingBoxID = Guid.NewGuid().ToString();
             SortingBox box = new SortingBox(controller);
             box.Init(sortingBoxID, name, user);
             list.Add(sortingBoxID, box);
+            return box;
         }
         /// <summary>
         /// Add a sorting box to the list if the box does not exist

@@ -51,7 +51,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// <param name="cards"></param>
         internal async Task LoadCards(Card[] cards)
         {
-            int index = zIndexList.Count();
+            int index = zIndexList.Count();//There might be cards in the list before load the cards
             foreach (Card card in cards) {
                 await cardLayer.AddCard(card);
                 zIndexList.Add(card, index++);

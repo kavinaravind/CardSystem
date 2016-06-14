@@ -28,7 +28,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         Point position = new Point(0, 0);
         SortingBoxController sortingBoxController;
         Rectangle background; // Background rectangle
-        TextBox sortingTextBox;
+        TextBlock textBlock;
         Size maxSize = new Size(600, 450);
         Size minSize = new Size(80, 60);
 
@@ -77,46 +77,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         {
             this.sortingBoxID = sortingBoxID;
             this.name = name;
-            SortingBoxInfo info = SortingBoxInfo.GetSortingBoxInfo(user);
-            this.Width = info.SortingBoxSize.Width;
-            this.Height = info.SortingBoxSize.Height;
-            this.sortingBoxScale = info.SortingBoxScale;
-            this.rotation = info.SortingBoxRotation;
-            this.position = info.SortingBoxPosition;
-            UpdateTransform();
             this.owner = user;
             cardList = new List<Card>();
-
-            //initialize the background rectangle
-            background = new Rectangle();
-            background.Width = info.SortingBoxSize.Width;
-            background.Height = info.SortingBoxSize.Height;
-            MatrixTransform mtf = new MatrixTransform();
-            mtf.Matrix = new Matrix(1, 0, 0, 1, -0.5 * background.Width, -0.5 * background.Height);
-            background.RenderTransform = mtf;
-            background.Fill = new SolidColorBrush(Colors.Transparent);
-            background.Stroke = new SolidColorBrush(Colors.Gray);
-            background.StrokeThickness = 5;
-            this.Children.Add(background);
-
-            sortingTextBox = new TextBox();
-            sortingTextBox.Width = info.SortingBoxSize.Width;
-            sortingTextBox.Height = info.SortingBoxSize.Height;
-            sortingTextBox.RenderTransform = mtf;
-            sortingTextBox.Background = new SolidColorBrush(Colors.Transparent);
-            sortingTextBox.Foreground = new SolidColorBrush(Colors.Transparent);
-            sortingTextBox.Text = "Sorting Box";
-            sortingTextBox.IsReadOnly = true;
-            sortingTextBox.FontFamily = new FontFamily("Comic Sans MS");
-            sortingTextBox.FontSize = 24;
-            sortingTextBox.FontWeight = FontWeights.Bold;
-            sortingTextBox.TextAlignment = TextAlignment.Center;
-            sortingTextBox.VerticalAlignment = VerticalAlignment.Center;
-            this.Children.Add(sortingTextBox);
-
-            Canvas.SetZIndex(background, 2);
-            Canvas.SetZIndex(sortingTextBox, 1);
-
+            LoadUI(user);
             //Register the touch events
             this.PointerEntered += PointerDown;
             this.PointerPressed += PointerDown;
@@ -124,12 +87,49 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.PointerCanceled += PointerUp;
             this.PointerReleased += PointerUp;
             this.PointerExited += PointerUp;
-
             this.ManipulationMode = ManipulationModes.All;
             this.ManipulationStarting += SortingBox_ManipulationStarting;
             this.ManipulationDelta += SortingBox_ManipulationDelta;
         }
+        //Load UI component
+        private void LoadUI(User user)
+        {
+            SortingBoxInfo info = SortingBoxInfo.GetSortingBoxInfo(user);
+            this.Width = info.SortingBoxSize.Width;
+            this.Height = info.SortingBoxSize.Height;
+            position = info.SortingBoxPosition;
+            sortingBoxScale = info.SortingBoxScale;
+            rotation = info.SortingBoxRotation;
+            UpdateTransform();
+            //initialize the background rectangle
+            background = new Rectangle();
+            UIHelper.InitializeUI(
+               new Point(-0.5 * info.SortingBoxSize.Width, -0.5 * info.SortingBoxSize.Height), 0, 1,
+               new Size(info.SortingBoxSize.Width, info.SortingBoxSize.Height),
+               background);
+            background.Fill = new SolidColorBrush(Colors.Transparent);
+            background.Stroke = new SolidColorBrush(Colors.Gray);
+            background.StrokeThickness = 5;
+            this.Children.Add(background);
 
+            textBlock = new TextBlock();
+            UIHelper.InitializeUI(
+                new Point(-0.5 * info.SortingBoxSize.Width, -0.5 * info.SortingBoxSize.Height), 0, 1,
+                new Size(info.SortingBoxSize.Width, info.SortingBoxSize.Height),
+                textBlock);
+            
+            textBlock.Foreground = new SolidColorBrush(Colors.White);
+            textBlock.Text = this.name;
+            textBlock.FontFamily = new FontFamily("Comic Sans MS");
+            textBlock.FontSize = 24;
+            textBlock.FontWeight = FontWeights.Bold;
+            textBlock.TextAlignment = TextAlignment.Center;
+            textBlock.VerticalAlignment = VerticalAlignment.Center;
+
+            this.Children.Add(textBlock);
+            Canvas.SetZIndex(background, 2);
+            Canvas.SetZIndex(textBlock, 1);
+        }
         /// <summary>
         /// Deinitialize sorting box
         /// </summary>
@@ -320,7 +320,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 this.position.X += e.Delta.Translation.X;
                 this.position.Y += e.Delta.Translation.Y;
                 this.rotation += e.Delta.Rotation;
-                this.sortingBoxScale *= e.Delta.Scale;
+                //this.sortingBoxScale *= e.Delta.Scale;
                 UpdateTransform();
             }
         }

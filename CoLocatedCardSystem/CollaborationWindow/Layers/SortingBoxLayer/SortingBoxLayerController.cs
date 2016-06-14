@@ -29,10 +29,14 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         public void Deinit() {
             sortingBoxLayer.Deinit();
         }
-
+        /// <summary>
+        /// Add sorting boxes to the sorting box layer.
+        /// </summary>
+        /// <param name="boxes"></param>
+        /// <returns></returns>
         internal async Task LoadBoxes(SortingBox[] boxes) {
+            int index = zIndexList.Count();
             foreach (SortingBox box in boxes) {
-                int index = zIndexList.Count();
                 await sortingBoxLayer.AddBox(box);
                 zIndexList.Add(box, index++);
                 sortingBoxLayer.SetZIndex(box, zIndexList[box]);

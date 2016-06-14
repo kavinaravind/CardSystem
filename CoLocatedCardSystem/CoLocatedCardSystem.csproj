@@ -150,6 +150,7 @@
     <Compile Include="CollaborationWindow\Layers\SortingBoxLayer\SortingBoxLayerController.cs" />
     <Compile Include="CollaborationWindow\Parameter\FilePath.cs" />
     <Compile Include="CollaborationWindow\Parameter\Screen.cs" />
+    <Compile Include="CollaborationWindow\Parameter\UIHelper.cs" />
     <Compile Include="CollaborationWindow\TouchModule\Touch.cs" />
     <Compile Include="CollaborationWindow\TouchModule\TouchController.cs" />
     <Compile Include="CollaborationWindow\TouchModule\TouchList.cs" />

@@ -27,7 +27,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         {
             MenuBarInfo info = MenuBarInfo.GetMenuBarInfo(user);
             this.owner = user;
-            Transform(info.Position, info.Rotate, info.Scale, info.Size, this);
+            UIHelper.InitializeUI(info.Position, info.Rotate, info.Scale, info.Size, this);
             LoadUI(info);
         }
         /// <summary>
@@ -47,11 +47,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             //Initialize the button to show the keyboard
             createSortingBoxButton = new Button();
             createSortingBoxButton.Content = "Create a Box";
-            Transform(info.KeyboardButtonInfo.Position, 0, 1, info.KeyboardButtonInfo.Size, createSortingBoxButton);
+            UIHelper.InitializeUI(info.KeyboardButtonInfo.Position, 0, 1, info.KeyboardButtonInfo.Size, createSortingBoxButton);
             //Initialize the text block
             textbox = new TextBox();
             textbox.AcceptsReturn = true;
-            Transform(info.InputTextBoxInfo.Position, 0, 1, info.InputTextBoxInfo.Size, textbox);
+            UIHelper.InitializeUI(info.InputTextBoxInfo.Position, 0, 1, info.InputTextBoxInfo.Size, textbox);
             textbox.Visibility = Visibility.Collapsed;
             textbox.TextChanged += Textbox_TextChanged;            
             //Initialize the keyboard to create the sorting box
@@ -59,7 +59,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             virtualKeyboard = new OnScreenKeyBoard();
             virtualKeyboard.InitialLayout = KeyboardLayouts.English;
             virtualKeyboard.Visibility = Visibility.Collapsed;
-            Transform(info.KeyboardInfo.Position, 0, 1, info.KeyboardInfo.Size, virtualKeyboard);
+            UIHelper.InitializeUI(info.KeyboardInfo.Position, 0, 1, info.KeyboardInfo.Size, virtualKeyboard);
             //Initialize the menubar
             ImageBrush brush = new ImageBrush();
             brush.ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/menu_bg.png"));
@@ -75,7 +75,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// <param name="e"></param>
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (textbox.Text.Last<char>().Equals('\n')) {
+            if (textbox.Text.Length>0&&textbox.Text.Last<char>().Equals('\n')) {
                 virtualKeyboard.Visibility = Visibility.Collapsed;
                 textbox.Visibility = Visibility.Collapsed;
                 virtualKeyboard.Disable();
@@ -116,30 +116,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             {
                 menuLayerController.CreateSortingBox(owner, content);
             }
-        }
-        /// <summary>
-        /// Update the render transform
-        /// </summary>
-        /// <param name="position"></param>
-        /// <param name="rotation"></param>
-        /// <param name="scale"></param>
-        /// <param name="element"></param>
-        private void Transform(Point position, double rotation, double scale, Size size, FrameworkElement element) {
-            element.Width = size.Width;
-            element.Height = size.Height;
-            ScaleTransform st = new ScaleTransform();
-            st.ScaleX = scale;
-            st.ScaleY = scale;
-            RotateTransform rt = new RotateTransform();
-            rt.Angle = rotation;
-            TranslateTransform tt = new TranslateTransform();
-            tt.X = position.X;
-            tt.Y = position.Y;
-            TransformGroup transGroup = new TransformGroup();
-            transGroup.Children.Add(st);
-            transGroup.Children.Add(rt);
-            transGroup.Children.Add(tt);
-            element.RenderTransform = transGroup;
-        }
+        }        
     }
 }

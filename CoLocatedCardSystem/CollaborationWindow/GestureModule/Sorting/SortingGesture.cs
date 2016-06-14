@@ -29,7 +29,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
                 if (touch.Type == typeof(Card) && !usedTouches.Contains(touch))
                 {
                     Card card = touch.Sender as Card;
-                    SortingBox[] boxes = interactionControllers.GetAllSortingBoxs();
+                    SortingBox[] boxes = interactionControllers.GetAllSortingBoxes();
                     foreach (SortingBox box in boxes)
                     {
                         bool isIntersect = await box.IsIntersected(card.Position);
