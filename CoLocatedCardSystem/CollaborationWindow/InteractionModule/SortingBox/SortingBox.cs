@@ -309,7 +309,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         }
 
         /// <summary>
-        /// Manipulate the card. Move if the manipulation is valid.
+        /// Manipulate the sorting box. Move if the manipulation is valid.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -327,7 +327,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 
         /// <summary>
         /// Check if the manipulation is valid. 
-        /// Cancel the manipulation if the card larger or smaller than the bound, or moved out of the screen.
+        /// Cancel the manipulation if the sorting box is larger or smaller than the bound, or moved out of the screen.
         /// </summary>
         /// <param name="trans"></param>
         /// <param name="rotat"></param>
@@ -353,7 +353,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             return isValid;
         }
         /// <summary>
-        /// Update the z index of the focused the card. Put it on the top of other cards.
+        /// Update the z index of the focused the sorting box. Put it on the top.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
