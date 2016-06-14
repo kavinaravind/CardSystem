@@ -97,5 +97,14 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         internal void PointerUp(PointerPoint p) {
             interactionControllers.OnTouchUp(p);
         }
+
+        /// <summary>
+        /// Update the ZIndex of the card. Move the card to the top.
+        /// </summary>
+        /// <param name="card"></param>
+        internal void MoveSortingBoxToTop(SortingBox box)
+        {
+            interactionControllers.MoveSortingBoxToTop(box);
+        }
     }
 }

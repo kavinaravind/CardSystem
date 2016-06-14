@@ -46,5 +46,16 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
                 this.Children.Add(box);
             });
         }
+
+
+        /// <summary>
+        /// Set the z index of the card
+        /// </summary>
+        /// <param name="card"></param>
+        /// <param name="zindex"></param>
+        internal void SetZIndex(SortingBox box, int zindex)
+        {
+            Canvas.SetZIndex(box, zindex);
+        }
     }
 }

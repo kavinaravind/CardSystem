@@ -11,11 +11,12 @@ using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Input;
 using Windows.UI.Core;
-using Windows.ApplicationModel.Core;
+using Windows.UI.Text;
+using Windows.UI.Xaml;
 
 namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
-    public class SortingBox:Canvas
+    public class SortingBox : Canvas
     {
         string sortingBoxID;
         string name;
@@ -27,38 +28,53 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         Point position = new Point(0, 0);
         SortingBoxController sortingBoxController;
         Rectangle background; // Background rectangle
+        TextBox sortingTextBox;
+        Size maxSize = new Size(600, 450);
+        Size minSize = new Size(80, 60);
 
-        public SortingBox(SortingBoxController sortingBoxController) {
+
+        public SortingBox(SortingBoxController sortingBoxController)
+        {
             this.sortingBoxController = sortingBoxController;
         }
-        public string SortingBoxID {
+        public string SortingBoxID
+        {
             get { return sortingBoxID; }
             set { sortingBoxID = value; }
         }
 
-        public string SortingBoxName {
+        public string SortingBoxName
+        {
             get { return name; }
         }
-        public double SortingBoxScale {
+        public double SortingBoxScale
+        {
             get { return sortingBoxScale; }
         }
 
-        public double Rotation {
+        public double Rotation
+        {
             get { return rotation; }
         }
 
-        public List<Card> CardList {
+        public List<Card> CardList
+        {
             get { return cardList; }
         }
 
-        public Point Position {
+        public Point Position
+        {
             get { return position; }
         }
 
-       /*
-        * Initialize sorting box
-        */
-        internal void Init(string sortingBoxID, string name, User user) {
+        /// <summary>
+        /// Initialize sorting box
+        /// </summary>
+        /// <param name="sortingBoxID"></param>
+        /// <param name="name"></param>
+        /// <param name="user"></param>
+        internal void Init(string sortingBoxID, string name, User user)
+        {
             this.sortingBoxID = sortingBoxID;
             this.name = name;
             SortingBoxInfo info = SortingBoxInfo.GetSortingBoxInfo(user);
@@ -67,7 +83,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.sortingBoxScale = info.SortingBoxScale;
             this.rotation = info.SortingBoxRotation;
             this.position = info.SortingBoxPosition;
-            UpdateTransform();          
+            UpdateTransform();
             this.owner = user;
             cardList = new List<Card>();
 
@@ -78,8 +94,28 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             MatrixTransform mtf = new MatrixTransform();
             mtf.Matrix = new Matrix(1, 0, 0, 1, -0.5 * background.Width, -0.5 * background.Height);
             background.RenderTransform = mtf;
-            background.Fill = new SolidColorBrush(info.SortingBoxColor);
+            background.Fill = new SolidColorBrush(Colors.Transparent);
+            background.Stroke = new SolidColorBrush(Colors.Gray);
+            background.StrokeThickness = 5;
             this.Children.Add(background);
+
+            sortingTextBox = new TextBox();
+            sortingTextBox.Width = info.SortingBoxSize.Width;
+            sortingTextBox.Height = info.SortingBoxSize.Height;
+            sortingTextBox.RenderTransform = mtf;
+            sortingTextBox.Background = new SolidColorBrush(Colors.Transparent);
+            sortingTextBox.Foreground = new SolidColorBrush(Colors.Transparent);
+            sortingTextBox.Text = "Sorting Box";
+            sortingTextBox.IsReadOnly = true;
+            sortingTextBox.FontFamily = new FontFamily("Comic Sans MS");
+            sortingTextBox.FontSize = 24;
+            sortingTextBox.FontWeight = FontWeights.Bold;
+            sortingTextBox.TextAlignment = TextAlignment.Center;
+            sortingTextBox.VerticalAlignment = VerticalAlignment.Center;
+            this.Children.Add(sortingTextBox);
+
+            Canvas.SetZIndex(background, 2);
+            Canvas.SetZIndex(sortingTextBox, 1);
 
             //Register the touch events
             this.PointerEntered += PointerDown;
@@ -88,12 +124,17 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.PointerCanceled += PointerUp;
             this.PointerReleased += PointerUp;
             this.PointerExited += PointerUp;
+
+            this.ManipulationMode = ManipulationModes.All;
+            this.ManipulationStarting += Card_ManipulationStarting;
+            this.ManipulationDelta += Card_ManipulationDelta;
         }
 
-       /*
-        * Deinitialize sorting box
-        */
-        internal void Deinit() {
+        /// <summary>
+        /// Deinitialize sorting box
+        /// </summary>
+        internal void Deinit()
+        {
             background.PointerEntered -= PointerDown;
             background.PointerPressed -= PointerDown;
             background.PointerMoved -= PointerMove;
@@ -105,38 +146,49 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Move the sorting box by vector.
         /// </summary>
         /// <param name="vector"></param>
-        public void Move(Point vector) {
+        public void Move(Point vector)
+        {
             this.position.X += vector.X;
             this.position.Y += vector.Y;
             UpdateTransform();
         }
-        /*
-         * Move the box to the position
-         */
-        public void MoveTo(Point position) {
+
+        /// <summary>
+        /// Move the box to the position
+        /// </summary>
+        /// <param name="position"></param>
+        public void MoveTo(Point position)
+        {
             this.position = position;
             UpdateTransform();
         }
 
-       /*
-        * Increase the box rotation by angle
-        */
-        public void Rotate(double angle) {
+        /// <summary>
+        /// Increase the box rotation by angle
+        /// </summary>
+        /// <param name="angle"></param>
+        public void Rotate(double angle)
+        {
             this.rotation += angle;
             UpdateTransform();
         }
 
-       /*
-        * Scale the box to scale
-        */
-        public void Scale(double scale) {
+        /// <summary>
+        /// Scale the box to scale
+        /// </summary>
+        /// <param name="scale"></param>
+        public void Scale(double scale)
+        {
             this.sortingBoxScale = scale;
             UpdateTransform();
         }
 
-       /*
-        * Move the card to the new position with new rotation and scale value
-        */
+        /// <summary>
+        /// Move the card to the new position with new rotation and scale value
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="rotation"></param>
+        /// <param name="scale"></param>
         public void ApplyNewTransform(Point position, double rotation, double scale)
         {
             this.position = position;
@@ -144,10 +196,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.sortingBoxScale = scale;
             UpdateTransform();
         }
-        /*
-         * Update the rendertransform and show the new states
-         */
-        private async void UpdateTransform() {
+
+        /// <summary>
+        /// Update the rendertransform and show the new states
+        /// </summary>
+        private async void UpdateTransform()
+        {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 ScaleTransform st = new ScaleTransform();
@@ -166,49 +220,65 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             });
         }
 
-       /*
-        * Call back method for pointer up
-        */
-        private void PointerUp(object sender, PointerRoutedEventArgs e) {
+        /// <summary>
+        /// Call back method for pointer up
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PointerUp(object sender, PointerRoutedEventArgs e)
+        {
             PointerPoint point = e.GetCurrentPoint(this);
             sortingBoxController.PointerUp(point);
         }
 
-       /*
-        * Call back method for pointer move
-        */
-        private void PointerMove(object sender, PointerRoutedEventArgs e) {
+        /// <summary>
+        /// Call back method for pointer move
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PointerMove(object sender, PointerRoutedEventArgs e)
+        {
             PointerPoint point = e.GetCurrentPoint(this);
             sortingBoxController.PointerMove(point);
         }
 
-       /*
-        * Call back method for pointer down
-        */
-        private void PointerDown(object sender, PointerRoutedEventArgs e) {
+        /// <summary>
+        /// Call back method for pointer down
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PointerDown(object sender, PointerRoutedEventArgs e)
+        {
             PointerPoint point = e.GetCurrentPoint(this);
             sortingBoxController.PointerDown(point, this, typeof(SortingBox));
         }
 
-       /*
-        * Change the background color of the box
-        */
-        public void setBackgroundColor(Color color) {
+        /// <summary>
+        /// Change the background color of the box
+        /// </summary>
+        /// <param name="color"></param>
+        public void setBackgroundColor(Color color)
+        {
             background.Fill = new SolidColorBrush(color);
         }
 
-       /*
-        * Add a card to the sorting box
-        */
-        public void AddCard(Card card) {
+        /// <summary>
+        /// Add a card to the sorting box
+        /// </summary>
+        /// <param name="card"></param>
+        public void AddCard(Card card)
+        {
             cardList.Add(card);
         }
 
-       /*
-        * Remove a card from the sorting box
-        */
-        public void RemoveCard(Card card) {
-            if (cardList.Contains(card)) {
+        /// <summary>
+        /// Remove a card from the sorting box
+        /// </summary>
+        /// <param name="card"></param>
+        public void RemoveCard(Card card)
+        {
+            if (cardList.Contains(card))
+            {
                 cardList.Remove(card);
             }
         }
@@ -216,7 +286,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <summary>
         /// Remove all cards from the sorting box
         /// </summary>
-        public void Clear() {
+        public void Clear()
+        {
             cardList.Clear();
         }
 
@@ -235,6 +306,60 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 radius = this.Width * this.sortingBoxScale;
             });
             return distance < radius;
+        }
+
+        /// <summary>
+        /// Manipulate the card. Move if the manipulation is valid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void Card_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        {
+            if (IsValideManipulation(e.Delta.Translation, e.Delta.Rotation, e.Delta.Scale))
+            {
+                this.position.X += e.Delta.Translation.X;
+                this.position.Y += e.Delta.Translation.Y;
+                this.rotation += e.Delta.Rotation;
+                this.sortingBoxScale *= e.Delta.Scale;
+                UpdateTransform();
+            }
+        }
+
+        /// <summary>
+        /// Check if the manipulation is valid. 
+        /// Cancel the manipulation if the card larger or smaller than the bound, or moved out of the screen.
+        /// </summary>
+        /// <param name="trans"></param>
+        /// <param name="rotat"></param>
+        /// <param name="scale"></param>
+        /// <returns></returns>
+        private bool IsValideManipulation(Point trans, double rotat, double scale)
+        {
+            bool isValid = true;
+            if (scale * this.sortingBoxScale * this.Width >= maxSize.Width ||
+                scale * this.sortingBoxScale * this.Height >= maxSize.Height ||
+                scale * this.sortingBoxScale * this.Width <= minSize.Width ||
+                scale * this.sortingBoxScale * this.Height <= minSize.Height)
+            {
+                isValid = false;
+            }
+            if (position.X + trans.X > Screen.WIDTH ||
+                position.X + trans.X < 0 ||
+                position.Y + trans.Y > Screen.HEIGHT ||
+                position.Y + trans.Y < 0)
+            {
+                isValid = false;
+            }
+            return isValid;
+        }
+        /// <summary>
+        /// Update the z index of the focused the card. Put it on the top of other cards.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void Card_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
+        {
+            sortingBoxController.MoveSortingBoxToTop(this);
         }
     }
 }
