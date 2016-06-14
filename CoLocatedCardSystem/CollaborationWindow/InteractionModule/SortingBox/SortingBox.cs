@@ -11,6 +11,8 @@ using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Input;
 using Windows.UI.Core;
+using Windows.UI.Text;
+using Windows.UI.Xaml;
 
 namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
@@ -98,8 +100,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.Children.Add(background);
 
             sortingTextBox = new TextBox();
-            sortingTextBox.Width = sortingBoxSize.Width;
-            sortingTextBox.Height = sortingBoxSize.Height;
+            sortingTextBox.Width = info.SortingBoxSize.Width;
+            sortingTextBox.Height = info.SortingBoxSize.Height;
             sortingTextBox.RenderTransform = mtf;
             sortingTextBox.Background = new SolidColorBrush(Colors.Transparent);
             sortingTextBox.Foreground = new SolidColorBrush(Colors.Transparent);
