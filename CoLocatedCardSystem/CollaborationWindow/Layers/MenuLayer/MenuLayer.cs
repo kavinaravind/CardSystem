@@ -11,7 +11,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
     class MenuLayer : Canvas
     {
         MenuLayerController menulayerController;
-        Dictionary<User, MenuBar> menubars = new Dictionary<User, MenuBar>();
         internal MenuLayer(MenuLayerController mlcltr)
         {
             this.menulayerController = mlcltr;
@@ -26,7 +25,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             this.Width = width;
             this.Height = height;
         }
-
+        /// <summary>
+        /// Add a menubar to the layer
+        /// </summary>
+        /// <param name="menubar"></param>
         internal void AddMenuBar(MenuBar menubar) {
             this.Children.Add(menubar);
         }

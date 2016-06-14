@@ -20,7 +20,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
             base.TerminateGesture(sender, e);
             SemanticCard card = (SemanticCard)e.Senders[0];
             SortingBox box = (SortingBox)e.Senders[1];
-            System.Diagnostics.Debug.WriteLine(card.Document.GetTitle());
+            box.AddCard(card);
+            System.Diagnostics.Debug.WriteLine("Card Sorted: "+card.Document.GetTitle());
         }
     }
 }

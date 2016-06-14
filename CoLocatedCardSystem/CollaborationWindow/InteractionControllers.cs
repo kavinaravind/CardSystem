@@ -118,6 +118,15 @@ namespace CoLocatedCardSystem.CollaborationWindow
             //Start the gesture detection thread
             gestureController.StartGestureDetection();
         }
+        /// <summary>
+        /// Create a sorting box
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="content"></param>
+        internal void CreateSortingBox(User owner, string content)
+        {
+            sortingBoxController.CreateSortingBox(content, owner);
+        }
 
         /// <summary>
         /// Destroy the interaction listener

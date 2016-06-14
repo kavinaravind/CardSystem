@@ -14,6 +14,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         private double scale = 1;
         private double rotate = 1;
         KeyboardButtonAttr keyboardButtonInfo=new KeyboardButtonAttr();
+        KeyboardAttr keyboardInfo = new KeyboardAttr();
+        InputTextBox inputTextBlockInfo = new InputTextBox();
         protected static Dictionary<User, MenuBarInfo> menubarInfoList = new Dictionary<User, MenuBarInfo>();
         internal Size Size
         {
@@ -48,6 +50,20 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             get
             {
                 return keyboardButtonInfo;
+            }
+        }
+        internal KeyboardAttr KeyboardInfo
+        {
+            get
+            {
+                return keyboardInfo;
+            }
+        }
+        internal InputTextBox InputTextBoxInfo
+        {
+            get
+            {
+                return inputTextBlockInfo;
             }
         }
 
@@ -130,10 +146,25 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
                 {
                     return position;
                 }
-
-                set
+            }
+            public Size Size
+            {
+                get
                 {
-                    position = value;
+                    return size;
+                }
+            }
+        }
+
+        internal class KeyboardAttr
+        {
+            Point position = new Point(0, -200);
+            Size size = new Size(600, 200);
+            public Point Position
+            {
+                get
+                {
+                    return position;
                 }
             }
             public Size Size
@@ -142,10 +173,24 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
                 {
                     return size;
                 }
+            }
+        }
 
-                set
+        internal class InputTextBox {
+            Point position = new Point(0, -230);
+            Size size = new Size(600, 20);
+            public Point Position
+            {
+                get
                 {
-                    size = value;
+                    return position;
+                }
+            }
+            public Size Size
+            {
+                get
+                {
+                    return size;
                 }
             }
         }

@@ -199,6 +199,12 @@
   <ItemGroup>
     <Folder Include="ControlWindow\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\UWP Custom On Screen Keyboard for IoT\C#\TCD.Controls.Keyboard\TCD.Controls.Keyboard.csproj">
+      <Project>{9e8b0d12-8145-4247-821c-4a603fa683f2}</Project>
+      <Name>TCD.Controls.Keyboard</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

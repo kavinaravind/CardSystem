@@ -97,7 +97,15 @@ namespace CoLocatedCardSystem.CollaborationWindow
         internal async Task LoadSortingBoxesToSortingBoxLayer(SortingBox[] boxes) {
             await sortingBoxLayerController.LoadBoxes(boxes);
         }
-
+        /// <summary>
+        /// Create a sorting box
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="content"></param>
+        internal void CreateSortingBox(User owner, string content)
+        {
+            interactionControllers.CreateSortingBox(owner, content);
+        }
         /// <summary>
         /// Pass the PointerPoint to the TouchController
         /// </summary>
