@@ -128,5 +128,14 @@ namespace CoLocatedCardSystem.CollaborationWindow
         {
             cardLayerController.MoveCardToTop(card);
         }
+
+        /// <summary>
+        /// Move the sortingBox to the top in the sorting box layer.
+        /// </summary>
+        /// <param name="card"></param>
+        internal void MoveSortingBoxToTop(SortingBox box)
+        {
+            sortingBoxLayerController.MoveSortingBoxToTop(box);
+        }
     }
 }

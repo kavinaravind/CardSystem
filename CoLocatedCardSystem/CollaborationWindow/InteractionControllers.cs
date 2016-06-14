@@ -81,5 +81,14 @@ namespace CoLocatedCardSystem.CollaborationWindow
         {
             viewControllers.MoveCardToTop(card);
         }
+
+        /// <summary>
+        /// Move the SortingBox to the top
+        /// </summary>
+        /// <param name="card"></param>
+        internal void MoveSortingBoxToTop(SortingBox box)
+        {
+            viewControllers.MoveSortingBoxToTop(box);
+        }
     }
 }

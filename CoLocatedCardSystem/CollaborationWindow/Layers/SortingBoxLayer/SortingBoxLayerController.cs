@@ -11,6 +11,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
     {
         SortingBoxLayer sortingBoxLayer;
         private ViewControllers viewControllers;
+        Dictionary<SortingBox, int> zIndexList = new Dictionary<SortingBox, int>();
+
         internal SortingBoxLayer SortingBoxLayer {
             get { return sortingBoxLayer; }
         }
@@ -30,7 +32,32 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
 
         internal async Task LoadBoxes(SortingBox[] boxes) {
             foreach (SortingBox box in boxes) {
+                int index = zIndexList.Count();
                 await sortingBoxLayer.AddBox(box);
+                zIndexList.Add(box, index++);
+                sortingBoxLayer.SetZIndex(box, zIndexList[box]);
+            }
+        }
+
+        /// <summary>
+        /// Update the card zindex in the cardlayer
+        /// </summary>
+        /// <param name="card"></param>
+        internal void MoveSortingBoxToTop(SortingBox box)
+        {
+            if (zIndexList.Keys.Contains(box))
+            {
+                int currentIndex = zIndexList[box];
+                foreach (SortingBox bx in sortingBoxLayer.Children)
+                {
+                    if (zIndexList[bx] > currentIndex)
+                    {
+                        zIndexList[bx]--;
+                        sortingBoxLayer.SetZIndex(bx, zIndexList[bx]);
+                    }
+                }
+                zIndexList[box] = zIndexList.Count - 1;
+                sortingBoxLayer.SetZIndex(box, zIndexList[box]);
             }
         }
     }
