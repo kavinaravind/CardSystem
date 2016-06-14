@@ -126,8 +126,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.PointerExited += PointerUp;
 
             this.ManipulationMode = ManipulationModes.All;
-            this.ManipulationStarting += Card_ManipulationStarting;
-            this.ManipulationDelta += Card_ManipulationDelta;
+            this.ManipulationStarting += SortingBox_ManipulationStarting;
+            this.ManipulationDelta += SortingBox_ManipulationDelta;
         }
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected virtual void Card_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        protected virtual void SortingBox_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
             if (IsValideManipulation(e.Delta.Translation, e.Delta.Rotation, e.Delta.Scale))
             {
@@ -357,7 +357,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected virtual void Card_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
+        protected virtual void SortingBox_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
         {
             sortingBoxController.MoveSortingBoxToTop(this);
         }
