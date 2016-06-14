@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
     class SemanticCardList
-    {
-        Dictionary<string, SemanticCard> list=new Dictionary<string, SemanticCard>();
-        
+    { 
+        Dictionary<string, SemanticCard> list=new Dictionary<string, SemanticCard>();//Key: random card id.
+
         /// <summary>
         /// Add a new card to the user.
         /// </summary>

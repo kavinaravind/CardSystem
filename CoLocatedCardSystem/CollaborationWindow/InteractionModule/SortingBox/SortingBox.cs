@@ -11,8 +11,6 @@ using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Input;
 using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Text;
 
 namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
@@ -24,7 +22,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         double rotation;
 
         User owner;
-        Size sortingBoxSize;
         List<Card> cardList;
         Point position = new Point(0, 0);
         SortingBoxController sortingBoxController;
@@ -79,7 +76,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.sortingBoxID = sortingBoxID;
             this.name = name;
             SortingBoxInfo info = SortingBoxInfo.GetSortingBoxInfo(user);
-            this.sortingBoxSize = info.SortingBoxSize;
+            this.Width = info.SortingBoxSize.Width;
+            this.Height = info.SortingBoxSize.Height;
             this.sortingBoxScale = info.SortingBoxScale;
             this.rotation = info.SortingBoxRotation;
             this.position = info.SortingBoxPosition;
@@ -89,8 +87,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 
             //initialize the background rectangle
             background = new Rectangle();
-            background.Width = sortingBoxSize.Width;
-            background.Height = sortingBoxSize.Height;
+            background.Width = info.SortingBoxSize.Width;
+            background.Height = info.SortingBoxSize.Height;
             MatrixTransform mtf = new MatrixTransform();
             mtf.Matrix = new Matrix(1, 0, 0, 1, -0.5 * background.Width, -0.5 * background.Height);
             background.RenderTransform = mtf;
@@ -250,7 +248,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         private void PointerDown(object sender, PointerRoutedEventArgs e)
         {
             PointerPoint point = e.GetCurrentPoint(this);
-            sortingBoxController.PointerDown(point, this, typeof(Card));
+            sortingBoxController.PointerDown(point, this, typeof(SortingBox));
         }
 
         /// <summary>
@@ -296,9 +294,16 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public bool isIntersected(Point p)
+        public async Task<bool> IsIntersected(Point p)
         {
-            return position.Equals(p);
+            double distance = 0;
+            double radius = 0;
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                distance = Math.Sqrt(Math.Pow(p.X - position.X, 2) + Math.Pow(p.Y - position.Y, 2));
+                radius = this.Width * this.sortingBoxScale;
+            });
+            return distance < radius;
         }
 
         /// <summary>

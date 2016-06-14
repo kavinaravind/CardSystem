@@ -37,6 +37,10 @@ namespace CoLocatedCardSystem.CollaborationWindow
 
             sortingBoxLayerController = new SortingBoxLayerController(this);
             sortingBoxLayerController.Init(width, height);
+
+            menuLayerController = new MenuLayerController(this);
+            menuLayerController.Init(width, height);
+
         }
         public void Deinit()
         {
@@ -66,7 +70,9 @@ namespace CoLocatedCardSystem.CollaborationWindow
         {
             return cardLayerController.CardLayer;
         }
-
+        internal MenuLayer GetMenuLayer() {
+            return menuLayerController.MenuLayer;
+        }
         /// <summary>
         /// Get the sortingbox layer
         /// </summary>

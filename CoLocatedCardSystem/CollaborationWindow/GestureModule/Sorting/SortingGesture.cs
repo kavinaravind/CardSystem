@@ -1,12 +1,86 @@
-﻿using System;
+﻿using CoLocatedCardSystem.CollaborationWindow.InteractionModule;
+using CoLocatedCardSystem.CollaborationWindow.TouchModule;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoLocatedCardSystem.CollaborationWindow.GestureModule.Event
+namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
 {
-    class SortingGesture:Gesture
+    class SortingGesture : Gesture
     {
+        public SortingGesture(GestureController gtCtrler) : base(gtCtrler)
+        {
+        }
+
+        /// <summary>
+        /// Detect the sorting gesture (Drag and drop the card to the sorting box). 
+        /// The touches in the sorting gesture will be removed from the touchList
+        /// </summary>
+        /// <param name="touchList"></param>
+        /// <returns></returns>
+        internal static async Task Detect(List<Touch> touchList, InteractionControllers interactionControllers)
+        {
+            List<Touch> usedTouches = new List<Touch>();
+            SortingGesture gesture = null;
+            foreach (Touch touch in touchList)
+            {
+                if (touch.Type == typeof(Card) && !usedTouches.Contains(touch))
+                {
+                    Card card = touch.Sender as Card;
+                    SortingBox[] boxes = interactionControllers.GetAllSortingBoxs();
+                    foreach (SortingBox box in boxes)
+                    {
+                        bool isIntersect = await box.IsIntersected(card.Position);
+                        if (isIntersect)
+                        {
+                            foreach (Touch otherTouches in touchList)
+                            {
+                                if (touch.Sender == otherTouches.Sender && !usedTouches.Contains(otherTouches))
+                                {
+                                    usedTouches.Add(otherTouches);
+                                }
+                            }
+                            gesture = new SortingGesture(interactionControllers.GestureController);
+                            gesture.AssociatedTouches = usedTouches;
+                            gesture.AssociatedObjects = new List<object>() { card, box };
+                            gesture.AssociatedObjectTypes = new List<Type>() { typeof(Card), typeof(SortingBox) };
+                            SortingListener listener = interactionControllers.ListenerController.GetSortingListener();
+                            RegisterListener(gesture, listener);// Register the gesture and add the gesture to the gesture list.
+                        }
+                    }
+                }
+            }
+            foreach (Touch touch in usedTouches)
+            {
+                touchList.Remove(touch);
+            }
+        }
+        /// <summary>
+        /// Check the touches to decide whether the gesture enters a terminated or failed status.
+        /// </summary>
+        /// <returns>true: continue, false: terminated or failed</returns>
+        protected override async Task<bool> CheckContinue()
+        {
+            if (AssociatedTouches == null || AssociatedTouches.Count() == 0)
+            {
+                return false;
+            }
+            bool isIntersect = await (AssociatedObjects[1] as SortingBox).IsIntersected((AssociatedObjects[0] as Card).Position);
+            return isIntersect;
+        }
+        /// <summary>
+        /// Check the status to decide if the gesture is terminated or failed
+        /// </summary>
+        /// <returns>true: terminate, false: failed</returns>
+        protected override bool CheckTerminate()
+        {
+            if (AssociatedTouches == null || AssociatedTouches.Count() == 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

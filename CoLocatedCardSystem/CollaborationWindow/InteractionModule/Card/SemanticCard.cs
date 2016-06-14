@@ -27,6 +27,19 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             }
         }
 
+        public Document Document
+        {
+            get
+            {
+                return document;
+            }
+
+            set
+            {
+                document = value;
+            }
+        }
+
         public SemanticCard(CardController cardController) : base(cardController)
         {
         }

@@ -11,13 +11,76 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
     public class Touch
     {
         uint touchID;
-        PointerPoint currentPoint;                
+        PointerPoint currentPoint;//The PointerPoint associated with the touch                
         Point startPoint;//The position where the touch starts
         Point endPoint;//The position where the touch ends
         object sender;// The object which fire the touch
         Type type;// The type of the object
         DateTime startTime;//The start time stamp when the touch starts
         DateTime endTime;//The end time stamp when the touch ends
+        public uint TouchID
+        {
+            get
+            {
+                return touchID;
+            }
+        }
+
+        public PointerPoint CurrentPoint
+        {
+            get
+            {
+                return currentPoint;
+            }
+        }
+
+        public Point StartPoint
+        {
+            get
+            {
+                return startPoint;
+            }
+        }
+
+        public Point EndPoint
+        {
+            get
+            {
+                return endPoint;
+            }
+        }
+
+        public object Sender
+        {
+            get
+            {
+                return sender;
+            }
+        }
+
+        public Type Type
+        {
+            get
+            {
+                return type;
+            }
+        }
+
+        public DateTime StartTime
+        {
+            get
+            {
+                return startTime;
+            }
+        }
+
+        public DateTime EndTime
+        {
+            get
+            {
+                return endTime;
+            }
+        }
 
         /// <summary>
         /// Construct the touch point
@@ -32,8 +95,25 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
             this.currentPoint = position;
             this.startPoint = position.Position;
             this.startTime = DateTime.Now;
-            //System.Diagnostics.Debug.WriteLine("Touch created: " + type.Name);
         }
+        /// <summary>
+        /// Generate a copy of the touch List
+        /// </summary>
+        /// <returns></returns>
+        internal Touch Copy()
+        {
+            Touch newTouch = new Touch();
+            newTouch.touchID = this.touchID;
+            newTouch.currentPoint = this.currentPoint;
+            newTouch.startPoint = this.startPoint;
+            newTouch.endPoint = this.endPoint;
+            newTouch.sender = this.sender;
+            newTouch.type = this.type;
+            newTouch.startTime = this.startTime;
+            newTouch.endTime = this.endTime;
+            return newTouch;
+        }
+
         /// <summary>
         /// Update a touch point
         /// </summary>
@@ -45,10 +125,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// Call this method when the finger leave the screen.
         /// </summary>
         /// <param name="position"></param>
-        public void End(PointerPoint position)
+        public Touch End(PointerPoint position)
         {
             this.endPoint = position.Position;
             this.endTime = DateTime.Now;
+            return this;
         }
     }
 }

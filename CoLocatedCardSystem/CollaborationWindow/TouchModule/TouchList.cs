@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Core;
 using Windows.UI.Input;
 
 namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
@@ -31,7 +32,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// Update a touch point
         /// </summary>
         /// <param name="point"></param>
-        internal void UpdateTouchPoint(PointerPoint point) {
+        internal void UpdateTouchPoint(PointerPoint point)
+        {
             uint touchID = point.PointerId;
             if (list.Keys.Contains(touchID))
             {
@@ -43,7 +45,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// </summary>
         /// <param name="touchID"></param>
         /// <returns></returns>
-        internal Touch RemoveTouchPoint(PointerPoint point) {
+        internal Touch RemoveTouchPoint(PointerPoint point)
+        {
             uint touchID = point.PointerId;
             Touch removedTouch = null;
             if (list.Keys.Contains(touchID))
@@ -57,15 +60,25 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// <summary>
         /// Delete all the touches from the list.
         /// </summary>
-        internal void Clear() {
+        internal void Clear()
+        {
             list.Clear();
         }
         /// <summary>
         /// Get a copy of all touches in the touch list
         /// </summary>
         /// <returns></returns>
-        internal Touch[] GetAllTouch() {
-            return list.Values.ToArray();
+        internal List<Touch> GetAllTouches()
+        {
+            List<Touch> newList = new List<Touch>();
+            lock (list)
+            {
+                foreach (Touch t in list.Values)
+                {
+                    newList.Add(t.Copy());
+                }
+            }
+            return newList;
         }
     }
 }
