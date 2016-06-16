@@ -21,7 +21,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
         /// </summary>
         /// <param name="touchList"></param>
         /// <returns></returns>
-        internal static async Task Detect(List<Touch> touchList, InteractionControllers interactionControllers)
+        internal static async Task Detect(List<Touch> touchList, CentralControllers controllers)
         {
             List<Touch> usedTouches = new List<Touch>();
             SortingGesture gesture = null;
@@ -30,7 +30,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
                 if (touch.Type == typeof(Card) && !usedTouches.Contains(touch))
                 {
                     Card card = touch.Sender as Card;
-                    SortingBox[] boxes = interactionControllers.SortingBoxController.GetAllSortingBoxes();
+                    SortingBox[] boxes = controllers.SortingBoxController.GetAllSortingBoxes();
                     foreach (SortingBox box in boxes)
                     {
                         bool isIntersect  = await box.IsIntersected(card.Position);
@@ -43,11 +43,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
                                     usedTouches.Add(otherTouches);
                                 }
                             }
-                            gesture = new SortingGesture(interactionControllers.GestureController);
+                            gesture = new SortingGesture(controllers.GestureController);
                             gesture.AssociatedTouches = usedTouches;
                             gesture.AssociatedObjects = new List<object>() { card, box };
                             gesture.AssociatedObjectTypes = new List<Type>() { typeof(Card), typeof(SortingBox) };
-                            SortingListener listener = interactionControllers.ListenerController.GetListener(typeof(SortingListener)) as SortingListener;
+                            SortingListener listener = controllers.ListenerController.GetListener(typeof(SortingListener)) as SortingListener;
                             RegisterListener(gesture, listener);// Register the gesture and add the gesture to the gesture list.
                         }
                     }

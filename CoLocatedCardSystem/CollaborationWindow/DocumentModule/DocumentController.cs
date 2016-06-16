@@ -12,9 +12,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
     class DocumentController
     {
         DocumentList list=new DocumentList();
-        InteractionControllers interactionControllers;
-        public DocumentController(InteractionControllers itcCtrlr) {
-            this.interactionControllers = itcCtrlr;
+        CentralControllers controllers;
+        public DocumentController(CentralControllers ctrls) {
+            this.controllers = ctrls;
         }
         /// <summary>
         /// Initialize documents from jsonFile

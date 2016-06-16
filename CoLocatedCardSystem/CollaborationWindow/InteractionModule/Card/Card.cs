@@ -16,13 +16,13 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
     /// </summary>
     public class Card : Canvas
     {
+        CardController cardController;
         string cardID = "";
         Point position = new Point(0, 0);//The position of the card on the screen
         double cardScale = 1;//The scale ratio of the card
         double rotation = 0;//The degree of the rotation
         Rectangle background = null;
         int marginWidth = 10;
-        CardController cardController;
         Size maxSize = new Size(600, 450);//Max size a card can be zoomed.
         Size minSize = new Size(80, 60);//Mim size a card can be zoomed
 
@@ -119,7 +119,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Move the card by the vector 
         /// </summary>
         /// <param name="point"></param>
-        public void Move(Point vector)
+        public void MoveBy(Point vector)
         {
             this.position.X += vector.X;
             this.position.Y += vector.Y;

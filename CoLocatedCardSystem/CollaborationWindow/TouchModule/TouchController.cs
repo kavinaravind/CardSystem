@@ -9,13 +9,13 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
 {
     class TouchController
     {
-        InteractionControllers interactionControllers;
+        CentralControllers controllers;
         TouchList list;
         bool isMouseEnabled = true;
         bool isPenEnabled = true;
-        public TouchController(InteractionControllers intrCtlrs)
+        public TouchController(CentralControllers ctrls)
         {
-            this.interactionControllers = intrCtlrs;
+            this.controllers = ctrls;
         }
         /// <summary>
         /// Initialize the TouchController
@@ -52,20 +52,24 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// <param name="type"></param>
         public void TouchDown(PointerPoint localPoint, PointerPoint globalPoint, object sender, Type type)
         {
+            Touch newTouch = null;
             switch (localPoint.PointerDevice.PointerDeviceType)
             {
                 case Windows.Devices.Input.PointerDeviceType.Touch:
-                    list.AddTouchPoint(localPoint, globalPoint, sender, type);
+                    newTouch=list.AddTouchPoint(localPoint, globalPoint, sender, type);
                     break;
                 case Windows.Devices.Input.PointerDeviceType.Mouse:
                     if (isMouseEnabled)
-                        list.AddTouchPoint(localPoint, globalPoint, sender, type);
+                        newTouch=list.AddTouchPoint(localPoint, globalPoint, sender, type);
                     break;
                 case Windows.Devices.Input.PointerDeviceType.Pen:
                     if (isPenEnabled)
-                        list.AddTouchPoint(localPoint, globalPoint, sender, type);
+                        newTouch=list.AddTouchPoint(localPoint, globalPoint, sender, type);
                     break;
             }
+            //For debug, output all touched items
+            //if(newTouch!=null)
+            //System.Diagnostics.Debug.WriteLine(type.Name+ "\t" + newTouch.StartPoint.ToString()+"\t"+ newTouch.StartTime.ToString());
         }
         /// <summary>
         /// Update the touch points

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 
 namespace CoLocatedCardSystem.CollaborationWindow.Layers
@@ -25,12 +26,17 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             this.Width = width;
             this.Height = height;
         }
+        internal void Deinit() {
+            this.Children.Clear();
+        }
         /// <summary>
         /// Add a menubar to the layer
         /// </summary>
         /// <param name="menubar"></param>
-        internal void AddMenuBar(MenuBar menubar) {
-            this.Children.Add(menubar);
+        internal async void AddMenuBar(MenuBar menubar) {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>{
+                this.Children.Add(menubar);
+            });
         }
     }
 }

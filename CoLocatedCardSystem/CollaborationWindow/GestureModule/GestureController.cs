@@ -11,13 +11,13 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
 {
     class GestureController
     {
-        InteractionControllers interactionControllers;
+        CentralControllers controllers;
         GestureList list;
         TimeSpan period = TimeSpan.FromMilliseconds(50);
         ThreadPoolTimer periodicTimer;
-        public GestureController(InteractionControllers itCtrlrs)
+        public GestureController(CentralControllers ctrls)
         {
-            this.interactionControllers = itCtrlrs;
+            this.controllers = ctrls;
         }
         public void Init()
         {
@@ -47,9 +47,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
         {
             if (periodicTimer == null)
             {
-                periodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
+                periodicTimer = ThreadPoolTimer.CreatePeriodicTimer((source) =>
                 {
-                    await GestureThread();
+                    GestureThread();
                 }, period);
             }
         }
@@ -57,11 +57,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
         /// Start the gesture detection thread
         /// </summary>
         /// <returns></returns>
-        private async Task GestureThread()
+        private void GestureThread()
         {
-            List<Touch> touchList = interactionControllers.TouchController.GetAllTouches();
+            List<Touch> touchList = controllers.TouchController.GetAllTouches();
             UpdateGesture(touchList);
-            await DetectGesture(touchList);
+            DetectGesture(touchList);
         }
         /// <summary>
         /// Update all gestures. Update the touches associated with the gesture.
@@ -91,12 +91,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
         /// Detect new gestures
         /// </summary>
         /// <returns></returns>
-        private async Task DetectGesture(List<Touch> touchList)
+        private async void DetectGesture(List<Touch> touchList)
         {
             if (touchList != null && touchList.Count > 0)
             {
-                await SortingGesture.Detect(touchList, interactionControllers);
-                await DeletingBoxGesture.Detect(touchList, interactionControllers);
+                await SortingGesture.Detect(touchList, controllers);
+                await DeletingBoxGesture.Detect(touchList, controllers);
             }
         }
         /// <summary>

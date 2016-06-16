@@ -13,9 +13,8 @@ namespace CoLocatedCardSystem.CollaborationWindow
     /// <summary>
     /// A central controller for all other controllers
     /// </summary>
-    public class InteractionControllers
+    public class CentralControllers
     {
-        ViewControllers viewControllers;
         DocumentController documentController;
         CardController cardController;
         SortingBoxController sortingBoxController;
@@ -23,13 +22,13 @@ namespace CoLocatedCardSystem.CollaborationWindow
         GestureController gestureController;
         GestureListenerController listenerController;
 
-        public ViewControllers ViewControllers
-        {
-            get
-            {
-                return viewControllers;
-            }
-        }
+        CentralControllers interactionControllers;
+        BaseLayerController baseLayerController;
+        CardLayerController cardLayerController;
+        LinkingLayerController linkingLayerController;
+        MenuLayerController menuLayerController;
+        SortingBoxLayerController sortingBoxLayerController;
+
         internal DocumentController DocumentController
         {
             get
@@ -72,35 +71,73 @@ namespace CoLocatedCardSystem.CollaborationWindow
                 return listenerController;
             }
         }
-
+        internal BaseLayerController BaseLayerController
+        {
+            get
+            {
+                return baseLayerController;
+            }
+        }
+        internal CardLayerController CardLayerController
+        {
+            get
+            {
+                return cardLayerController;
+            }
+        }
+        internal LinkingLayerController LinkingLayerController
+        {
+            get
+            {
+                return linkingLayerController;
+            }
+        }
+        internal MenuLayerController MenuLayerController
+        {
+            get
+            {
+                return menuLayerController;
+            }
+        }
+        internal SortingBoxLayerController SortingBoxLayerController
+        {
+            get
+            {
+                return sortingBoxLayerController;
+            }
+        }
         /// <summary>
         /// Initialize all documents
         /// </summary>
-        public async void Init(ViewControllers viewControllers)
+        public async void Init(int width, int height)
         {
             //Initialize controllers
-            this.viewControllers = viewControllers;
             documentController = new DocumentController(this);
             cardController = new CardController(this);
             sortingBoxController = new SortingBoxController(this);
             touchController = new TouchController(this);
             gestureController = new GestureController(this);
             listenerController = new GestureListenerController(this);
-
-            //Load the documents, cards and add them to the card layer
-            Document[] docs = await documentController.Init(FilePath.NewsArticle);//Load the document
-            Card[] cards = await cardController.Init(docs);
-            await viewControllers.CardLayerController.LoadCards(cards);
-
-            //Load the sorting box and add them to the sorting box layer
-            sortingBoxController.Init();
-
-            await viewControllers.SortingBoxLayerController.LoadBoxes(sortingBoxController.GetAllSortingBoxes());
-
+            baseLayerController = new BaseLayerController(this);
+            cardLayerController = new CardLayerController(this);
+            sortingBoxLayerController = new SortingBoxLayerController(this);         
+            menuLayerController = new MenuLayerController(this);
+            //Initialize layers
             touchController.Init();
             gestureController.Init();
             listenerController.Init();
-
+            baseLayerController.Init(width, height);
+            Coordination.Baselayer = baseLayerController.BaseLayer;//Set the base layer to the coordination helper
+            cardLayerController.Init(width, height);
+            sortingBoxLayerController.Init(width, height);
+            menuLayerController.Init(width, height);
+            //Load the documents, cards and add them to the card layer
+            Document[] docs = await documentController.Init(FilePath.NewsArticle);//Load the document
+            Card[] cards = await cardController.Init(docs);
+            CardLayerController.LoadCards(cards);
+            //Load the sorting box and add them to the sorting box layer
+            sortingBoxController.Init();
+            SortingBoxLayerController.LoadBoxes(sortingBoxController.GetAllSortingBoxes());
             //Start the gesture detection thread
             gestureController.StartGestureDetection();
         }
@@ -111,42 +148,25 @@ namespace CoLocatedCardSystem.CollaborationWindow
         internal void Deinit()
         {
             gestureController.Deinit();
+            gestureController = null;
+            listenerController.Deinit();
+            listenerController = null;
             touchController.Deinit();
+            touchController = null;
             sortingBoxController.Deinit();
+            sortingBoxController = null;
             cardController.Deinit();
+            cardController = null;
             documentController.Deinit();
-        }
-        /// <summary>
-        /// Get all active menu bars
-        /// </summary>
-        /// <returns></returns>
-        internal MenuBar[] GetAllMenuBar()
-        {
-            return viewControllers.MenuLayerController.GetAllMenuBars();
-        }
-        /// <summary>
-        /// Move the card to the top
-        /// </summary>
-        /// <param name="card"></param>
-        internal void MoveCardToTop(Card card)
-        {
-            viewControllers.CardLayerController.MoveCardToTop(card);
-        }
-
-        /// <summary>
-        /// Move the SortingBox to the top
-        /// </summary>
-        /// <param name="card"></param>
-        internal void MoveSortingBoxToTop(SortingBox box)
-        {
-            viewControllers.SortingBoxLayerController.MoveSortingBoxToTop(box);
-        }
-        /// <summary>
-        /// Load all sortingboxes to screen
-        /// </summary>
-        internal async void AddSortingBoxes(SortingBox newBox)
-        {
-            await viewControllers.SortingBoxLayerController.LoadBoxes(new SortingBox[] { newBox });
+            documentController = null;
+            baseLayerController.Deinit();
+            baseLayerController = null;
+            cardLayerController.Deinit();
+            cardLayerController = null;
+            sortingBoxLayerController.Deinit();
+            sortingBoxLayerController = null;
+            menuLayerController.Deinit();
+            menuLayerController = null;
         }
     }
 }

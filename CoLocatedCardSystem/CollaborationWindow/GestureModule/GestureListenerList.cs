@@ -13,8 +13,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
         internal GestureListenerList(GestureListenerController controller) {
             this.gestureListenerController = controller;
         }
+
         /// <summary>
-        /// Get the listener instance in the list
+        /// Get the listener instance. If the listener object does not exist, create one and add it to the list.
+        /// All same gestures share one gesture listener.
         /// </summary>
         /// <param name="listenerType"></param>
         /// <returns></returns>
@@ -34,6 +36,13 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
                 list.Add(listenerType, listener);
             }
             return list[listenerType];
+        }
+        /// <summary>
+        /// Remove all gesture listeners.
+        /// </summary>
+        internal void Clear()
+        {
+            list.Clear();
         }
     }
 }

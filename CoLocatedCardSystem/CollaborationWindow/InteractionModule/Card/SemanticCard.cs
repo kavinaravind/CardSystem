@@ -53,7 +53,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="position"></param>
         /// <param name="scale"></param>
         /// <param name="rotation"></param>
-        internal override async void Init(string cardID, User user)
+        internal override void Init(string cardID, User user)
         {
             base.Init(cardID, user);
             this.owner = user;
@@ -63,7 +63,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             layers[2] = new Layer3(this);
             layers[3] = new Layer4(this);
             foreach (var layer in layers) {
-                await layer.Init();
+                layer.Init();
             }
             this.Children.Add(layers[0]);
         }
@@ -77,18 +77,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             {
                 await layer.SetArticle(this.document);
             }
-        }
-        /// <summary>
-        /// Get the document associated with the card.
-        /// </summary>
-        /// <returns></returns>
-        internal Document GetDocument() {
-            return document;
-        }
-        protected override void PointerDown(object sender, PointerRoutedEventArgs e)
-        {
-            base.PointerDown(sender, e);
-            PointerPoint p = e.GetCurrentPoint(this);
         }
     }
 }

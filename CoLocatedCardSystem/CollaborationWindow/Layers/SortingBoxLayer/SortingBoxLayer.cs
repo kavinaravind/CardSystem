@@ -39,7 +39,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// </summary>
         /// <param name="box"></param>
         /// <returns></returns>
-        internal async Task AddBox(SortingBox box)
+        internal async void AddBox(SortingBox box)
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
@@ -49,13 +49,24 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
 
 
         /// <summary>
-        /// Set the z index of the card
+        /// Set the z index of the sorting box
         /// </summary>
         /// <param name="card"></param>
         /// <param name="zindex"></param>
-        internal void SetZIndex(SortingBox box, int zindex)
+        internal async void SetZIndex(SortingBox box, int zindex)
         {
-            Canvas.SetZIndex(box, zindex);
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                Canvas.SetZIndex(box, zindex);
+            });
+        }
+
+        internal async void RemoveSortingBox(SortingBox box)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                this.Children.Remove(box);
+            });
         }
     }
 }

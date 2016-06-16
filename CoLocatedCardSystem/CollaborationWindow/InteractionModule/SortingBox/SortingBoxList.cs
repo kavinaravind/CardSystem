@@ -21,28 +21,17 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             list.Add(sortingBoxID, box);
             return box;
         }
-        /// <summary>
-        /// Add a sorting box to the list if the box does not exist
-        /// </summary>
-        /// <param name="box"></param>
-        internal void AddBox(SortingBox box) {
-            list.Add(box.SortingBoxID, box);
-        }
-
-        /// <summary>
-        /// Add a sorting box to the list if the box does not exist
-        /// </summary>
-        /// <param name="box"></param>
-        internal void AddBox(string name) {
-            // implement
-        }
 
         /// <summary>
         /// Delete a sorting box
         /// </summary>
         /// <param name="box"></param>
         internal void RemoveSortingBox(SortingBox box) {
-            list.Remove(box.SortingBoxID);
+            if (list.ContainsKey(box.SortingBoxID))
+            {
+                box.Clear();
+                list.Remove(box.SortingBoxID);               
+            }
         }
         /// <summary>
         /// Delete all sorting boxes

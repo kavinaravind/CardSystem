@@ -24,12 +24,13 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         /// </summary>
         /// <param name="docID"></param>
         internal void RemoveDocument(string docID) {
-
+            //To do
         }
         /// <summary>
         /// Remove all documents
         /// </summary>
         internal void Clear() {
+            list.Clear();
         }
         /// <summary>
         /// Find the document by "docID"
@@ -37,9 +38,13 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         /// <param name="docID"></param>
         /// <returns></returns>
         internal Document GetDocument(string docID) {
+            //To do
             return null;
         }
-
+        /// <summary>
+        /// Get all documents
+        /// </summary>
+        /// <returns></returns>
         internal Document[] GetDocument() {
             return list.Values.ToArray();
         }

@@ -33,7 +33,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             this.Width = width;
             this.Height = height;
         }
-        
+
         /// <summary>
         /// Destroy the card layer
         /// </summary>
@@ -60,8 +60,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// </summary>
         /// <param name="card"></param>
         /// <param name="zindex"></param>
-        internal void SetZIndex(Card card, int zindex) {
-            Canvas.SetZIndex(card, zindex);
+        internal async void SetZIndex(Card card, int zindex)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+             {
+                 Canvas.SetZIndex(card, zindex);
+             });
         }
     }
 }

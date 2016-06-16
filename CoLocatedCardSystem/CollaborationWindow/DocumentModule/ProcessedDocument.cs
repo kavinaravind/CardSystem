@@ -41,12 +41,19 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
                 }
             }
             foreach (Token tk in tokenList) {
-                PunctuationMarker.Mark(tk);
-                Stemmer.Stem(tk); // convert to root form
-                StopwordMarker.Mark(tk);
-                IrregularMarker.Mark(tk);
+                ProcessToken(tk);
             }
             list = tokenList.ToArray<Token>();
+        }
+        /// <summary>
+        /// Use NLP method to process the token
+        /// </summary>
+        /// <param name="tk"></param>
+        private void ProcessToken(Token tk) {
+            PunctuationMarker.Mark(tk);
+            Stemmer.Stem(tk); // convert to root form
+            StopwordMarker.Mark(tk);
+            IrregularMarker.Mark(tk);
         }
         /// <summary>
         /// Return the number of tokens whose original word is the same with the key work
@@ -57,16 +64,36 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
             return 0;
         }
         /// <summary>
-        /// Return a string of the whole document, in processed form.
+        /// Check if the document contains the keyword.
         /// </summary>
+        /// <param name="key"></param>
         /// <returns></returns>
-        public string GetProcessedDocument() {
-            string result = "";
-            foreach (Token token in list)
+        internal bool IsContainKey(string key)
+        {
+            Token newToken = new Token();
+            newToken.OriginalWord = key;
+            ProcessToken(newToken);
+            foreach (Token tk in list)
             {
-                result += token.StemmedWord;
+                if (tk.Type == newToken.Type)
+                {
+                    if (newToken.Type == WordType.REGULAR)
+                    {
+                        if (newToken.StemmedWord.Equals(tk.StemmedWord))
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        if (newToken.OriginalWord.Equals(tk.OriginalWord))
+                        {
+                            return true;
+                        }
+                    }
+                }
             }
-            return result;
+            return false;
         }
     }
 }

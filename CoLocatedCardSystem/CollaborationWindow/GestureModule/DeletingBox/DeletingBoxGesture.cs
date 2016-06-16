@@ -24,7 +24,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
         /// </summary>
         /// <param name="touchList"></param>
         /// <returns></returns>
-        internal static async Task Detect(List<Touch> touchList, InteractionControllers interactionControllers)
+        internal static async Task Detect(List<Touch> touchList, CentralControllers controllers)
         {
             List<Touch> usedTouches = new List<Touch>();
             DeletingBoxGesture gesture = null;
@@ -33,10 +33,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
                 if (touch.Type == typeof(SortingBox) && !usedTouches.Contains(touch))
                 {
                     SortingBox box = touch.Sender as SortingBox;
-                    MenuBar[] bars = interactionControllers.GetAllMenuBar();
+                    MenuBar[] bars = controllers.MenuLayerController.GetAllMenuBars();
                     foreach (MenuBar bar in bars)
                     {
-                        bool isIntersect = await bar.IsIntersectWithDelete(touch.CurrentGlobalPoint);
+                        bool isIntersect = await bar.IsIntersectWithDelete(box.Position);
                         if (isIntersect)
                         {
                             foreach (Touch otherTouches in touchList)
@@ -46,11 +46,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
                                     usedTouches.Add(otherTouches);
                                 }
                             }
-                            gesture = new DeletingBoxGesture(interactionControllers.GestureController);
+                            gesture = new DeletingBoxGesture(controllers.GestureController);
                             gesture.AssociatedTouches = usedTouches;
                             gesture.AssociatedObjects = new List<object>() { box, bar };
                             gesture.AssociatedObjectTypes = new List<Type>() { typeof(SortingBox), typeof(MenuBar) };
-                            DeletingBoxListener listener = interactionControllers.ListenerController.GetListener(typeof(DeletingBoxListener)) as DeletingBoxListener;
+                            DeletingBoxListener listener = controllers.ListenerController.GetListener(typeof(DeletingBoxListener)) as DeletingBoxListener;
                             RegisterListener(gesture, listener);// Register the gesture and add the gesture to the gesture list.
                         }
                     }

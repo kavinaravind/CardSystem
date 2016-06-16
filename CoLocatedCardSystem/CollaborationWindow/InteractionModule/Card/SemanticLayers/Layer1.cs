@@ -48,7 +48,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="card"></param>
         /// <returns></returns>
-        internal override async Task Init()
+        internal override async void Init()
         {
             this.Width = attachedCard.Width;
             this.Height = attachedCard.Height;

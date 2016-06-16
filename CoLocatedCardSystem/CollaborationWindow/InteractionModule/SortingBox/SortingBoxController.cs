@@ -10,11 +10,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
     public class SortingBoxController
     {
         SortingBoxList list;
-        InteractionControllers interactionControllers;
+        CentralControllers controllers;
 
-        public SortingBoxController(InteractionControllers interactionControllers)
+        public SortingBoxController(CentralControllers ctrls)
         {
-            this.interactionControllers = interactionControllers;
+            this.controllers = ctrls;
         }
 
         /// <summary>
@@ -36,10 +36,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="name"></param>
         /// <param name="user"></param>
-        public void CreateSortingBox(string name, User user)
+        public SortingBox CreateSortingBox(User user, string name)
         {
             SortingBox box = list.AddBox(user, name, this);
-            interactionControllers.AddSortingBoxes(box);
+            controllers.SortingBoxLayerController.LoadBoxes(new SortingBox[] {box});
+            return box;
         }
         /// <summary>
         /// Add a card to the sortingbox
@@ -49,11 +50,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         public void AddCardToSortingBox(Card card, SortingBox box)
         {
             box.AddCard(card);
-        }
-
-        public void RemoveCardFromSortingBox(Card card, SortingBox box)
-        {
-            box.RemoveCard(card);
         }
         /// <summary>
         /// Get all sorting box by card
@@ -95,25 +91,44 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             }
             return false;
         }
-
-        void DestroyBox(SortingBox box)
+        /// <summary>
+        /// Delete a sorting box. Remove it both from the sorting box list and the sorting box layer.
+        /// </summary>
+        /// <param name="box"></param>
+        internal void DestroyBox(SortingBox box)
         {
             list.RemoveSortingBox(box);
+            controllers.SortingBoxLayerController.RemoveSortingBox(box);
         }
-
+        /// <summary>
+        /// Update the touch point
+        /// </summary>
+        /// <param name="localPoint"></param>
+        /// <param name="globalPoint"></param>
+        /// <param name="box"></param>
+        /// <param name="type"></param>
         internal void PointerDown(PointerPoint localPoint, PointerPoint globalPoint, SortingBox box, Type type)
         {
-            interactionControllers.TouchController.TouchDown(localPoint, globalPoint, box, type);
+            controllers.TouchController.TouchDown(localPoint, globalPoint, box, type);
         }
-
+        /// <summary>
+        /// update the touch point
+        /// </summary>
+        /// <param name="localPoint"></param>
+        /// <param name="globalPoint"></param>
         internal void PointerMove(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            interactionControllers.TouchController.TouchMove(localPoint, globalPoint);
+            controllers.TouchController.TouchMove(localPoint, globalPoint);
         }
+        /// <summary>
+        /// Release a touch point
+        /// </summary>
+        /// <param name="localPoint"></param>
+        /// <param name="globalPoint"></param>
 
         internal void PointerUp(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            interactionControllers.TouchController.TouchUp(localPoint, globalPoint);
+            controllers.TouchController.TouchUp(localPoint, globalPoint);
         }
 
         /// <summary>
@@ -122,7 +137,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="card"></param>
         internal void MoveSortingBoxToTop(SortingBox box)
         {
-            interactionControllers.MoveSortingBoxToTop(box);
+            controllers.SortingBoxLayerController.MoveSortingBoxToTop(box);
         }
     }
 }

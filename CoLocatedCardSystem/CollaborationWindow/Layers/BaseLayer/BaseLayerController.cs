@@ -13,7 +13,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
     class BaseLayerController
     {
         private BaseLayer baseLayer;
-        private ViewControllers viewControllers;
+        private CentralControllers controllers;
 
         internal BaseLayer BaseLayer
         {
@@ -23,9 +23,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             }
         }
 
-        public BaseLayerController(ViewControllers vctrl)
+        public BaseLayerController(CentralControllers ctrls)
         {
-            viewControllers = vctrl;
+            controllers = ctrls;
         }
         /// <summary>
         /// Initialize the card layer
@@ -50,7 +50,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// <param name="p"></param>
         internal void PointerDown(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            viewControllers.OnTouchDown(localPoint, globalPoint, baseLayer, typeof(BaseLayer));
+            controllers.TouchController.TouchDown(localPoint, globalPoint, baseLayer, typeof(BaseLayer));
         }
         /// <summary>
         /// Update the touch point
@@ -58,7 +58,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// <param name="p"></param>
         internal void PointerMove(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            viewControllers.OnTouchMove(localPoint, globalPoint);
+            controllers.TouchController.TouchMove(localPoint, globalPoint);
         }
         /// <summary>
         /// End the touch point
@@ -66,7 +66,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// <param name="p"></param>
         internal void PointerUp(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            viewControllers.OnTouchUp(localPoint,globalPoint);
+            controllers.TouchController.TouchUp(localPoint,globalPoint);
         }
     }
 }

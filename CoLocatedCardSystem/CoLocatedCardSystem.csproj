@@ -122,7 +122,7 @@
     <Compile Include="CollaborationWindow\GestureModule\Sorting\SortingGesture.cs" />
     <Compile Include="CollaborationWindow\GestureModule\GestureStatus.cs" />
     <Compile Include="CollaborationWindow\GestureModule\Sorting\SortingListener.cs" />
-    <Compile Include="CollaborationWindow\InteractionControllers.cs" />
+    <Compile Include="CollaborationWindow\CentralControllers.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\Card\Card.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\Card\CardController.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\Card\CardInfo.cs" />
@@ -157,7 +157,6 @@
     <Compile Include="CollaborationWindow\TouchModule\Touch.cs" />
     <Compile Include="CollaborationWindow\TouchModule\TouchController.cs" />
     <Compile Include="CollaborationWindow\TouchModule\TouchList.cs" />
-    <Compile Include="CollaborationWindow\ViewControllers.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

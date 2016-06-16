@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.System;
+using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -12,12 +13,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
     class MenuLayerController
     {
         MenuLayer menuLayer;
-        ViewControllers viewControllers;
+        CentralControllers controllers;
         Dictionary<User, MenuBar> list = new Dictionary<User, MenuBar>();
-        public MenuLayerController(ViewControllers vctrls) {
-            this.viewControllers = vctrls;
-        }
-
         internal MenuLayer MenuLayer
         {
             get
@@ -25,7 +22,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
                 return menuLayer;
             }
         }
-
+        public MenuLayerController(CentralControllers ctrls) {
+            this.controllers = ctrls;
+        }
         /// <summary>
         /// Initialize the menu controller and the menu layer.
         /// </summary>
@@ -50,6 +49,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
                 bar.Deinit();
             }
             list.Clear();
+            menuLayer.Deinit();
         }
         /// <summary>
         /// Ask the interaction module to create a sorting box
@@ -58,7 +58,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// <param name="content"></param>
         internal void CreateSortingBox(User owner, string content)
         {
-            viewControllers.CreateSortingBox(owner, content);
+            if (content.Length > 0)
+            {
+                controllers.SortingBoxController.CreateSortingBox(owner, content);
+            }
         }
         /// <summary>
         /// Get all menu bars
@@ -67,6 +70,35 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         internal MenuBar[] GetAllMenuBars()
         {
             return list.Values.ToArray();
+        }
+        /// <summary>
+        /// Pass the touch poitn to the touch module
+        /// </summary>
+        /// <param name="localPoint"></param>
+        /// <param name="globalPoint"></param>
+        /// <param name="sender"></param>
+        /// <param name="type"></param>
+        internal void PointerDown(PointerPoint localPoint, PointerPoint globalPoint, object sender, Type type)
+        {
+            controllers.TouchController.TouchDown(localPoint, globalPoint, sender, type);
+        }
+        /// <summary>
+        /// update the touch point
+        /// </summary>
+        /// <param name="localPoint"></param>
+        /// <param name="globalPoint"></param>
+        internal void PointerMove(PointerPoint localPoint, PointerPoint globalPoint)
+        {
+            controllers.TouchController.TouchMove(localPoint, globalPoint);
+        }
+        /// <summary>
+        /// End the touch Point
+        /// </summary>
+        /// <param name="localPoint"></param>
+        /// <param name="globalPoint"></param>
+        internal void PointerUp(PointerPoint localPoint, PointerPoint globalPoint)
+        {
+            controllers.TouchController.TouchUp(localPoint, globalPoint);
         }
     }
 }

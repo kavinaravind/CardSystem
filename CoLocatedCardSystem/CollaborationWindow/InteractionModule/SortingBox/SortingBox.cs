@@ -108,7 +108,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                new Size(info.SortingBoxSize.Width, info.SortingBoxSize.Height),
                background);
             background.Fill = new SolidColorBrush(Colors.Transparent);
-            background.Stroke = new SolidColorBrush(Colors.Gray);
+            background.Stroke = new SolidColorBrush(info.SortingBoxColor);
             background.StrokeThickness = 5;
             this.Children.Add(background);
 
@@ -260,9 +260,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Change the background color of the box
         /// </summary>
         /// <param name="color"></param>
-        public void setBackgroundColor(Color color)
+        public async void SetBackgroundColor(Color color)
         {
-            background.Fill = new SolidColorBrush(color);
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                background.Fill = new SolidColorBrush(color);
+            });
         }
 
         /// <summary>

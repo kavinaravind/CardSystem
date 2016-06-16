@@ -148,5 +148,21 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
             this.endTime = DateTime.Now;
             return this;
         }
+        /// <summary>
+        /// Get how long the touch has been moved on the screen, in second.
+        /// </summary>
+        /// <returns></returns>
+        public double GetLife() {
+            //To do
+            return 0;
+        }
+        /// <summary>
+        /// Get the distance the touch has moved. In global coordination. Unit is pixel.
+        /// </summary>
+        /// <returns></returns>
+        public double GetTouchDistance() {
+            //To do
+            return 0;
+        }
     }
 }
