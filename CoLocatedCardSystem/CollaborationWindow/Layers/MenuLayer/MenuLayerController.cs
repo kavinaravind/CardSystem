@@ -60,5 +60,13 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         {
             viewControllers.CreateSortingBox(owner, content);
         }
+        /// <summary>
+        /// Get all menu bars
+        /// </summary>
+        /// <returns></returns>
+        internal MenuBar[] GetAllMenuBars()
+        {
+            return list.Values.ToArray();
+        }
     }
 }

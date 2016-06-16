@@ -50,7 +50,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             }
         }
 
-        public Card(CardController cardController) {
+        public Card(CardController cardController)
+        {
             this.cardController = cardController;
         }
 
@@ -72,20 +73,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         internal virtual void Init(string cardID, User user)
         {
             this.cardID = cardID;
-            CardInfo info = CardInfo.GetCardInfo(user);
-            this.Width = info.CardSize.Width;
-            this.Height = info.CardSize.Height;
-            this.position = info.CardPosition;
-            this.cardScale = info.CardScale;
-            this.rotation = info.CardRotation;
-            UpdateTransform();
-            background = new Rectangle();
-            //Move the backgroud rectangle -1/2 width and -1/2 height to the center.
-            UIHelper.InitializeUI(
-                new Point(-0.5 * (this.Width + marginWidth * 2), -0.5 * (this.Height + marginWidth * 2)), 0, 1, 
-                new Size(this.Width + marginWidth * 2, this.Height + marginWidth * 2), 
-                background);
-            background.Fill = new SolidColorBrush(info.CardColor);
+            LoadUI(user);
             //Register the touch events
             this.Children.Add(background);
             this.PointerEntered += PointerDown;
@@ -99,7 +87,23 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.ManipulationStarting += Card_ManipulationStarting;
             this.ManipulationDelta += Card_ManipulationDelta;
         }
-
+        private void LoadUI(User user)
+        {
+            CardInfo info = CardInfo.GetCardInfo(user);
+            this.Width = info.CardSize.Width;
+            this.Height = info.CardSize.Height;
+            this.position = info.CardPosition;
+            this.cardScale = info.CardScale;
+            this.rotation = info.CardRotation;
+            UpdateTransform();
+            background = new Rectangle();
+            //Move the backgroud rectangle -1/2 width and -1/2 height to the center.
+            UIHelper.InitializeUI(
+                new Point(-0.5 * (this.Width + marginWidth * 2), -0.5 * (this.Height + marginWidth * 2)), 0, 1,
+                new Size(this.Width + marginWidth * 2, this.Height + marginWidth * 2),
+                background);
+            background.Fill = new SolidColorBrush(info.CardColor);
+        }
         internal void Deinit()
         {
             this.PointerEntered -= PointerDown;
@@ -191,8 +195,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="e"></param>
         protected virtual void PointerDown(object sender, PointerRoutedEventArgs e)
         {
-            PointerPoint point = e.GetCurrentPoint(this);
-            cardController.PointerDown(point, this, typeof(Card));
+            PointerPoint localPoint = e.GetCurrentPoint(this);
+            PointerPoint globalPoint = e.GetCurrentPoint(Coordination.Baselayer);
+            cardController.PointerDown(localPoint, globalPoint, this, typeof(Card));
         }
         /// <summary>
         /// Call back method for Pointer move
@@ -201,8 +206,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="e"></param>
         protected virtual void PointerMove(object sender, PointerRoutedEventArgs e)
         {
-            PointerPoint point = e.GetCurrentPoint(this);
-            cardController.PointerMove(point);
+            PointerPoint localPoint = e.GetCurrentPoint(this);
+            PointerPoint globalPoint = e.GetCurrentPoint(Coordination.Baselayer);
+            cardController.PointerMove(localPoint, globalPoint);
         }
         /// <summary>
         /// Call back method for pointer up
@@ -211,8 +217,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="e"></param>
         protected virtual void PointerUp(object sender, PointerRoutedEventArgs e)
         {
-            PointerPoint point = e.GetCurrentPoint(this);
-            cardController.PointerUp(point);
+            PointerPoint localPoint = e.GetCurrentPoint(this);
+            PointerPoint globalPoint = e.GetCurrentPoint(Coordination.Baselayer);
+            cardController.PointerUp(localPoint, globalPoint);
         }
         /// <summary>
         /// Manipulate the card. Move if the manipulation is valid.
@@ -229,7 +236,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 this.cardScale *= e.Delta.Scale;
                 UpdateTransform();
             }
-            else {
+            else
+            {
                 e.Complete();
             }
         }

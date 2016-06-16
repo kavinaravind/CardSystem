@@ -13,20 +13,24 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         TouchList list;
         bool isMouseEnabled = true;
         bool isPenEnabled = true;
-        public TouchController(InteractionControllers intrCtlrs) {
+        public TouchController(InteractionControllers intrCtlrs)
+        {
             this.interactionControllers = intrCtlrs;
         }
         /// <summary>
         /// Initialize the TouchController
         /// </summary>
-        public void Init() {
+        public void Init()
+        {
             list = new TouchList();
         }
         /// <summary>
         /// Deinitialize the TouchController
         /// </summary>
-        public void Deinit() {
-            if (list != null) {
+        public void Deinit()
+        {
+            if (list != null)
+            {
                 list.Clear();
             }
         }
@@ -34,7 +38,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// Get a copy of all the touch points
         /// </summary>
         /// <returns></returns>
-        public List<Touch> GetAllTouches() {
+        public List<Touch> GetAllTouches()
+        {
             return list.GetAllTouches();
         }
         /// <summary>
@@ -45,20 +50,20 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// <param name="point"></param>
         /// <param name="sender"></param>
         /// <param name="type"></param>
-        public void TouchDown(PointerPoint point, object sender, Type type)
+        public void TouchDown(PointerPoint localPoint, PointerPoint globalPoint, object sender, Type type)
         {
-            switch (point.PointerDevice.PointerDeviceType)
+            switch (localPoint.PointerDevice.PointerDeviceType)
             {
                 case Windows.Devices.Input.PointerDeviceType.Touch:
-                    list.AddTouchPoint(point, sender, type);
+                    list.AddTouchPoint(localPoint, globalPoint, sender, type);
                     break;
                 case Windows.Devices.Input.PointerDeviceType.Mouse:
                     if (isMouseEnabled)
-                        list.AddTouchPoint(point, sender, type);
+                        list.AddTouchPoint(localPoint, globalPoint, sender, type);
                     break;
                 case Windows.Devices.Input.PointerDeviceType.Pen:
                     if (isPenEnabled)
-                        list.AddTouchPoint(point, sender, type);
+                        list.AddTouchPoint(localPoint, globalPoint, sender, type);
                     break;
             }
         }
@@ -66,20 +71,20 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// Update the touch points
         /// </summary>
         /// <param name="point"></param>
-        public void TouchMove(PointerPoint point)
+        public void TouchMove(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            switch (point.PointerDevice.PointerDeviceType)
+            switch (localPoint.PointerDevice.PointerDeviceType)
             {
                 case Windows.Devices.Input.PointerDeviceType.Touch:
-                    list.UpdateTouchPoint(point);
+                    list.UpdateTouchPoint(localPoint, globalPoint);
                     break;
                 case Windows.Devices.Input.PointerDeviceType.Mouse:
                     if (isMouseEnabled)
-                        list.UpdateTouchPoint(point);
+                        list.UpdateTouchPoint(localPoint, globalPoint);
                     break;
                 case Windows.Devices.Input.PointerDeviceType.Pen:
                     if (isPenEnabled)
-                        list.UpdateTouchPoint(point);
+                        list.UpdateTouchPoint(localPoint, globalPoint);
                     break;
             }
         }
@@ -87,19 +92,20 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// Release the touch points
         /// </summary>
         /// <param name="point"></param>
-        public void TouchUp(PointerPoint point) {
-            switch (point.PointerDevice.PointerDeviceType)
+        public void TouchUp(PointerPoint localPoint, PointerPoint globalPoint)
+        {
+            switch (localPoint.PointerDevice.PointerDeviceType)
             {
                 case Windows.Devices.Input.PointerDeviceType.Touch:
-                    list.RemoveTouchPoint(point);
+                    list.RemoveTouchPoint(localPoint, globalPoint);
                     break;
                 case Windows.Devices.Input.PointerDeviceType.Mouse:
                     if (isMouseEnabled)
-                        list.RemoveTouchPoint(point);
+                        list.RemoveTouchPoint(localPoint, globalPoint);
                     break;
                 case Windows.Devices.Input.PointerDeviceType.Pen:
                     if (isPenEnabled)
-                        list.RemoveTouchPoint(point);
+                        list.RemoveTouchPoint(localPoint, globalPoint);
                     break;
             }
         }

@@ -48,25 +48,25 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// Pass the touch point from the base layer to the view controller
         /// </summary>
         /// <param name="p"></param>
-        internal void PointerDown(PointerPoint p)
+        internal void PointerDown(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            viewControllers.OnTouchDown(p, baseLayer, typeof(BaseLayer));
+            viewControllers.OnTouchDown(localPoint, globalPoint, baseLayer, typeof(BaseLayer));
         }
         /// <summary>
         /// Update the touch point
         /// </summary>
         /// <param name="p"></param>
-        internal void PointerMove(PointerPoint p)
+        internal void PointerMove(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            viewControllers.OnTouchMove(p);
+            viewControllers.OnTouchMove(localPoint, globalPoint);
         }
         /// <summary>
         /// End the touch point
         /// </summary>
         /// <param name="p"></param>
-        internal void PointerUp(PointerPoint p)
+        internal void PointerUp(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            viewControllers.OnTouchUp(p);
+            viewControllers.OnTouchUp(localPoint,globalPoint);
         }
     }
 }

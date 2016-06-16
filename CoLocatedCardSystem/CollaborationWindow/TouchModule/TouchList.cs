@@ -18,26 +18,26 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// <param name="position"></param>
         /// <param name="sender"></param>
         /// <param name="type"></param>
-        internal void AddTouchPoint(PointerPoint position, object sender, Type type)
+        internal void AddTouchPoint(PointerPoint localPoint, PointerPoint globalPoint, object sender, Type type)
         {
-            uint touchID = position.PointerId;
+            uint touchID = localPoint.PointerId;
             if (!list.Keys.Contains(touchID))
             {
                 Touch touch = new Touch();
-                touch.Init(position, sender, type);
-                list.Add(position.PointerId, touch);
+                touch.Init(localPoint, globalPoint, sender, type);
+                list.Add(localPoint.PointerId, touch);
             }
         }
         /// <summary>
         /// Update a touch point
         /// </summary>
         /// <param name="point"></param>
-        internal void UpdateTouchPoint(PointerPoint point)
+        internal void UpdateTouchPoint(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            uint touchID = point.PointerId;
+            uint touchID = localPoint.PointerId;
             if (list.Keys.Contains(touchID))
             {
-                list[touchID].UpdateTouchPoint(point);
+                list[touchID].UpdateTouchPoint(localPoint,globalPoint);
             }
         }
         /// <summary>
@@ -45,14 +45,13 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         /// </summary>
         /// <param name="touchID"></param>
         /// <returns></returns>
-        internal Touch RemoveTouchPoint(PointerPoint point)
+        internal Touch RemoveTouchPoint(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            uint touchID = point.PointerId;
+            uint touchID = localPoint.PointerId;
             Touch removedTouch = null;
             if (list.Keys.Contains(touchID))
             {
-                list[touchID].End(point);
-                removedTouch = list[touchID];
+                removedTouch = list[touchID].End(localPoint, globalPoint);
                 list.Remove(touchID);
             }
             return removedTouch;

@@ -76,8 +76,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// <param name="e"></param>
         private void PointerDown(object sender, PointerRoutedEventArgs e)
         {
-            PointerPoint point = e.GetCurrentPoint(this);
-            baseLayerController.PointerDown(point);
+            PointerPoint localPoint = e.GetCurrentPoint(this);
+            PointerPoint globalPoint = e.GetCurrentPoint(Coordination.Baselayer);
+            baseLayerController.PointerDown(localPoint, globalPoint);
         }
         /// <summary>
         /// Call back method for Pointer move
@@ -86,8 +87,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// <param name="e"></param>
         private void PointerMove(object sender, PointerRoutedEventArgs e)
         {
-            PointerPoint point = e.GetCurrentPoint(this);
-            baseLayerController.PointerMove(point);
+            PointerPoint localPoint = e.GetCurrentPoint(this);
+            PointerPoint globalPoint = e.GetCurrentPoint(Coordination.Baselayer);
+            baseLayerController.PointerMove(localPoint, globalPoint);
         }
         /// <summary>
         /// Call back method for pointer up
@@ -96,8 +98,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// <param name="e"></param>
         private void PointerUp(object sender, PointerRoutedEventArgs e)
         {
-            PointerPoint point = e.GetCurrentPoint(this);
-            baseLayerController.PointerUp(point);
+            PointerPoint localPoint = e.GetCurrentPoint(this);
+            PointerPoint globalPoint = e.GetCurrentPoint(Coordination.Baselayer);
+            baseLayerController.PointerUp(localPoint, globalPoint);
         }
     }
 }

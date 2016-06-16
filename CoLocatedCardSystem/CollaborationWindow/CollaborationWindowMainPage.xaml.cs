@@ -46,15 +46,18 @@ namespace CoLocatedCardSystem.CollaborationWindow
             viewControllers.Init(Screen.WIDTH, Screen.HEIGHT,interactionControllers);
             interactionControllers.Init(viewControllers);
 
-            Container.Children.Add(viewControllers.GetBaseLayer());
-            Container.Children.Add(viewControllers.GetCardLayer());
-            Container.Children.Add(viewControllers.GetSortingBoxLayer());
-            Container.Children.Add(viewControllers.GetMenuLayer());
+            Container.Children.Add(viewControllers.BaseLayerController.BaseLayer);
+            Container.Children.Add(viewControllers.CardLayerController.CardLayer);
+            Container.Children.Add(viewControllers.SortingBoxLayerController.SortingBoxLayer);
+            Container.Children.Add(viewControllers.MenuLayerController.MenuLayer);
         }
         public void Deinit()
         {
             viewControllers.Deinit();
-            Container.Children.Remove(viewControllers.GetBaseLayer());
+            Container.Children.Remove(viewControllers.BaseLayerController.BaseLayer);
+            Container.Children.Remove(viewControllers.CardLayerController.CardLayer);
+            Container.Children.Remove(viewControllers.SortingBoxLayerController.SortingBoxLayer);
+            Container.Children.Remove(viewControllers.MenuLayerController.MenuLayer);
             interactionControllers.Deinit();
         }
     }

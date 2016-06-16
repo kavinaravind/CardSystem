@@ -18,7 +18,53 @@ namespace CoLocatedCardSystem.CollaborationWindow
         LinkingLayerController linkingLayerController;
         MenuLayerController menuLayerController;
         SortingBoxLayerController sortingBoxLayerController;
-        
+
+        public InteractionControllers InteractionControllers
+        {
+            get
+            {
+                return interactionControllers;
+            }
+        }
+
+        internal BaseLayerController BaseLayerController
+        {
+            get
+            {
+                return baseLayerController;
+            }
+        }
+
+        internal CardLayerController CardLayerController
+        {
+            get
+            {
+                return cardLayerController;
+            }
+        }
+
+        internal LinkingLayerController LinkingLayerController
+        {
+            get
+            {
+                return linkingLayerController;
+            }
+        }
+
+        internal MenuLayerController MenuLayerController
+        {
+            get
+            {
+                return menuLayerController;
+            }
+        }
+        internal SortingBoxLayerController SortingBoxLayerController
+        {
+            get
+            {
+                return sortingBoxLayerController;
+            }
+        }
         /// <summary>
         /// Initialize the views, including different layers.
         /// </summary>
@@ -31,6 +77,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
 
             baseLayerController = new BaseLayerController(this);
             baseLayerController.Init(width, height);
+            Coordination.Baselayer = baseLayerController.BaseLayer;//Set the base layer to the coordination helper
 
             cardLayerController = new CardLayerController(this);
             cardLayerController.Init(width, height);
@@ -42,6 +89,8 @@ namespace CoLocatedCardSystem.CollaborationWindow
             menuLayerController.Init(width, height);
 
         }
+
+
         public void Deinit()
         {
             baseLayerController.Deinit();
@@ -52,50 +101,9 @@ namespace CoLocatedCardSystem.CollaborationWindow
 
             sortingBoxLayerController.Deinit();
             sortingBoxLayerController = null;
-        }
 
-        /// <summary>
-        /// Get the base layer
-        /// </summary>
-        /// <returns></returns>
-        internal BaseLayer GetBaseLayer()
-        {
-            return baseLayerController.BaseLayer;
-        }
-        /// <summary>
-        /// Get the card layer
-        /// </summary>
-        /// <returns></returns>
-        internal CardLayer GetCardLayer()
-        {
-            return cardLayerController.CardLayer;
-        }
-        internal MenuLayer GetMenuLayer() {
-            return menuLayerController.MenuLayer;
-        }
-        /// <summary>
-        /// Get the sortingbox layer
-        /// </summary>
-        /// <returns></returns>
-        internal SortingBoxLayer GetSortingBoxLayer()
-        {
-            return sortingBoxLayerController.SortingBoxLayer;
-        }
-
-        /// <summary>
-        /// Add all the cards to the card layer
-        /// </summary>
-        /// <param name="cards"></param>
-        internal async Task LoadCardsToCardLayer(Card[] cards) {
-            await cardLayerController.LoadCards(cards);
-        }
-        /// <summary>
-        /// Load all the sorting boxes to the sorting box layer
-        /// </summary>
-        /// <param name="boxes"></param>
-        /// <returns></returns>
-        internal async Task LoadSortingBoxesToSortingBoxLayer(SortingBox[] boxes) {
-            await sortingBoxLayerController.LoadBoxes(boxes);
+            menuLayerController.Deinit();
+            menuLayerController = null;
         }
         /// <summary>
         /// Create a sorting box
@@ -104,52 +112,28 @@ namespace CoLocatedCardSystem.CollaborationWindow
         /// <param name="content"></param>
         internal void CreateSortingBox(User owner, string content)
         {
-            interactionControllers.CreateSortingBox(owner, content);
+            interactionControllers.SortingBoxController.CreateSortingBox(content, owner);
         }
         /// <summary>
-        /// Pass the PointerPoint to the TouchController
+        /// Pass the touch point to the interaction controller
         /// </summary>
+        /// <param name="localPoint"></param>
+        /// <param name="globalPoint"></param>
         /// <param name="baseLayer"></param>
-        /// <param name="p"></param>
-        internal void OnTouchDown(PointerPoint p,object sender, Type type)
+        /// <param name="type"></param>
+        internal void OnTouchDown(PointerPoint localPoint, PointerPoint globalPoint, object baseLayer, Type type)
         {
-            interactionControllers.OnTouchDown(p, sender, type);
+            interactionControllers.TouchController.TouchDown(localPoint, globalPoint, baseLayer, type);
         }
 
-        /// <summary>
-        /// Update the touch
-        /// </summary>
-        /// <param name="p"></param>
-        internal void OnTouchMove(PointerPoint p)
+        internal void OnTouchMove(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            interactionControllers.OnTouchMove(p);
+            interactionControllers.TouchController.TouchMove(localPoint, globalPoint);
         }
 
-        /// <summary>
-        /// Release the touch
-        /// </summary>
-        /// <param name="p"></param>
-        internal void OnTouchUp(PointerPoint p)
+        internal void OnTouchUp(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            interactionControllers.OnTouchUp(p);
-        }
-
-        /// <summary>
-        /// Move the card to the top in the card layer.
-        /// </summary>
-        /// <param name="card"></param>
-        internal void MoveCardToTop(Card card)
-        {
-            cardLayerController.MoveCardToTop(card);
-        }
-
-        /// <summary>
-        /// Move the sortingBox to the top in the sorting box layer.
-        /// </summary>
-        /// <param name="card"></param>
-        internal void MoveSortingBoxToTop(SortingBox box)
-        {
-            sortingBoxLayerController.MoveSortingBoxToTop(box);
+            interactionControllers.TouchController.TouchUp(localPoint, globalPoint);
         }
     }
 }

@@ -117,7 +117,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 new Point(-0.5 * info.SortingBoxSize.Width, -0.5 * info.SortingBoxSize.Height), 0, 1,
                 new Size(info.SortingBoxSize.Width, info.SortingBoxSize.Height),
                 textBlock);
-            
+
             textBlock.Foreground = new SolidColorBrush(Colors.White);
             textBlock.Text = this.name;
             textBlock.FontFamily = new FontFamily("Comic Sans MS");
@@ -227,8 +227,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="e"></param>
         private void PointerUp(object sender, PointerRoutedEventArgs e)
         {
-            PointerPoint point = e.GetCurrentPoint(this);
-            sortingBoxController.PointerUp(point);
+            PointerPoint localPoint = e.GetCurrentPoint(this);
+            PointerPoint globalPoint = e.GetCurrentPoint(Coordination.Baselayer);
+            sortingBoxController.PointerUp(localPoint, globalPoint);
         }
 
         /// <summary>
@@ -238,8 +239,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="e"></param>
         private void PointerMove(object sender, PointerRoutedEventArgs e)
         {
-            PointerPoint point = e.GetCurrentPoint(this);
-            sortingBoxController.PointerMove(point);
+            PointerPoint localPoint = e.GetCurrentPoint(this);
+            PointerPoint globalPoint = e.GetCurrentPoint(Coordination.Baselayer);
+            sortingBoxController.PointerMove(localPoint, globalPoint);
         }
 
         /// <summary>
@@ -249,8 +251,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="e"></param>
         private void PointerDown(object sender, PointerRoutedEventArgs e)
         {
-            PointerPoint point = e.GetCurrentPoint(this);
-            sortingBoxController.PointerDown(point, this, typeof(SortingBox));
+            PointerPoint localPoint = e.GetCurrentPoint(this);
+            PointerPoint globalPoint = e.GetCurrentPoint(Coordination.Baselayer);
+            sortingBoxController.PointerDown(localPoint, globalPoint, this, typeof(SortingBox));
         }
 
         /// <summary>
@@ -294,18 +297,16 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <summary>
         ///  Check if a point is intersected with the sorting box.
         /// </summary>
-        /// <param name="p"></param>
+        /// <param name="point"></param>
         /// <returns></returns>
-        public async Task<bool> IsIntersected(Point p)
+        public async Task<bool> IsIntersected(Point point)
         {
-            double distance = 0;
-            double radius = 0;
+            bool isIntersect = false;
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                distance = Math.Sqrt(Math.Pow(p.X - position.X, 2) + Math.Pow(p.Y - position.Y, 2));
-                radius = this.Width * this.sortingBoxScale;
+                isIntersect = Coordination.IsIntersect(point, this, true);
             });
-            return distance < radius;
+            return isIntersect;
         }
 
         /// <summary>

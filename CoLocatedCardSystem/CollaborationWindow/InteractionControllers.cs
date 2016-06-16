@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using Windows.UI.Input;
 using System.Collections.Generic;
+using CoLocatedCardSystem.CollaborationWindow.Layers;
 
 namespace CoLocatedCardSystem.CollaborationWindow
 {
@@ -29,7 +30,6 @@ namespace CoLocatedCardSystem.CollaborationWindow
                 return viewControllers;
             }
         }
-
         internal DocumentController DocumentController
         {
             get
@@ -37,7 +37,6 @@ namespace CoLocatedCardSystem.CollaborationWindow
                 return documentController;
             }
         }
-
         public CardController CardController
         {
             get
@@ -45,7 +44,6 @@ namespace CoLocatedCardSystem.CollaborationWindow
                 return cardController;
             }
         }
-
         public SortingBoxController SortingBoxController
         {
             get
@@ -53,7 +51,6 @@ namespace CoLocatedCardSystem.CollaborationWindow
                 return sortingBoxController;
             }
         }
-
         internal TouchController TouchController
         {
             get
@@ -61,15 +58,6 @@ namespace CoLocatedCardSystem.CollaborationWindow
                 return touchController;
             }
         }
-        /// <summary>
-        /// Get a copy of all live touch points
-        /// </summary>
-        /// <returns></returns>
-        internal List<Touch> GetAllTouches()
-        {
-            return touchController.GetAllTouches();
-        }
-
         internal GestureController GestureController
         {
             get
@@ -77,7 +65,6 @@ namespace CoLocatedCardSystem.CollaborationWindow
                 return gestureController;
             }
         }
-
         internal GestureListenerController ListenerController
         {
             get
@@ -89,7 +76,8 @@ namespace CoLocatedCardSystem.CollaborationWindow
         /// <summary>
         /// Initialize all documents
         /// </summary>
-        public async void Init(ViewControllers viewControllers) {
+        public async void Init(ViewControllers viewControllers)
+        {
             //Initialize controllers
             this.viewControllers = viewControllers;
             documentController = new DocumentController(this);
@@ -102,12 +90,12 @@ namespace CoLocatedCardSystem.CollaborationWindow
             //Load the documents, cards and add them to the card layer
             Document[] docs = await documentController.Init(FilePath.NewsArticle);//Load the document
             Card[] cards = await cardController.Init(docs);
-            await viewControllers.LoadCardsToCardLayer(cards);
+            await viewControllers.CardLayerController.LoadCards(cards);
 
             //Load the sorting box and add them to the sorting box layer
             sortingBoxController.Init();
-            
-            await viewControllers.LoadSortingBoxesToSortingBoxLayer(sortingBoxController.GetAllSortingBoxes());
+
+            await viewControllers.SortingBoxLayerController.LoadBoxes(sortingBoxController.GetAllSortingBoxes());
 
             touchController.Init();
             gestureController.Init();
@@ -115,15 +103,6 @@ namespace CoLocatedCardSystem.CollaborationWindow
 
             //Start the gesture detection thread
             gestureController.StartGestureDetection();
-        }
-        /// <summary>
-        /// Create a sorting box
-        /// </summary>
-        /// <param name="owner"></param>
-        /// <param name="content"></param>
-        internal void CreateSortingBox(User owner, string content)
-        {
-            sortingBoxController.CreateSortingBox(content, owner);
         }
 
         /// <summary>
@@ -138,41 +117,12 @@ namespace CoLocatedCardSystem.CollaborationWindow
             documentController.Deinit();
         }
         /// <summary>
-        /// Get all cards
+        /// Get all active menu bars
         /// </summary>
         /// <returns></returns>
-        internal Card[] GetAllCards() {
-            return cardController.GetCard();
-        }
-        /// <summary>
-        /// Get all sorting boxes.
-        /// </summary>
-        /// <returns></returns>
-        internal SortingBox[] GetAllSortingBoxes() {
-            return sortingBoxController.GetAllSortingBoxes();
-        }
-        /// <summary>
-        /// Add a touch point to the touch module
-        /// </summary>
-        /// <param name="point"></param>
-        /// <param name="sender"></param>
-        /// <param name="type"></param>
-        internal void OnTouchDown(PointerPoint point, object sender, Type type) {
-            touchController.TouchDown(point, sender, type);
-        }
-        /// <summary>
-        /// Update a touch point
-        /// </summary>
-        /// <param name="point"></param>
-        internal void OnTouchMove(PointerPoint point) {
-            touchController.TouchMove(point);
-        }
-        /// <summary>
-        /// End a touch point.
-        /// </summary>
-        /// <param name="point"></param>
-        internal void OnTouchUp(PointerPoint point) {
-            touchController.TouchUp(point);
+        internal MenuBar[] GetAllMenuBar()
+        {
+            return viewControllers.MenuLayerController.GetAllMenuBars();
         }
         /// <summary>
         /// Move the card to the top
@@ -180,7 +130,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
         /// <param name="card"></param>
         internal void MoveCardToTop(Card card)
         {
-            viewControllers.MoveCardToTop(card);
+            viewControllers.CardLayerController.MoveCardToTop(card);
         }
 
         /// <summary>
@@ -189,14 +139,14 @@ namespace CoLocatedCardSystem.CollaborationWindow
         /// <param name="card"></param>
         internal void MoveSortingBoxToTop(SortingBox box)
         {
-            viewControllers.MoveSortingBoxToTop(box);
+            viewControllers.SortingBoxLayerController.MoveSortingBoxToTop(box);
         }
         /// <summary>
         /// Load all sortingboxes to screen
         /// </summary>
         internal async void AddSortingBoxes(SortingBox newBox)
         {
-            await viewControllers.LoadSortingBoxesToSortingBoxLayer(new SortingBox[] {newBox});
+            await viewControllers.SortingBoxLayerController.LoadBoxes(new SortingBox[] { newBox });
         }
     }
 }

@@ -49,7 +49,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
             {
                 periodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
                 {
-                       await GestureThread();
+                    await GestureThread();
                 }, period);
             }
         }
@@ -59,12 +59,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
         /// <returns></returns>
         private async Task GestureThread()
         {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                List<Touch> touchList = interactionControllers.GetAllTouches();
-                UpdateGesture(touchList);
-                DetectGesture(touchList);
-            });
+            List<Touch> touchList = interactionControllers.TouchController.GetAllTouches();
+            UpdateGesture(touchList);
+            await DetectGesture(touchList);
         }
         /// <summary>
         /// Update all gestures. Update the touches associated with the gesture.
@@ -94,11 +91,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
         /// Detect new gestures
         /// </summary>
         /// <returns></returns>
-        private async void DetectGesture(List<Touch> touchList)
+        private async Task DetectGesture(List<Touch> touchList)
         {
             if (touchList != null && touchList.Count > 0)
             {
                 await SortingGesture.Detect(touchList, interactionControllers);
+                await DeletingBoxGesture.Detect(touchList, interactionControllers);
             }
         }
         /// <summary>
