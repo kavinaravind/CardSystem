@@ -33,12 +33,9 @@ namespace CoLocatedCardSystem.CollaborationWindow
 
         public void Init()
         {
-            var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
-            var scaleFactor = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
-            var size = new Size(bounds.Width * scaleFactor, bounds.Height * scaleFactor);
-            Screen.WIDTH = (int)size.Width;
-            Screen.HEIGHT = (int)size.Height;
-            System.Diagnostics.Debug.WriteLine(Screen.WIDTH + " " + Screen.HEIGHT);
+            Screen.WIDTH = (int)ApplicationView.GetForCurrentView().VisibleBounds.Width;
+            Screen.HEIGHT = (int)ApplicationView.GetForCurrentView().VisibleBounds.Height;
+            Screen.SCALE_FACTOR= 1/DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
             this.Width = Screen.WIDTH;
             this.Height = Screen.HEIGHT;
             Container.Width = this.Width;

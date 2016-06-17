@@ -9,11 +9,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
 {
     class MenuBarInfo
     {
-        private Size size = new Size(800, 60);
+        private Size size = new Size(800 * Screen.SCALE_FACTOR, 60 * Screen.SCALE_FACTOR);
         private Point position = new Point(0, 0);
         private double scale = 1;
         private double rotate = 1;
-        KeyboardButtonAttr keyboardButtonInfo=new KeyboardButtonAttr();
+        KeyboardButtonAttr keyboardButtonInfo = new KeyboardButtonAttr();
         KeyboardAttr keyboardInfo = new KeyboardAttr();
         InputTextBox inputTextBlockInfo = new InputTextBox();
         DeleteButtonAttr deleteButtonInfo = new DeleteButtonAttr();
@@ -139,7 +139,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         private static MenuBarInfo InitDanny()
         {
             MenuBarInfo info = new MenuBarInfo();
-            info.size = new Size(800, 60);
             info.position = new Point((Screen.WIDTH + info.Size.Width) / 2, info.Size.Height);
             info.scale = 1;
             info.rotate = 180;
@@ -148,8 +147,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
 
         internal class KeyboardButtonAttr
         {
-            Point position = new Point(50, 10);
-            Size size = new Size(150, 40);
+            Point position = new Point(50 * Screen.SCALE_FACTOR, 10 * Screen.SCALE_FACTOR);
+            Size size = new Size(150 * Screen.SCALE_FACTOR, 40 * Screen.SCALE_FACTOR);
             public Point Position
             {
                 get
@@ -168,8 +167,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
 
         internal class KeyboardAttr
         {
-            Point position = new Point(0, -200);
-            Size size = new Size(600, 200);
+            Point position = new Point(0, -200 * Screen.SCALE_FACTOR);
+            Size size = new Size(600 * Screen.SCALE_FACTOR, 200 * Screen.SCALE_FACTOR);
             public Point Position
             {
                 get
@@ -186,9 +185,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             }
         }
 
-        internal class InputTextBox {
-            Point position = new Point(0, -230);
-            Size size = new Size(600, 20);
+        internal class InputTextBox
+        {
+            Point position = new Point(0 * Screen.SCALE_FACTOR, -230 * Screen.SCALE_FACTOR);
+            Size size = new Size(600 * Screen.SCALE_FACTOR, 20 * Screen.SCALE_FACTOR);
             public Point Position
             {
                 get
@@ -205,9 +205,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             }
         }
 
-        internal class DeleteButtonAttr {
-            Point position = new Point(250, 0);
-            Size size = new Size(150, 60);
+        internal class DeleteButtonAttr
+        {
+            Point position = new Point(250 * Screen.SCALE_FACTOR, 0);
+            Size size = new Size(150 * Screen.SCALE_FACTOR, 60 * Screen.SCALE_FACTOR);
             public Point Position
             {
                 get

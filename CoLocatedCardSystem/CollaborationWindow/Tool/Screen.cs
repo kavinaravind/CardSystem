@@ -10,5 +10,6 @@ namespace CoLocatedCardSystem.CollaborationWindow
     {
         public static int WIDTH = 1920;
         public static int HEIGHT = 1080;
+        public static double SCALE_FACTOR = 0;
     }
 }

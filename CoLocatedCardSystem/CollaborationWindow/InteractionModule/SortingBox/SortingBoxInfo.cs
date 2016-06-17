@@ -10,9 +10,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
     class SortingBoxInfo
     {
-        protected Size sortingBoxSize = new Size(160, 120);
+        protected Size sortingBoxSize = new Size(160 * Screen.SCALE_FACTOR, 120 * Screen.SCALE_FACTOR);
         protected Color sortingBoxColor = Colors.Gray;
-        protected Point sortingBoxPosition = new Point(900, 500);
+        protected Point sortingBoxPosition = new Point(900 * Screen.SCALE_FACTOR, 500 * Screen.SCALE_FACTOR);
         protected double sortingBoxScale = 1;
         protected double sortingBoxRotation = 1;
         protected static Dictionary<User, SortingBoxInfo> sortingBoxInfoList = new Dictionary<User, SortingBoxInfo>();

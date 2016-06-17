@@ -10,8 +10,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
     static class CardLayoutGenerator
     {
-        static int totalLenght = 600;
-        static double margin = 80;
+        static double totalLenght = 600 * Screen.SCALE_FACTOR;
+        static double margin = 80 * Screen.SCALE_FACTOR;
         static Dictionary<User, Point> trans = new Dictionary<User, Point>();
         static Dictionary<User, double> rotates = new Dictionary<User, double>();
         static Dictionary<User, Point> vector = new Dictionary<User, Point>();
