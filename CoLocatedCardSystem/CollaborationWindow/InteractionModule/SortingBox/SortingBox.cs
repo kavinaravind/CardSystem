@@ -28,7 +28,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         Point position = new Point(0, 0);
         SortingBoxController sortingBoxController;
         Rectangle background; // Background rectangle
-        TextBlock textBlock;
+        TextBlock textBlockTop;
+        TextBlock textBlockBottom;
         Size maxSize = new Size(600, 450);
         Size minSize = new Size(80, 60);
 
@@ -112,23 +113,44 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             background.StrokeThickness = 5;
             this.Children.Add(background);
 
-            textBlock = new TextBlock();
+            textBlockTop = new TextBlock();
             UIHelper.InitializeUI(
                 new Point(-0.5 * info.SortingBoxSize.Width, -0.5 * info.SortingBoxSize.Height), 0, 1,
                 new Size(info.SortingBoxSize.Width, info.SortingBoxSize.Height),
-                textBlock);
-            
-            textBlock.Foreground = new SolidColorBrush(Colors.White);
-            textBlock.Text = this.name;
-            textBlock.FontFamily = new FontFamily("Comic Sans MS");
-            textBlock.FontSize = 24;
-            textBlock.FontWeight = FontWeights.Bold;
-            textBlock.TextAlignment = TextAlignment.Center;
-            textBlock.VerticalAlignment = VerticalAlignment.Center;
+                textBlockTop);
 
-            this.Children.Add(textBlock);
-            Canvas.SetZIndex(background, 2);
-            Canvas.SetZIndex(textBlock, 1);
+            textBlockTop.Foreground = new SolidColorBrush(Colors.White);
+            textBlockTop.Text = " " + this.name;
+            textBlockTop.FontFamily = new FontFamily("Comic Sans MS");
+            textBlockTop.FontSize = 24;
+            textBlockTop.FontWeight = FontWeights.Bold;
+            textBlockTop.TextAlignment = TextAlignment.Left;
+            textBlockTop.VerticalAlignment = VerticalAlignment.Center;
+
+            textBlockBottom = new TextBlock();
+            UIHelper.InitializeUI(
+                new Point(-0.5 * info.SortingBoxSize.Width, -0.5 * info.SortingBoxSize.Height), 0, 1,
+                new Size(info.SortingBoxSize.Width, info.SortingBoxSize.Height),
+                textBlockBottom);
+
+            textBlockBottom.Foreground = new SolidColorBrush(Colors.White);
+            textBlockBottom.Text = " " + this.name;
+            textBlockBottom.FontFamily = new FontFamily("Comic Sans MS");
+            textBlockBottom.FontSize = 24;
+            textBlockBottom.FontWeight = FontWeights.Bold;
+            textBlockBottom.TextAlignment = TextAlignment.Left;
+            textBlockBottom.RenderTransformOrigin = RenderTransformOrigin = new Point(.25, .25);
+            RotateTransform rotateTransform = new RotateTransform();
+            rotateTransform.Angle = 180;
+            textBlockBottom.RenderTransform = rotateTransform;
+
+            this.Children.Add(textBlockTop);
+            this.Children.Add(textBlockBottom);
+
+            Canvas.SetZIndex(background, 3);
+            Canvas.SetZIndex(textBlockTop, 2);
+            Canvas.SetZIndex(textBlockBottom, 1);
+
         }
         /// <summary>
         /// Deinitialize sorting box
