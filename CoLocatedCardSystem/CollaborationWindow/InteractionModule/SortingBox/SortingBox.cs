@@ -129,7 +129,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 
             textBlockBottom = new TextBlock();
             UIHelper.InitializeUI(
-                new Point(-0.5 * info.SortingBoxSize.Width, -0.5 * info.SortingBoxSize.Height), 0, 1,
+                new Point(.5 * info.SortingBoxSize.Width, .5 * info.SortingBoxSize.Height), 180, 1,
                 new Size(info.SortingBoxSize.Width, info.SortingBoxSize.Height),
                 textBlockBottom);
 
@@ -139,10 +139,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             textBlockBottom.FontSize = 24;
             textBlockBottom.FontWeight = FontWeights.Bold;
             textBlockBottom.TextAlignment = TextAlignment.Left;
-            textBlockBottom.RenderTransformOrigin = RenderTransformOrigin = new Point(.25, .25);
-            RotateTransform rotateTransform = new RotateTransform();
-            rotateTransform.Angle = 180;
-            textBlockBottom.RenderTransform = rotateTransform;
 
             this.Children.Add(textBlockTop);
             this.Children.Add(textBlockBottom);
