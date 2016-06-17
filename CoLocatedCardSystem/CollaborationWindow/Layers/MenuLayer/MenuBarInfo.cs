@@ -103,7 +103,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         private static MenuBarInfo InitAlex()
         {
             MenuBarInfo info = new MenuBarInfo();
-            info.size = new Size(800, 60);
             info.position = new Point(info.Size.Height, (Screen.HEIGHT - info.Size.Width) / 2);
             info.scale = 1;
             info.rotate = 90;
@@ -116,7 +115,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         private static MenuBarInfo InitBen()
         {
             MenuBarInfo info = new MenuBarInfo();
-            info.size = new Size(800, 60);
             info.position = new Point((Screen.WIDTH - info.size.Width) / 2, Screen.HEIGHT - info.size.Height);
             info.scale = 1;
             info.rotate = 0;
@@ -129,7 +127,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         private static MenuBarInfo InitChris()
         {
             MenuBarInfo info = new MenuBarInfo();
-            info.size = new Size(800, 60);
             info.position = new Point(Screen.WIDTH - info.size.Height, (Screen.HEIGHT + info.Size.Width) / 2);
             info.scale = 1;
             info.rotate = 270;
