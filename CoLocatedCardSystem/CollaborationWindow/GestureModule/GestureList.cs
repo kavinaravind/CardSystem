@@ -38,5 +38,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
         internal Gesture[] GetGesture() {
             return list.ToArray();
         }
+        /// <summary>
+        /// Remove all the gestures from the gesture list.
+        /// </summary>
+        internal void Clear() {
+            list.Clear();
+        }
     }
 }

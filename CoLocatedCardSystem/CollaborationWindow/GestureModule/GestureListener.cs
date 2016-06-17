@@ -8,7 +8,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
 {
     class GestureListener
     {
-        GestureListenerController gestureListenerController;
+        protected GestureListenerController gestureListenerController;
         public GestureListener(GestureListenerController gCtrlers)
         {
             this.gestureListenerController = gCtrlers;

@@ -13,7 +13,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
     class CardLayerController
     {
         CardLayer cardLayer;
-        private ViewControllers viewControllers;
+        CentralControllers controllers;
         Dictionary<Card, int> zIndexList = new Dictionary<Card, int>();
 
         internal CardLayer CardLayer
@@ -24,9 +24,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             }
         }
 
-        public CardLayerController(ViewControllers vctrl)
+        public CardLayerController(CentralControllers ctrls)
         {
-            this.viewControllers = vctrl;
+            this.controllers = ctrls;
         }
         /// <summary>
         /// Initialize the CardLayer
@@ -49,7 +49,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// Load the card list to the card layer
         /// </summary>
         /// <param name="cards"></param>
-        internal async Task LoadCards(Card[] cards)
+        internal async void LoadCards(Card[] cards)
         {
             int index = zIndexList.Count();//There might be cards in the list before load the cards
             foreach (Card card in cards) {
@@ -66,7 +66,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         {
             if (zIndexList.Keys.Contains(card)) {
                 int currentIndex = zIndexList[card];
-                foreach (Card child in cardLayer.Children)
+                foreach (Card child in zIndexList.Keys.ToList())
                 {
                     if (zIndexList[child] > currentIndex)
                     {

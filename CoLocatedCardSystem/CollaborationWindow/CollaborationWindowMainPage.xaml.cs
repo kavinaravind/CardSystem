@@ -23,8 +23,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
     /// </summary>
     public sealed partial class CollaborationWindowMainPage : Page
     {
-        ViewControllers viewControllers;
-        InteractionControllers interactionControllers;
+        CentralControllers controllers;
         public CollaborationWindowMainPage()
         {
             this.InitializeComponent();
@@ -41,21 +40,21 @@ namespace CoLocatedCardSystem.CollaborationWindow
             Container.Height = this.Height;
             ApplicationView.PreferredLaunchViewSize = new Size(this.Width, this.Height);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
-            viewControllers = new ViewControllers();
-            interactionControllers = new InteractionControllers();
-            viewControllers.Init(Screen.WIDTH, Screen.HEIGHT,interactionControllers);
-            interactionControllers.Init(viewControllers);
+            controllers = new CentralControllers();
+            controllers.Init(Screen.WIDTH, Screen.HEIGHT);
 
-            Container.Children.Add(viewControllers.GetBaseLayer());
-            Container.Children.Add(viewControllers.GetCardLayer());
-            Container.Children.Add(viewControllers.GetSortingBoxLayer());
-            Container.Children.Add(viewControllers.GetMenuLayer());
+            Container.Children.Add(controllers.BaseLayerController.BaseLayer);
+            Container.Children.Add(controllers.CardLayerController.CardLayer);
+            Container.Children.Add(controllers.SortingBoxLayerController.SortingBoxLayer);
+            Container.Children.Add(controllers.MenuLayerController.MenuLayer);
         }
         public void Deinit()
         {
-            viewControllers.Deinit();
-            Container.Children.Remove(viewControllers.GetBaseLayer());
-            interactionControllers.Deinit();
+            controllers.Deinit();
+            Container.Children.Remove(controllers.BaseLayerController.BaseLayer);
+            Container.Children.Remove(controllers.CardLayerController.CardLayer);
+            Container.Children.Remove(controllers.SortingBoxLayerController.SortingBoxLayer);
+            Container.Children.Remove(controllers.MenuLayerController.MenuLayer);
         }
     }
 }

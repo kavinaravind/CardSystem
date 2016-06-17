@@ -16,6 +16,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         KeyboardButtonAttr keyboardButtonInfo=new KeyboardButtonAttr();
         KeyboardAttr keyboardInfo = new KeyboardAttr();
         InputTextBox inputTextBlockInfo = new InputTextBox();
+        DeleteButtonAttr deleteButtonInfo = new DeleteButtonAttr();
         protected static Dictionary<User, MenuBarInfo> menubarInfoList = new Dictionary<User, MenuBarInfo>();
         internal Size Size
         {
@@ -64,6 +65,18 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             get
             {
                 return inputTextBlockInfo;
+            }
+        }
+        internal DeleteButtonAttr DeleteButtonInfo
+        {
+            get
+            {
+                return deleteButtonInfo;
+            }
+
+            set
+            {
+                deleteButtonInfo = value;
             }
         }
 
@@ -179,6 +192,25 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         internal class InputTextBox {
             Point position = new Point(0, -230);
             Size size = new Size(600, 20);
+            public Point Position
+            {
+                get
+                {
+                    return position;
+                }
+            }
+            public Size Size
+            {
+                get
+                {
+                    return size;
+                }
+            }
+        }
+
+        internal class DeleteButtonAttr {
+            Point position = new Point(250, 0);
+            Size size = new Size(150, 60);
             public Point Position
             {
                 get

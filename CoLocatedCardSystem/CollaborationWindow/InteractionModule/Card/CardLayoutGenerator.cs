@@ -54,7 +54,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 for (int i = 0; i < cardNum; i++)
                 {
                     Point mv = new Point(vector[user].X * interval * i, vector[user].Y * interval * i);
-                    cards[i].Move(mv);
+                    cards[i].MoveBy(mv);
                     cards[i].Rotate(rand.Next(5) - 2.5);
                 }
             }

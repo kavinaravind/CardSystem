@@ -23,7 +23,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             attachedCard = card;
         }
 
-        internal virtual async Task Init() {
+        internal virtual async void Init() {
 
         }
     }

@@ -110,6 +110,8 @@
     <Compile Include="CollaborationWindow\DocumentModule\NLP\StopwordMarker.cs" />
     <Compile Include="CollaborationWindow\DocumentModule\Token.cs" />
     <Compile Include="CollaborationWindow\DocumentModule\WordType.cs" />
+    <Compile Include="CollaborationWindow\GestureModule\DeletingBox\DeletingBoxGesture.cs" />
+    <Compile Include="CollaborationWindow\GestureModule\DeletingBox\DeletingBoxListener.cs" />
     <Compile Include="CollaborationWindow\GestureModule\Gesture.cs" />
     <Compile Include="CollaborationWindow\GestureModule\GestureController.cs" />
     <Compile Include="CollaborationWindow\GestureModule\GestureEventArgs.cs" />
@@ -120,7 +122,7 @@
     <Compile Include="CollaborationWindow\GestureModule\Sorting\SortingGesture.cs" />
     <Compile Include="CollaborationWindow\GestureModule\GestureStatus.cs" />
     <Compile Include="CollaborationWindow\GestureModule\Sorting\SortingListener.cs" />
-    <Compile Include="CollaborationWindow\InteractionControllers.cs" />
+    <Compile Include="CollaborationWindow\CentralControllers.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\Card\Card.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\Card\CardController.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\Card\CardInfo.cs" />
@@ -148,13 +150,13 @@
     <Compile Include="CollaborationWindow\Layers\MenuLayer\MenuLayerController.cs" />
     <Compile Include="CollaborationWindow\Layers\SortingBoxLayer\SortingBoxLayer.cs" />
     <Compile Include="CollaborationWindow\Layers\SortingBoxLayer\SortingBoxLayerController.cs" />
-    <Compile Include="CollaborationWindow\Parameter\FilePath.cs" />
-    <Compile Include="CollaborationWindow\Parameter\Screen.cs" />
-    <Compile Include="CollaborationWindow\Parameter\UIHelper.cs" />
+    <Compile Include="CollaborationWindow\Tool\Coordination.cs" />
+    <Compile Include="CollaborationWindow\Tool\FilePath.cs" />
+    <Compile Include="CollaborationWindow\Tool\Screen.cs" />
+    <Compile Include="CollaborationWindow\Tool\UIHelper.cs" />
     <Compile Include="CollaborationWindow\TouchModule\Touch.cs" />
     <Compile Include="CollaborationWindow\TouchModule\TouchController.cs" />
     <Compile Include="CollaborationWindow\TouchModule\TouchList.cs" />
-    <Compile Include="CollaborationWindow\ViewControllers.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

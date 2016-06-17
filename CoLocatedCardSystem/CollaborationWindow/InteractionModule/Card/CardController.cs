@@ -10,10 +10,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
     public class CardController
     {
-        InteractionControllers interactionControllers;
+        CentralControllers controllers;
         SemanticCardList list;
-        public CardController(InteractionControllers itcCtrlr) {
-            this.interactionControllers = itcCtrlr;
+        public CardController(CentralControllers ctrls) {
+            this.controllers = ctrls;
         }
         /// <summary>
         /// Initialize the cardController with a list of documents
@@ -76,25 +76,25 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Create a touch and pass it to the interaction controller.
         /// </summary>
         /// <param name="p"></param>
-        internal void PointerDown(PointerPoint p, Card card, Type type)
+        internal void PointerDown(PointerPoint localPoint, PointerPoint globalPoint, Card card, Type type)
         {
-            interactionControllers.OnTouchDown(p, card, type);
+            controllers.TouchController.TouchDown(localPoint,globalPoint, card, type);
         }
         /// <summary>
         /// Update the touch point
         /// </summary>
         /// <param name="p"></param>
-        internal void PointerMove(PointerPoint p)
+        internal void PointerMove(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            interactionControllers.OnTouchMove(p);
+            controllers.TouchController.TouchMove(localPoint, globalPoint);
         }
         /// <summary>
         /// Lift the touch layer
         /// </summary>
         /// <param name="p"></param>
-        internal void PointerUp(PointerPoint p)
+        internal void PointerUp(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            interactionControllers.OnTouchUp(p);
+            controllers.TouchController.TouchUp(localPoint, globalPoint);
         }
         /// <summary>
         /// Update the ZIndex of the card. Move the card to the top.
@@ -102,7 +102,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="card"></param>
         internal void MoveCardToTop(Card card)
         {
-            interactionControllers.MoveCardToTop(card);
+            controllers.CardLayerController.MoveCardToTop(card);
         }
     }
 }

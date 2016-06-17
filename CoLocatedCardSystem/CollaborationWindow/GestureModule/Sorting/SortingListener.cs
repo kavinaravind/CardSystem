@@ -14,7 +14,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
         {
 
         }
-
+        public override void ContinueGesture(object sender, GestureEventArgs e)
+        {
+            base.ContinueGesture(sender, e);
+            SemanticCard card = (SemanticCard)e.Senders[0];
+            card.Rotate(10);//for debug
+        }
         public override void TerminateGesture(object sender, GestureEventArgs e)
         {
             base.TerminateGesture(sender, e);

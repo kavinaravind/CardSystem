@@ -20,9 +20,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         internal async Task AddCard(Document doc,User user, CardController cardController) {
             string cardID = Guid.NewGuid().ToString();
             SemanticCard card = new SemanticCard(cardController);
+            list.Add(cardID, card);
             card.Init(cardID, user);
             await card.LoadDocument(doc);
-            list.Add(cardID, card);
         }
         /// <summary>
         /// Remove a card based on its id
@@ -35,7 +35,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Delete all cards in the card list
         /// </summary>
         internal void Clear() {
-
+            list.Clear();
         }
         /// <summary>
         /// Get the card by cardID

@@ -4,16 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI.Core;
 using Windows.UI.Input;
+using Windows.UI.Xaml;
 
 namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
 {
     public class Touch
     {
         uint touchID;
-        PointerPoint currentPoint;//The PointerPoint associated with the touch                
-        Point startPoint;//The position where the touch starts
-        Point endPoint;//The position where the touch ends
+        Point currentLocalPoint;//The local coordination of the touch point
+        Point currentGlobalPoint;//The global coordination of the touch point
+        Point startPoint;//The position where the touch starts. Global cooridnation
+        Point endPoint;//The position where the touch ends. Global cooridnation
         object sender;// The object which fire the touch
         Type type;// The type of the object
         DateTime startTime;//The start time stamp when the touch starts
@@ -23,14 +26,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
             get
             {
                 return touchID;
-            }
-        }
-
-        public PointerPoint CurrentPoint
-        {
-            get
-            {
-                return currentPoint;
             }
         }
 
@@ -82,18 +77,36 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
             }
         }
 
+        public Point CurrentLocalPoint
+        {
+            get
+            {
+                return currentLocalPoint;
+            }
+        }
+
+        public Point CurrentGlobalPoint
+        {
+            get
+            {
+                return currentGlobalPoint;
+            }
+        }
+
         /// <summary>
         /// Construct the touch point
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="localPoint"></param>
         /// <param name="sender"></param>
         /// <param name="type"></param>
-        public void Init(PointerPoint position, object sender, Type type) {
-            this.touchID = position.PointerId;
+        public void Init(PointerPoint localPoint, PointerPoint globalPoint, object sender, Type type)
+        {
+            this.touchID = localPoint.PointerId;
             this.sender = sender;
             this.type = type;
-            this.currentPoint = position;
-            this.startPoint = position.Position;
+            this.currentLocalPoint = localPoint.Position;
+            this.currentGlobalPoint = globalPoint.Position;
+            this.startPoint = globalPoint.Position;
             this.startTime = DateTime.Now;
         }
         /// <summary>
@@ -104,32 +117,52 @@ namespace CoLocatedCardSystem.CollaborationWindow.TouchModule
         {
             Touch newTouch = new Touch();
             newTouch.touchID = this.touchID;
-            newTouch.currentPoint = this.currentPoint;
             newTouch.startPoint = this.startPoint;
             newTouch.endPoint = this.endPoint;
             newTouch.sender = this.sender;
             newTouch.type = this.type;
             newTouch.startTime = this.startTime;
             newTouch.endTime = this.endTime;
+            newTouch.currentLocalPoint = this.currentLocalPoint;
+            newTouch.currentGlobalPoint = this.currentGlobalPoint;
             return newTouch;
         }
 
         /// <summary>
         /// Update a touch point
         /// </summary>
-        /// <param name="point"></param>
-        public void UpdateTouchPoint(PointerPoint point) {
-
+        /// <param name="touchPoint"></param>
+        public void UpdateTouchPoint(PointerPoint localPoint, PointerPoint globalPoint) {
+            currentLocalPoint = localPoint.Position;
+            currentGlobalPoint = globalPoint.Position;
         }
         /// <summary>
         /// Call this method when the finger leave the screen.
         /// </summary>
-        /// <param name="position"></param>
-        public Touch End(PointerPoint position)
+        /// <param name="touchPoint"></param>
+        public Touch End(PointerPoint localPoint, PointerPoint globalPoint)
         {
-            this.endPoint = position.Position;
+            currentLocalPoint = localPoint.Position;
+            currentGlobalPoint = globalPoint.Position;
+            this.endPoint = localPoint.Position;
             this.endTime = DateTime.Now;
             return this;
+        }
+        /// <summary>
+        /// Get how long the touch has been moved on the screen, in second.
+        /// </summary>
+        /// <returns></returns>
+        public double GetLife() {
+            //To do
+            return 0;
+        }
+        /// <summary>
+        /// Get the distance the touch has moved. In global coordination. Unit is pixel.
+        /// </summary>
+        /// <returns></returns>
+        public double GetTouchDistance() {
+            //To do
+            return 0;
         }
     }
 }

@@ -11,6 +11,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
     {
         private List<Touch> associatedTouches;
         private List<object> associatedObjects;
+        private List<Type> associatedObjectTypes;
         internal List<Touch> AssociatedTouches
         {
             get
@@ -35,7 +36,18 @@ namespace CoLocatedCardSystem.CollaborationWindow.GestureModule
                 associatedObjects = value;
             }
         }
-        internal List<Type> AssociatedObjectTypes;
+        public List<Type> AssociatedObjectTypes
+        {
+            get
+            {
+                return associatedObjectTypes;
+            }
+
+            set
+            {
+                associatedObjectTypes = value;
+            }
+        }
         public GestureStatus Status
         {
             get
