@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using VirtualKeyboard;
 using Windows.Foundation;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
@@ -17,6 +18,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
     {
         OnScreenKeyBoard virtualKeyboard;
         TextBox textbox;
+        TextBlock notificationBlock;
+        Grid grid;
         Button createSortingBoxButton;
         MenuLayerController menuLayerController;
         User owner;
@@ -104,6 +107,16 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             deleteButton.PointerExited += PointerUp;
             deleteButton.PointerReleased += PointerUp;
             UIHelper.InitializeUI(info.DeleteButtonInfo.Position, 0, 1, info.DeleteButtonInfo.Size, deleteButton);
+            //Initialize the notificationBlock + Grid
+            grid = new Grid();
+            notificationBlock = new TextBlock();
+            grid.Background = new SolidColorBrush(Colors.White);
+            notificationBlock.Text = "The Sorting Box will be deleted when it's dragged into this.";
+            notificationBlock.TextWrapping = TextWrapping.Wrap;
+            Point position = new Point(250, -60);
+            UIHelper.InitializeUI(position, 0, 1, info.DeleteButtonInfo.Size, grid);
+            grid.Children.Add(notificationBlock);
+            grid.Visibility = Visibility.Collapsed;
             //Initialize the menubar
             ImageBrush brush = new ImageBrush();
             brush.ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/menu_bg.png"));
@@ -112,6 +125,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             this.Children.Add(virtualKeyboard);
             this.Children.Add(textbox);
             this.Children.Add(deleteButton);
+            this.Children.Add(grid);
         }
 
         /// <summary>
@@ -169,6 +183,21 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
         /// <param name="e"></param>
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+        /// <summary>
+        /// Sets the delete notification to appear if the user hovers over the delete button
+        /// </summary>
+        public void setGridVisibility()
+        {
+            if (grid.Visibility.Equals(Visibility.Visible))
+            {
+                grid.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                grid.Visibility = Visibility.Visible;
+            }
         }
         /// <summary>
         /// Ask the interaction module to add a sorting box

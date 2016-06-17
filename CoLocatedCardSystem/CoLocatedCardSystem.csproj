@@ -144,6 +144,7 @@
     <Compile Include="CollaborationWindow\Layers\CardLayer\CardLayerController.cs" />
     <Compile Include="CollaborationWindow\Layers\LinkingLayer\LinkingLayer.cs" />
     <Compile Include="CollaborationWindow\Layers\LinkingLayer\LinkingLayerController.cs" />
+    <Compile Include="CollaborationWindow\Layers\MenuLayer\DeleteButton.cs" />
     <Compile Include="CollaborationWindow\Layers\MenuLayer\MenuBar.cs" />
     <Compile Include="CollaborationWindow\Layers\MenuLayer\MenuBarInfo.cs" />
     <Compile Include="CollaborationWindow\Layers\MenuLayer\MenuLayer.cs" />
