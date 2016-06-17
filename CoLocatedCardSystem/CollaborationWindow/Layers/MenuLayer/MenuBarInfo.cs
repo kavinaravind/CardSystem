@@ -167,8 +167,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
 
         internal class KeyboardAttr
         {
-            Point position = new Point(0, -200 * Screen.SCALE_FACTOR);
-            Size size = new Size(600 * Screen.SCALE_FACTOR, 200 * Screen.SCALE_FACTOR);
+            Point position = new Point(0, -250 * Screen.SCALE_FACTOR);
+            Size size = new Size(700 * Screen.SCALE_FACTOR, 250 * Screen.SCALE_FACTOR);
             public Point Position
             {
                 get
@@ -187,8 +187,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
 
         internal class InputTextBox
         {
-            Point position = new Point(0 * Screen.SCALE_FACTOR, -230 * Screen.SCALE_FACTOR);
-            Size size = new Size(600 * Screen.SCALE_FACTOR, 20 * Screen.SCALE_FACTOR);
+            Point position = new Point(0 * Screen.SCALE_FACTOR, -270 * Screen.SCALE_FACTOR);
+            Size size = new Size(700 * Screen.SCALE_FACTOR, 20 * Screen.SCALE_FACTOR);
             public Point Position
             {
                 get
