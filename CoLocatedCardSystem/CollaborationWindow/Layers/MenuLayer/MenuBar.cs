@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using VirtualKeyboard;
 using Windows.Foundation;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
@@ -77,6 +78,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             createSortingBoxButton.PointerMoved += PointerMove;
             createSortingBoxButton.PointerExited += PointerUp;
             createSortingBoxButton.PointerReleased += PointerUp;
+            createSortingBoxButton.IsTextScaleFactorEnabled = false;
             UIHelper.InitializeUI(info.KeyboardButtonInfo.Position, 0, 1, info.KeyboardButtonInfo.Size, createSortingBoxButton);
             //Initialize the text block
             textbox = new TextBox();
@@ -84,6 +86,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             UIHelper.InitializeUI(info.InputTextBoxInfo.Position, 0, 1, info.InputTextBoxInfo.Size, textbox);
             textbox.Visibility = Visibility.Collapsed;
             textbox.TextChanged += Textbox_TextChanged;
+            textbox.IsEnabled = false;
             //Initialize the keyboard to create the sorting box
             virtualKeyboard = new OnScreenKeyBoard();
             virtualKeyboard.InitialLayout = KeyboardLayouts.English;
@@ -103,6 +106,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             deleteButton.PointerMoved += PointerMove;
             deleteButton.PointerExited += PointerUp;
             deleteButton.PointerReleased += PointerUp;
+            deleteButton.IsTextScaleFactorEnabled = false;
             UIHelper.InitializeUI(info.DeleteButtonInfo.Position, 0, 1, info.DeleteButtonInfo.Size, deleteButton);
             //Initialize the menubar
             ImageBrush brush = new ImageBrush();

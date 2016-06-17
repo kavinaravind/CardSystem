@@ -187,8 +187,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
 
         internal class InputTextBox
         {
-            Point position = new Point(0 * Screen.SCALE_FACTOR, -270 * Screen.SCALE_FACTOR);
-            Size size = new Size(700 * Screen.SCALE_FACTOR, 20 * Screen.SCALE_FACTOR);
+            Point position = new Point(0 * Screen.SCALE_FACTOR, -280 * Screen.SCALE_FACTOR);
+            Size size = new Size(700 * Screen.SCALE_FACTOR, 30 * Screen.SCALE_FACTOR);
             public Point Position
             {
                 get
