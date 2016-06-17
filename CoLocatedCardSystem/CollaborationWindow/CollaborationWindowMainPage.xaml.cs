@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -32,8 +33,11 @@ namespace CoLocatedCardSystem.CollaborationWindow
 
         public void Init()
         {
-            Screen.WIDTH = (int)ApplicationView.GetForCurrentView().VisibleBounds.Width;
-            Screen.HEIGHT = (int)ApplicationView.GetForCurrentView().VisibleBounds.Height;
+            var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
+            var scaleFactor = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
+            var size = new Size(bounds.Width * scaleFactor, bounds.Height * scaleFactor);
+            Screen.WIDTH = (int)size.Width;
+            Screen.HEIGHT = (int)size.Height;
             System.Diagnostics.Debug.WriteLine(Screen.WIDTH + " " + Screen.HEIGHT);
             this.Width = Screen.WIDTH;
             this.Height = Screen.HEIGHT;
