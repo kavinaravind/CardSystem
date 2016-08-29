@@ -122,7 +122,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             textBlockTop.Foreground = new SolidColorBrush(Colors.White);
             textBlockTop.Text = " " + this.name;
             textBlockTop.FontFamily = new FontFamily("Comic Sans MS");
-            textBlockTop.FontSize = 24;
+            textBlockTop.FontSize = 18;
             textBlockTop.FontWeight = FontWeights.Bold;
             textBlockTop.TextAlignment = TextAlignment.Left;
             textBlockTop.VerticalAlignment = VerticalAlignment.Center;
@@ -136,7 +136,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             textBlockBottom.Foreground = new SolidColorBrush(Colors.White);
             textBlockBottom.Text = " " + this.name;
             textBlockBottom.FontFamily = new FontFamily("Comic Sans MS");
-            textBlockBottom.FontSize = 24;
+            textBlockBottom.FontSize = 18;
             textBlockBottom.FontWeight = FontWeights.Bold;
             textBlockBottom.TextAlignment = TextAlignment.Left;
 
@@ -358,10 +358,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         private bool IsValideManipulation(Point trans, double rotat, double scale)
         {
             bool isValid = true;
-            if (scale * this.sortingBoxScale * this.Width >= maxSize.Width ||
-                scale * this.sortingBoxScale * this.Height >= maxSize.Height ||
-                scale * this.sortingBoxScale * this.Width <= minSize.Width ||
-                scale * this.sortingBoxScale * this.Height <= minSize.Height)
+            if (scale * this.sortingBoxScale * this.Width > maxSize.Width ||
+                scale * this.sortingBoxScale * this.Height > maxSize.Height ||
+                scale * this.sortingBoxScale * this.Width < minSize.Width ||
+                scale * this.sortingBoxScale * this.Height < minSize.Height)
             {
                 isValid = false;
             }

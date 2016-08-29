@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
-    class Layer3:LayerBase
+    class DocumentCardLayer2 : DocumentCardLayerBase
     {
-        public Layer3(Card card) : base(card)
+        public DocumentCardLayer2(Card card) : base(card)
         {
         }
+
 
         internal override async Task SetArticle(Document doc)
         {

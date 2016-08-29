@@ -51,7 +51,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.Layers
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
                 this.Children.Add(card);
-                SemanticCard sCard = card as SemanticCard;
+                DocumentCard sCard = card as DocumentCard;
             });
         }
 

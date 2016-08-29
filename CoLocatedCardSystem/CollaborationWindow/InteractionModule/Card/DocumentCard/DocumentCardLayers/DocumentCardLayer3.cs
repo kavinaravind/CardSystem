@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
-    class Layer4:LayerBase
+    class DocumentCardLayer3 : DocumentCardLayerBase
     {
-        public Layer4(Card card) : base(card)
+        public DocumentCardLayer3(Card card) : base(card)
         {
         }
 

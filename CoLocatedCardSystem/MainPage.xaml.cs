@@ -14,26 +14,74 @@ namespace CoLocatedCardSystem
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public static MainPage Current;
+
         public MainPage()
         {
             this.InitializeComponent();
             Init();
         }
-
+        /// <summary>
+        /// Initialize the MainPage
+        /// </summary>
         internal async void Init()
         {
-            CoreApplicationView newView = CoreApplication.CreateNewView();
-            int newViewId = 0;
-            await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            Current = this;
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
+        }
+        /// <summary>
+        /// Callback method of the start button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void startButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.CollaborationWindowLifeControl == null && this.SecondaryWindowLifeControl == null)
             {
-                Frame frame = new Frame();
-                frame.Navigate(typeof(CollaborationWindow.CollaborationWindowMainPage), null);
-                Window.Current.Content = frame;
-                // You have to activate the window in order to show it later.
-                Window.Current.Activate();
-                newViewId = ApplicationView.GetForCurrentView().Id;
-            });
-            bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
+                CoreApplicationView newView = CoreApplication.CreateNewView();
+                int collaborationPageID = 0;
+                CollaborationWindow.CollaborationWindowLifeEventControl cwLifeEventControl = null;
+                await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    this.CollaborationWindowLifeControl = CollaborationWindow.CollaborationWindowLifeEventControl.CreateForCurrentView();
+                    cwLifeEventControl = CollaborationWindow.CollaborationWindowLifeEventControl.CreateForCurrentView();
+                    var frame = new Frame();
+                    frame.Navigate(typeof(CollaborationWindow.CollaborationWindowMainPage), cwLifeEventControl);
+                    Window.Current.Content = frame;
+                    // You have to activate the window in order to show it later.
+                    Window.Current.Activate();
+                    collaborationPageID = ApplicationView.GetForCurrentView().Id;
+                });
+                newView = CoreApplication.CreateNewView();
+                int secondaryPageID = 0;
+                SecondaryWindow.SecondaryWindowLifeEventControl swLifeEventControl = null;
+                await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    this.SecondaryWindowLifeControl = SecondaryWindow.SecondaryWindowLifeEventControl.CreateForCurrentView();
+                    swLifeEventControl = SecondaryWindow.SecondaryWindowLifeEventControl.CreateForCurrentView();
+                    var frame = new Frame();
+                    frame.Navigate(typeof(SecondaryWindow.CollaborationWindowSecondaryPage), swLifeEventControl);
+                    Window.Current.Content = frame;
+                    // You have to activate the window in order to show it later.
+                    Window.Current.Activate();
+                    secondaryPageID = ApplicationView.GetForCurrentView().Id;
+                });
+                bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(secondaryPageID);
+                viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(collaborationPageID);
+
+                try
+                {
+                    // Show the view on a second display (if available) or on the primary display
+                    await ProjectionManager.StartProjectingAsync(SecondaryWindowLifeControl.Id, ApplicationView.GetForCurrentView().Id);
+
+                    swLifeEventControl.StartViewInUse();
+                    cwLifeEventControl.StartViewInUse();
+
+                }
+                catch (InvalidOperationException)
+                {
+                }
+            }
         }
     }
 }

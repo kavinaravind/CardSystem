@@ -1,4 +1,5 @@
 ﻿using CoLocatedCardSystem.CollaborationWindow.DocumentModule;
+using CoLocatedCardSystem.CollaborationWindow.FileLoaderModule;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,67 +12,40 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
     public class CardController
     {
         CentralControllers controllers;
-        SemanticCardList list;
+        ItemCardController itemCardController = null;
+        DocumentCardController semanticCardController = null;
+        ClusterCardController clusterCardController = null;
+        PlotCardController plotCardController = null;
+
         public CardController(CentralControllers ctrls) {
             this.controllers = ctrls;
         }
-        /// <summary>
-        /// Initialize the cardController with a list of documents
-        /// </summary>
-        /// <param name="documents"></param>
-        public async Task<Card[]> Init(Document[] documents)
+        internal async Task<Card[]> Init(Document[] docs, Item[] items, FileLoaderModule.Attribute[] attrs)
         {
-            list = new SemanticCardList();
-            foreach (User user in UserInfo.GetLiveUsers())
+            itemCardController = new ItemCardController(controllers);
+            semanticCardController = new DocumentCardController(controllers);
+            List<Card> cardToShow = new List<Card>();
+            if (docs != null)
             {
-                foreach (Document doc in documents)
+                Card[] docCards = await semanticCardController.Init(docs);
+                foreach (Card c in docCards)
                 {
-                    await list.AddCard(doc, user, this);
+                    cardToShow.Add(c);
                 }
-                Card[] cardsToBePlaced = GetCard(user);
-                CardLayoutGenerator.ApplyLayout(cardsToBePlaced, user);
             }
-            return list.GetCard();
+            if (items != null)
+            {
+                Card[] itemCards = await itemCardController.Init(items);
+                foreach (Card c in itemCards)
+                {
+                    cardToShow.Add(c);
+                }
+            }
+            return cardToShow.ToArray();
         }
-        /// <summary>
-        /// Destroy the card list
-        /// </summary>
-        public void Deinit() {
-            list.Clear();
-        }
-        /// <summary>
-        /// Add a card to the user
-        /// </summary>
-        /// <param name="doc"></param>
-        /// <param name="user"></param>
-        public void AddCard(Document doc, User user) {
-            //TO DO: add a document to the user. Information is in user info
-            UserInfo userInfo = UserInfo.GetUserInfo(user);
-
-        }
-        /// <summary>
-        /// Get card by id
-        /// </summary>
-        /// <param name="cardID"></param>
-        /// <returns></returns>
-        public Card GetCard(string cardID) {
-            return list.GetCard(cardID);
-        }
-        /// <summary>
-        /// Get all the cards.
-        /// </summary>
-        /// <returns></returns>
-        public Card[] GetCard() {
-            return list.GetCard();
-        }
-        /// <summary>
-        /// Get all the cards belong to a user. The returned results are references.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public Card[] GetCard(User user) {
-            return list.GetCard(user);
-        }
+        internal async void Deinit() {
+            itemCardController.Deinit();
+        }      
         /// <summary>
         /// Create a touch and pass it to the interaction controller.
         /// </summary>

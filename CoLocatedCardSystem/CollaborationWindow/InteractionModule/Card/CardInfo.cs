@@ -73,7 +73,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         private static CardInfo InitAlex()
         {
             CardInfo cardInfo = new CardInfo();
-            cardInfo.cardColor = Colors.Red;
+            cardInfo.cardColor = Colors.Silver;
             cardInfo.cardPosition = new Point(0, 0);
             cardInfo.cardScale = 1;
             cardInfo.cardRotation = 1;
@@ -87,7 +87,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         private static CardInfo InitBen()
         {
             CardInfo cardInfo = new CardInfo();
-            cardInfo.cardColor = Colors.Green;
+            cardInfo.cardColor = Colors.Silver;
             cardInfo.cardPosition = new Point(0, 0);
             cardInfo.cardScale = 1;
             cardInfo.cardRotation = 1;
@@ -100,7 +100,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         private static CardInfo InitChris()
         {
             CardInfo cardInfo = new CardInfo();
-            cardInfo.cardColor = Colors.Blue;
+            cardInfo.cardColor = Colors.Silver;
             cardInfo.cardPosition = new Point(0, 0);
             cardInfo.cardScale = 1;
             cardInfo.cardRotation = 1;
@@ -113,7 +113,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         private static CardInfo InitDanny()
         {
             CardInfo cardInfo = new CardInfo();
-            cardInfo.cardColor = Colors.Yellow;
+            cardInfo.cardColor = Colors.Silver;
             cardInfo.cardPosition = new Point(0, 0);
             cardInfo.cardScale = 1;
             cardInfo.cardRotation = 1;

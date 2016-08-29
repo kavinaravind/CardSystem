@@ -40,11 +40,8 @@ namespace CoLocatedCardSystem.CollaborationWindow
             this.Height = Screen.HEIGHT;
             Container.Width = this.Width;
             Container.Height = this.Height;
-            ApplicationView.PreferredLaunchViewSize = new Size(this.Width, this.Height);
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
             controllers = new CentralControllers();
             controllers.Init(Screen.WIDTH, Screen.HEIGHT);
-
             Container.Children.Add(controllers.BaseLayerController.BaseLayer);
             Container.Children.Add(controllers.CardLayerController.CardLayer);
             Container.Children.Add(controllers.SortingBoxLayerController.SortingBoxLayer);

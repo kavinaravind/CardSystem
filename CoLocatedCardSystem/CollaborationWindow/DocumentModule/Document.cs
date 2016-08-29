@@ -48,13 +48,19 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         public DateTime GetTime() {
             return DateTime.Now;
         }
-
+        /// <summary>
+        /// Get the author of the article.
+        /// </summary>
+        /// <returns></returns>
+        public string GetAuthor() {
+            return rawDocument.Author;
+        }
         /// <summary>
         /// Get the text content of the article
         /// </summary>
         /// <returns></returns>
         public string GetContent() {
-            return "";
+            return rawDocument.Content;
         }
         /// <summary>
         /// Check if the article mention a person

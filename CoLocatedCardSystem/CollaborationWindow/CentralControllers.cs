@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Windows.UI.Input;
 using System.Collections.Generic;
 using CoLocatedCardSystem.CollaborationWindow.Layers;
+using CoLocatedCardSystem.CollaborationWindow.FileLoaderModule;
+using CoLocatedCardSystem.CollaborationWindow.ClusterModule;
 
 namespace CoLocatedCardSystem.CollaborationWindow
 {
@@ -16,24 +18,37 @@ namespace CoLocatedCardSystem.CollaborationWindow
     public class CentralControllers
     {
         DocumentController documentController;
+        TableController tableController;
         CardController cardController;
         SortingBoxController sortingBoxController;
         TouchController touchController;
         GestureController gestureController;
+        ClusterController clusterController;
         GestureListenerController listenerController;
-
-        CentralControllers interactionControllers;
         BaseLayerController baseLayerController;
         CardLayerController cardLayerController;
         LinkingLayerController linkingLayerController;
         MenuLayerController menuLayerController;
         SortingBoxLayerController sortingBoxLayerController;
 
+        CentralControllers centralControllers;
         internal DocumentController DocumentController
         {
             get
             {
                 return documentController;
+            }
+        }
+        internal TableController TableController
+        {
+            get
+            {
+                return tableController;
+            }
+
+            set
+            {
+                tableController = value;
             }
         }
         public CardController CardController
@@ -62,6 +77,18 @@ namespace CoLocatedCardSystem.CollaborationWindow
             get
             {
                 return gestureController;
+            }
+        }
+        internal ClusterController ClusterController
+        {
+            get
+            {
+                return clusterController;
+            }
+
+            set
+            {
+                clusterController = value;
             }
         }
         internal GestureListenerController ListenerController
@@ -106,6 +133,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
                 return sortingBoxLayerController;
             }
         }
+
         /// <summary>
         /// Initialize all documents
         /// </summary>
@@ -113,27 +141,32 @@ namespace CoLocatedCardSystem.CollaborationWindow
         {
             //Initialize controllers
             documentController = new DocumentController(this);
+            tableController = new TableController(this);
             cardController = new CardController(this);
             sortingBoxController = new SortingBoxController(this);
             touchController = new TouchController(this);
             gestureController = new GestureController(this);
+            clusterController = new ClusterController(this);
             listenerController = new GestureListenerController(this);
             baseLayerController = new BaseLayerController(this);
             cardLayerController = new CardLayerController(this);
-            sortingBoxLayerController = new SortingBoxLayerController(this);         
+            sortingBoxLayerController = new SortingBoxLayerController(this);
             menuLayerController = new MenuLayerController(this);
-            //Initialize layers
+            //Initialize controllers
             touchController.Init();
             gestureController.Init();
             listenerController.Init();
+            clusterController.Init();
             baseLayerController.Init(width, height);
             Coordination.Baselayer = baseLayerController.BaseLayer;//Set the base layer to the coordination helper
             cardLayerController.Init(width, height);
             sortingBoxLayerController.Init(width, height);
             menuLayerController.Init(width, height);
+
             //Load the documents, cards and add them to the card layer
             Document[] docs = await documentController.Init(FilePath.NewsArticle);//Load the document
-            Card[] cards = await cardController.Init(docs);
+            Item[] item = await tableController.Init(FilePath.CSVFile) ;
+            Card[] cards = await cardController.Init(docs, item, null);
             CardLayerController.LoadCards(cards);
             //Load the sorting box and add them to the sorting box layer
             sortingBoxController.Init();
@@ -147,6 +180,8 @@ namespace CoLocatedCardSystem.CollaborationWindow
         /// </summary>
         internal void Deinit()
         {
+            clusterController.Deinit();
+            clusterController = null;
             gestureController.Deinit();
             gestureController = null;
             listenerController.Deinit();
@@ -159,6 +194,8 @@ namespace CoLocatedCardSystem.CollaborationWindow
             cardController = null;
             documentController.Deinit();
             documentController = null;
+            tableController.Deinit();
+            tableController = null;
             baseLayerController.Deinit();
             baseLayerController = null;
             cardLayerController.Deinit();

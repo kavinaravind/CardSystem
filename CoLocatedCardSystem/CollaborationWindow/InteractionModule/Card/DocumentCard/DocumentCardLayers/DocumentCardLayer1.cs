@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Text;
@@ -13,11 +14,14 @@ using Windows.UI.Xaml.Media;
 
 namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
-    class Layer1:LayerBase
+    class DocumentCardLayer1 : DocumentCardLayerBase
     {
         TextBlock titleTextBlock = new TextBlock();
 
-        public object FontStretches { get; private set; }
+        public DocumentCardLayer1(Card card) : base(card)
+        {
+        }
+        
 
         /// <summary>
         /// Initialize the card layers
@@ -40,9 +44,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 }
             });
         }
-        public Layer1(Card card) : base(card)
-        {
-        }
         /// <summary>
         /// Initialize the layer
         /// </summary>
@@ -52,12 +53,15 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         {
             this.Width = attachedCard.Width;
             this.Height = attachedCard.Height;
-            //Move the textblock - 1 / 2 width and -1 / 2 height to the center.
-            MatrixTransform mtf = new MatrixTransform();
-            mtf.Matrix = new Matrix(1, 0, 0, 1, -0.5 * attachedCard.Width, -0.5 * attachedCard.Height);
-            this.RenderTransform = mtf;
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
+                //Move the textblock - 1 / 2 width and -1 / 2 height to the center.
+                UIHelper.InitializeUI(
+                    new Point(-0.5 * attachedCard.Width, -0.5 * attachedCard.Height),
+                    0,
+                    1,
+                    new Size(this.Width, this.Height),
+                    this);
                 titleTextBlock.Width = attachedCard.Width;
                 titleTextBlock.Height = attachedCard.Height;
                 titleTextBlock.Foreground = new SolidColorBrush(Colors.Black);

@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
-    class LayerBase:Canvas
+    class DocumentCardLayerBase:Canvas
     {
         protected Card attachedCard = null;
 
@@ -19,7 +19,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         internal virtual async Task SetArticle(Document doc) {
 
         }
-        public LayerBase(Card card) {
+        public DocumentCardLayerBase(Card card) {
             attachedCard = card;
         }
 

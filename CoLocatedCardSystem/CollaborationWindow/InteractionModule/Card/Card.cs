@@ -16,16 +16,19 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
     /// </summary>
     public class Card : Canvas
     {
-        CardController cardController;
         string cardID = "";
+        CardController cardController;
         Point position = new Point(0, 0);//The position of the card on the screen
         double cardScale = 1;//The scale ratio of the card
         double rotation = 0;//The degree of the rotation
         Rectangle background = null;
         int marginWidth = 10;
-        Size maxSize = new Size(600, 450);//Max size a card can be zoomed.
-        Size minSize = new Size(80, 60);//Mim size a card can be zoomed
-
+        Size maxSize = new Size(600 * Screen.SCALE_FACTOR, 450 * Screen.SCALE_FACTOR);//Max size a card can be zoomed. 3.75 cardscale
+        Size minSize = new Size(80 * Screen.SCALE_FACTOR, 60 * Screen.SCALE_FACTOR);//Mim size a card can be zoomed. 0.5 cardscale
+        public Card(CardController cardController)
+        {
+            this.CardController = cardController;
+        }
         public Point Position
         {
             get
@@ -50,15 +53,23 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             }
         }
 
-        public Card(CardController cardController)
-        {
-            this.cardController = cardController;
-        }
-
         public string CardID
         {
             get { return cardID; }
             set { cardID = value; }
+        }
+
+        public CardController CardController
+        {
+            get
+            {
+                return cardController;
+            }
+
+            set
+            {
+                cardController = value;
+            }
         }
 
         /// <summary>
@@ -116,10 +127,17 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             this.ManipulationDelta -= Card_ManipulationDelta;
         }
         /// <summary>
+        /// Update the card size, detect if any new layers need to appear.
+        /// </summary>
+        internal virtual void UpdateSize()
+        {
+
+        }
+        /// <summary>
         /// Move the card by the vector 
         /// </summary>
         /// <param name="point"></param>
-        public void MoveBy(Point vector)
+        internal void MoveBy(Point vector)
         {
             this.position.X += vector.X;
             this.position.Y += vector.Y;
@@ -129,7 +147,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Move the card to the position
         /// </summary>
         /// <param name="position"></param>
-        public void MoveTo(Point position)
+        internal void MoveTo(Point position)
         {
             this.position = position;
             UpdateTransform();
@@ -138,7 +156,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Rotate the card by "angle" degree. Add to the current rotation
         /// </summary>
         /// <param name="angle"></param>
-        public void Rotate(double angle)
+        internal void Rotate(double angle)
         {
             this.rotation += angle;
             UpdateTransform();
@@ -147,7 +165,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// Scale the card to the "scale"
         /// </summary>
         /// <param name="scale"></param>
-        public void Scale(double scale)
+        internal void Scale(double scale)
         {
             this.cardScale = scale;
             UpdateTransform();
@@ -158,7 +176,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="point"></param>
         /// <param name="rotation"></param>
         /// <param name="scale"></param>
-        public void ApplyNewTransform(Point position, double rotation, double scale)
+        internal void ApplyNewTransform(Point position, double rotation, double scale)
         {
             this.position = position;
             this.rotation = rotation;
@@ -186,6 +204,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                  transGroup.Children.Add(tt);
 
                  this.RenderTransform = transGroup;
+                 UpdateSize();
              });
         }
         /// <summary>
@@ -197,7 +216,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         {
             PointerPoint localPoint = e.GetCurrentPoint(this);
             PointerPoint globalPoint = e.GetCurrentPoint(Coordination.Baselayer);
-            cardController.PointerDown(localPoint, globalPoint, this, typeof(Card));
+            CardController.PointerDown(localPoint, globalPoint, this, typeof(Card));
         }
         /// <summary>
         /// Call back method for Pointer move
@@ -208,7 +227,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         {
             PointerPoint localPoint = e.GetCurrentPoint(this);
             PointerPoint globalPoint = e.GetCurrentPoint(Coordination.Baselayer);
-            cardController.PointerMove(localPoint, globalPoint);
+            CardController.PointerMove(localPoint, globalPoint);
         }
         /// <summary>
         /// Call back method for pointer up
@@ -219,7 +238,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         {
             PointerPoint localPoint = e.GetCurrentPoint(this);
             PointerPoint globalPoint = e.GetCurrentPoint(Coordination.Baselayer);
-            cardController.PointerUp(localPoint, globalPoint);
+            CardController.PointerUp(localPoint, globalPoint);
         }
         /// <summary>
         /// Manipulate the card. Move if the manipulation is valid.
@@ -253,10 +272,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         private bool IsValideManipulation(Point trans, double rotat, double scale)
         {
             bool isValid = true;
-            if (scale * this.cardScale * this.Width >= maxSize.Width ||
-                scale * this.cardScale * this.Height >= maxSize.Height ||
-                scale * this.cardScale * this.Width <= minSize.Width ||
-                scale * this.cardScale * this.Height <= minSize.Height)
+            if (scale * this.cardScale * this.Width > maxSize.Width ||
+                scale * this.cardScale * this.Height > maxSize.Height ||
+                scale * this.cardScale * this.Width < minSize.Width ||
+                scale * this.cardScale * this.Height < minSize.Height)
             {
                 isValid = false;
             }
@@ -276,7 +295,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// <param name="e"></param>
         protected virtual void Card_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
         {
-            cardController.MoveCardToTop(this);
+            CardController.MoveCardToTop(this);
         }
     }
 }
