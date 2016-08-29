@@ -8,5 +8,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.FileLoaderModule
 {
     class AttributeList
     {
+        internal void Init()
+        {
+        }
     }
 }

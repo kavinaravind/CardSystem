@@ -164,15 +164,15 @@ namespace CoLocatedCardSystem.CollaborationWindow
             menuLayerController.Init(width, height);
 
             //Load the documents, cards and add them to the card layer
-            Document[] docs = await documentController.Init(FilePath.NewsArticle);//Load the document
-            Item[] item = await tableController.Init(FilePath.CSVFile) ;
+            await documentController.Init(FilePath.NewsArticle);//Load the document
+            await tableController.Init(FilePath.CSVFile) ;
             cardController.Init();
             List<Card> allCards = new List<Card>();
-            Card[] cards = await cardController.InitDocCard(docs);
+            Card[] cards = await cardController.InitDocCard(documentController.GetDocument());
             foreach (Card c in cards) {
                 allCards.Add(c);
             }
-            cards = await cardController.InitItemCard(item);
+            cards = await cardController.InitItemCard(tableController.GetItem());
             foreach (Card c in cards)
             {
                 allCards.Add(c);

@@ -9,6 +9,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.FileLoaderModule
     class TableController
     {
         CentralControllers controllers;
+        AttributeList attrList;
+        ItemList itemList;
         public TableController(CentralControllers ctrls)
         {
             this.controllers = ctrls;
@@ -18,14 +20,26 @@ namespace CoLocatedCardSystem.CollaborationWindow.FileLoaderModule
         /// </summary>
         /// <param name="cSVFile"></param>
         /// <returns></returns>
-        internal async Task<Item[]> Init(string cSVFile)
+        internal async Task Init(string cSVFile)
         {
-            Item[] items = new Item[] { new Item(), new Item(), new Item(), };
-            return items;
+            itemList = new ItemList();
+            itemList.Init();
+            itemList.AddItem(new Item());
+            itemList.AddItem(new Item());
+            itemList.AddItem(new Item());
+            attrList = new AttributeList();
+            attrList.Init();
         }
 
         internal void Deinit()
         {
+        }
+        /// <summary>
+        /// Get all items
+        /// </summary>
+        /// <returns></returns>
+        internal Item[] GetItem() {
+            return itemList.GetItem();
         }
     }
 }

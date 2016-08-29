@@ -20,7 +20,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         /// Initialize documents from jsonFile
         /// </summary>
         /// <param name="jsonFilePath"></param>
-        public async Task<Document[]> Init(String jsonFilePath) {
+        public async Task Init(String jsonFilePath) {
             StorageFolder folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
             StorageFile file = await folder.GetFileAsync(jsonFilePath);
             using (var inputStream = await file.OpenReadAsync())
@@ -34,7 +34,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
                     list.AddDocument(doc);
                 }
             }
-            return list.GetDocument();
         }
         /// <summary>
         /// Deinit the document module
@@ -50,7 +49,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
         public Document GetDocument(string docID) {
             return list.GetDocument(docID);
         }
-
+        /// <summary>
+        /// Get all documents
+        /// </summary>
+        /// <returns></returns>
         public Document[] GetDocument() {
             return list.GetDocument();
         }

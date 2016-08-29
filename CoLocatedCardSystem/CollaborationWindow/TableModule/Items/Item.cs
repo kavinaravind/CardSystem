@@ -10,12 +10,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.FileLoaderModule
     {
         internal string GetID()
         {
-            return "itemID:1234567";
+            return "itemID:1234567";//Temp for debug
         }
 
         internal string GetAll()
         {
-            return "itemID:1234567\nage:89\nsize:01\ngender:Female";
+            return "itemID:1234567\nage:89\nsize:01\ngender:Female";//Temp for debug
         }
     }
 }

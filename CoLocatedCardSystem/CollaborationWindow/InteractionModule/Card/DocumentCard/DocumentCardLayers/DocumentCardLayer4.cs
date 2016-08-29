@@ -34,7 +34,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 authorTextBlock.Text = doc.GetAuthor();
                 timeTextBlock.Text = doc.GetTime().ToString();
                 contentTextBlock.Text = doc.GetContent();
-                System.Diagnostics.Debug.WriteLine(doc.GetContent());
             });
         }
         /// <summary>
