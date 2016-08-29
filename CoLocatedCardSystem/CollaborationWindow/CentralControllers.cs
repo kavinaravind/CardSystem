@@ -166,8 +166,18 @@ namespace CoLocatedCardSystem.CollaborationWindow
             //Load the documents, cards and add them to the card layer
             Document[] docs = await documentController.Init(FilePath.NewsArticle);//Load the document
             Item[] item = await tableController.Init(FilePath.CSVFile) ;
-            Card[] cards = await cardController.Init(docs, item, null);
-            CardLayerController.LoadCards(cards);
+            cardController.Init();
+            List<Card> allCards = new List<Card>();
+            Card[] cards = await cardController.InitDocCard(docs);
+            foreach (Card c in cards) {
+                allCards.Add(c);
+            }
+            cards = await cardController.InitItemCard(item);
+            foreach (Card c in cards)
+            {
+                allCards.Add(c);
+            }
+            CardLayerController.LoadCards(allCards.ToArray());
             //Load the sorting box and add them to the sorting box layer
             sortingBoxController.Init();
             SortingBoxLayerController.LoadBoxes(sortingBoxController.GetAllSortingBoxes());

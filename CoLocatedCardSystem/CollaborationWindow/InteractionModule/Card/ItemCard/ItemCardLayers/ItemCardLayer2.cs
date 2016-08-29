@@ -28,12 +28,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 contentTextBlock.Text = item.GetAll();
                 if (item.GetAll().Length > 50)
                 {
-                    contentTextBlock.FontSize = 10;
+                    contentTextBlock.FontSize = 6;
 
                 }
                 if (item.GetAll().Length > 100)
                 {
-                    contentTextBlock.FontSize = 8;
+                    contentTextBlock.FontSize = 4;
                 }
             });
         }
@@ -54,7 +54,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 contentTextBlock.Foreground = new SolidColorBrush(Colors.Black);
                 contentTextBlock.LineHeight = 1;
                 contentTextBlock.TextWrapping = TextWrapping.Wrap;
-                contentTextBlock.FontSize = 12;
+                contentTextBlock.FontSize = 8;
                 contentTextBlock.TextAlignment = TextAlignment.Left;
                 contentTextBlock.FontStretch = FontStretch.Normal;
                 contentTextBlock.FontWeight = FontWeights.Bold;

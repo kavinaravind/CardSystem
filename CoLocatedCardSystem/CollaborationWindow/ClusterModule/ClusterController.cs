@@ -9,6 +9,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.ClusterModule
     class ClusterController
     {
         CentralControllers controllers;
+        Dictionary<string, Cluster> list;
         public ClusterController(CentralControllers ctrls)
         {
             this.controllers = ctrls;
@@ -16,6 +17,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.ClusterModule
 
         internal void Init()
         {
+            list = new Dictionary<string, Cluster>();
         }
 
         internal void Deinit()

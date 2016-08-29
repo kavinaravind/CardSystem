@@ -1,4 +1,5 @@
-﻿using CoLocatedCardSystem.CollaborationWindow.DocumentModule;
+﻿using CoLocatedCardSystem.CollaborationWindow.ClusterModule;
+using CoLocatedCardSystem.CollaborationWindow.DocumentModule;
 using CoLocatedCardSystem.CollaborationWindow.FileLoaderModule;
 using System;
 using System.Collections.Generic;
@@ -20,32 +21,76 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         public CardController(CentralControllers ctrls) {
             this.controllers = ctrls;
         }
-        internal async Task<Card[]> Init(Document[] docs, Item[] items, FileLoaderModule.Attribute[] attrs)
+        internal void Init()
         {
             itemCardController = new ItemCardController(controllers);
             semanticCardController = new DocumentCardController(controllers);
-            List<Card> cardToShow = new List<Card>();
-            if (docs != null)
-            {
-                Card[] docCards = await semanticCardController.Init(docs);
-                foreach (Card c in docCards)
-                {
-                    cardToShow.Add(c);
-                }
-            }
-            if (items != null)
-            {
-                Card[] itemCards = await itemCardController.Init(items);
-                foreach (Card c in itemCards)
-                {
-                    cardToShow.Add(c);
-                }
-            }
-            return cardToShow.ToArray();
+            clusterCardController = new ClusterCardController(controllers);
+            plotCardController = new PlotCardController(controllers);
+            
         }
         internal async void Deinit() {
             itemCardController.Deinit();
-        }      
+            semanticCardController.Deinit();
+            clusterCardController.Deinit();
+            plotCardController.Deinit();
+        } 
+        /// <summary>
+        /// Initialize the doc cards
+        /// </summary>
+        /// <param name="docs"></param>
+        /// <returns></returns>                
+        internal async Task<Card[]> InitDocCard(Document[] docs) {
+            Card[] docCards=null;
+            if (docs != null)
+            {
+                docCards = await semanticCardController.Init(docs);
+            }
+            return docCards;
+        }
+
+        /// <summary>
+        /// Initialize the table cards
+        /// </summary>
+        /// <param name="docs"></param>
+        /// <returns></returns>                
+        internal async Task<Card[]> InitItemCard(Item[] items)
+        {
+            Card[] itemCards = null;
+            if (items != null)
+            {
+                itemCards = await itemCardController.Init(items);
+            }
+            return itemCards;
+        }
+        /// <summary>
+        /// Initialize the plot cards
+        /// </summary>
+        /// <param name="docs"></param>
+        /// <returns></returns>                
+        internal async Task<Card[]> InitAttributeCard(FileLoaderModule.Attribute[] attributes)
+        {
+            Card[] plotCards = null;
+            if (attributes != null)
+            {
+                plotCards = await plotCardController.Init(attributes);
+            }
+            return plotCards;
+        }
+        /// <summary>
+        /// Initialize the cluster cards
+        /// </summary>
+        /// <param name="docs"></param>
+        /// <returns></returns>                
+        internal async Task<Card[]> InitClusterCard(Cluster[] clusters)
+        {
+            Card[] clusterCards = null;
+            if (clusters != null)
+            {
+                clusterCards = await clusterCardController.Init(clusters);
+            }
+            return clusterCards;
+        }
         /// <summary>
         /// Create a touch and pass it to the interaction controller.
         /// </summary>
