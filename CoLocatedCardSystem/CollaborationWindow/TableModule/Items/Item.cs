@@ -31,7 +31,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.TableModule
             String str = "";
             foreach (Cell data in cellList.Values)
             {
-                str.Insert(str.Length, data.data + "/n");
+                str.Insert(str.Length, data.data + "\n");
             }
             return str;
         }

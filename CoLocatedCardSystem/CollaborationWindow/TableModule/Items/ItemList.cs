@@ -9,11 +9,9 @@ namespace CoLocatedCardSystem.CollaborationWindow.TableModule
     class ItemList
     {
         public Dictionary<String, Item> itemList;
-        int uuidCounter;
 
         public ItemList()
         {
-            uuidCounter = 0;
             Init();
         }
 
@@ -40,11 +38,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.TableModule
 
         public bool AddItem(Item item)
         {
-            // string id = Guid.NewGuid().ToString();
-            uuidCounter++;
+            String id = Guid.NewGuid().ToString();
+            item.uuid = id;
             if (item != null)
             {
-                itemList.Add(uuidCounter.ToString(), item);
+                itemList.Add(id, item);
                 return true;
             }
             return false;
