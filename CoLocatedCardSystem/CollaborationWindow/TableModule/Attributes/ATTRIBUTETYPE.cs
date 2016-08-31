@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoLocatedCardSystem.CollaborationWindow.FileLoaderModule
+namespace CoLocatedCardSystem.CollaborationWindow.TableModule
 {
-    enum AttrType
+    enum ATTRIBUTETYPE
     {
-        NUMERICAL,CATEGORICAL,TIME
+        Numerical, Categorical, Time
     }
 }

@@ -4,38 +4,60 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoLocatedCardSystem.CollaborationWindow.FileLoaderModule
+namespace CoLocatedCardSystem.CollaborationWindow.TableModule
 {
     class ItemList
     {
-        Dictionary<string, Item> list;
-        /// <summary>
-        /// Initialize the item list
-        /// </summary>
-        internal void Init()
+        public Dictionary<String, Item> itemList;
+        int uuidCounter;
+
+        public ItemList()
         {
-            list = new Dictionary<string, Item>();
-        }
-        /// <summary>
-        /// Deinitialize the item list
-        /// </summary>
-        internal void Deinit() {
-
-        }
-        /// <summary>
-        /// Get all items
-        /// </summary>
-        /// <returns></returns>
-        internal Item[] GetItem() {
-            return list.Values.ToArray();
+            uuidCounter = 0;
+            Init();
         }
 
-        internal void AddItem(Item item)
+        public void Init()
         {
-            string id = Guid.NewGuid().ToString();
-            list.Add(id, item);
+            itemList = new Dictionary<String, Item>();
         }
 
+        public void DeInit()
+        {
+            itemList.Clear();
+            itemList = null;
+        }
 
+        public void ClearList()
+        {
+            itemList.Clear();
+        }
+
+        public Item[] getItem()
+        {
+            return itemList.Values.ToArray();
+        }
+
+        public bool AddItem(Item item)
+        {
+            // string id = Guid.NewGuid().ToString();
+            uuidCounter++;
+            if (item != null)
+            {
+                itemList.Add(uuidCounter.ToString(), item);
+                return true;
+            }
+            return false;
+        }
+
+        public bool RemoveItem(String id)
+        {
+            if (itemList.ContainsKey(id))
+            {
+                itemList.Remove(id);
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -118,7 +118,7 @@
     <Compile Include="CollaborationWindow\InteractionModule\ConnectionGlow\Glow.cs" />
     <Compile Include="CollaborationWindow\TableModule\Attributes\Attribute.cs" />
     <Compile Include="CollaborationWindow\TableModule\Attributes\AttributeList.cs" />
-    <Compile Include="CollaborationWindow\TableModule\AttrType.cs" />
+    <Compile Include="CollaborationWindow\TableModule\Attributes\ATTRIBUTETYPE.cs" />
     <Compile Include="CollaborationWindow\TableModule\Items\Cell.cs" />
     <Compile Include="CollaborationWindow\TableModule\Items\Item.cs" />
     <Compile Include="CollaborationWindow\TableModule\Items\ItemList.cs" />

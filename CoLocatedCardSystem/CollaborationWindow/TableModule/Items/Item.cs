@@ -4,18 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoLocatedCardSystem.CollaborationWindow.FileLoaderModule
+namespace CoLocatedCardSystem.CollaborationWindow.TableModule
 {
     class Item
     {
-        internal string GetID()
+        public Dictionary<Attribute, Cell> cellList;
+        public String uuid { get; set; }
+
+        public Item()
         {
-            return "itemID:1234567";//Temp for debug
+            Init();
         }
 
-        internal string GetAll()
+        public void Init()
         {
-            return "itemID:1234567\nage:89\nsize:01\ngender:Female";//Temp for debug
+            cellList = new Dictionary<Attribute, Cell>();
         }
+
+        public string getID()
+        {
+            return null;
+        }
+
     }
 }
