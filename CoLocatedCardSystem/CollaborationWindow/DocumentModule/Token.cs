@@ -10,7 +10,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
     {
         string originalWord = "";
         string stemmedWord = "";
-        WordType type=WordType.DEFAULT;
+        WordType wordType=WordType.DEFAULT;
 
         public string OriginalWord
         {
@@ -38,16 +38,16 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
             }
         }
 
-        internal WordType Type
+        internal WordType WordType
         {
             get
             {
-                return type;
+                return wordType;
             }
 
             set
             {
-                type = value;
+                wordType = value;
             }
         }
     }

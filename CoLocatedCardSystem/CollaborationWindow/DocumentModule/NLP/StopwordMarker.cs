@@ -42,7 +42,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
             {
                 if (stopword.Equals(token.StemmedWord))
                 {
-                    token.Type = WordType.STOPWORD;
+                    token.WordType = WordType.STOPWORD;
                     break;
                 }
             }

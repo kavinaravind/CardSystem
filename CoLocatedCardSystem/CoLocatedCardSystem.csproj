@@ -113,6 +113,8 @@
     <Compile Include="CollaborationWindow\DocumentModule\NLP\StopwordMarker.cs" />
     <Compile Include="CollaborationWindow\DocumentModule\Token.cs" />
     <Compile Include="CollaborationWindow\DocumentModule\WordType.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\Card\DocumentCard\DocumentCardLayers\ContentView\ContentTouchView.cs" />
+    <Compile Include="CollaborationWindow\InteractionModule\Card\DocumentCard\DocumentCardLayers\ContentView\Tile.cs" />
     <Compile Include="CollaborationWindow\InteractionModule\ConnectionGlow\Glow.cs" />
     <Compile Include="CollaborationWindow\TableModule\Attributes\Attribute.cs" />
     <Compile Include="CollaborationWindow\TableModule\Attributes\AttributeList.cs" />

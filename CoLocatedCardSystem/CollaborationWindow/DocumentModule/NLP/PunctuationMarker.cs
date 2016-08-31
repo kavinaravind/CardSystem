@@ -21,7 +21,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
                     token.OriginalWord[0] == '\r')
                 {
 
-                    token.Type = WordType.IRREGULAR;
+                    token.WordType = WordType.IRREGULAR;
                 }
             }
         }

@@ -11,8 +11,8 @@
         internal static void Stem(Token token) {
             string word = token.OriginalWord.ToLower();
             token.StemmedWord = stemmer.stemTerm(word);
-            if (token.Type == WordType.DEFAULT) {
-                token.Type = WordType.REGULAR;
+            if (token.WordType == WordType.DEFAULT) {
+                token.WordType = WordType.REGULAR;
             }
         }
 

@@ -18,7 +18,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
                 || token.StemmedWord.Length == 0 
                 || token.StemmedWord.Equals(" "))
             {
-                token.Type = WordType.IRREGULAR;
+                token.WordType = WordType.IRREGULAR;
             }
         }
     }

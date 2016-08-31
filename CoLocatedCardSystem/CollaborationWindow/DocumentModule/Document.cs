@@ -27,6 +27,14 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
             }
         }
 
+        internal ProcessedDocument ProcessedDocument
+        {
+            get
+            {
+                return processedDocument;
+            }
+        }
+
         internal void Load(string jsonLine) {
             RawDocument rawDocument = JsonConvert.DeserializeObject<RawDocument>(jsonLine);
             this.docID = rawDocument.Id;

@@ -11,6 +11,15 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
     class ProcessedDocument
     {
         Token[] list;
+
+        internal Token[] List
+        {
+            get
+            {
+                return list;
+            }
+        }
+
         /// <summary>
         /// Initialize the token list with the content. Processed with token makers.
         /// </summary>
@@ -73,11 +82,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.DocumentModule
             Token newToken = new Token();
             newToken.OriginalWord = key;
             ProcessToken(newToken);
-            foreach (Token tk in list)
+            foreach (Token tk in List)
             {
-                if (tk.Type == newToken.Type)
+                if (tk.WordType == newToken.WordType)
                 {
-                    if (newToken.Type == WordType.REGULAR)
+                    if (newToken.WordType == WordType.REGULAR)
                     {
                         if (newToken.StemmedWord.Equals(tk.StemmedWord))
                         {

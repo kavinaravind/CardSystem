@@ -20,11 +20,15 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         TextBlock titleTextBlock = new TextBlock();
         TextBlock authorTextBlock = new TextBlock();
         TextBlock timeTextBlock = new TextBlock();
-        TextBlock contentTextBlock = new TextBlock();
+        ContentTouchView contentView = new ContentTouchView();
         public DocumentCardLayer4(Card card) : base(card)
         {
         }
-
+        /// <summary>
+        /// Add the article to the doc.
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <returns></returns>
         internal override async Task SetArticle(Document doc)
         {
             await base.SetArticle(doc);
@@ -33,7 +37,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 titleTextBlock.Text = doc.GetTitle();
                 authorTextBlock.Text = doc.GetAuthor();
                 timeTextBlock.Text = doc.GetTime().ToString();
-                contentTextBlock.Text = doc.GetContent();
+                contentView.Init(doc,contentView.Width);
             });
         }
         /// <summary>
@@ -130,18 +134,8 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 ScrollViewer contentSV = new ScrollViewer();
                 contentSV.Width = attachedCard.Width;
                 contentSV.Height = attachedCard.Height*0.7;
-                contentSV.HorizontalAlignment = HorizontalAlignment.Center;
-                contentSV.VerticalAlignment = VerticalAlignment.Center;
-                contentTextBlock.Width = attachedCard.Width;
-                contentTextBlock.Foreground = new SolidColorBrush(Colors.Black);
-                contentTextBlock.LineHeight = 1;
-                contentTextBlock.TextWrapping = TextWrapping.Wrap;
-                contentTextBlock.FontSize = 3;
-                contentTextBlock.TextAlignment = TextAlignment.Left;
-                contentTextBlock.HorizontalAlignment = HorizontalAlignment.Left;
-                contentTextBlock.VerticalAlignment = VerticalAlignment.Center;
-                contentTextBlock.FontStretch = FontStretch.Normal;
-                contentSV.Content = contentTextBlock;
+                contentView.Width = attachedCard.Width;
+                contentSV.Content = contentView;
                 Grid.SetColumn(contentSV, 0);
                 Grid.SetRow(contentSV, 3);
                 layerGrid.Children.Add(contentSV);

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace CoLocatedCardSystem.CollaborationWindow
@@ -35,6 +37,16 @@ namespace CoLocatedCardSystem.CollaborationWindow
             transGroup.Children.Add(rt);
             transGroup.Children.Add(tt);
             element.RenderTransform = transGroup;
+        }
+        /// <summary>
+        /// Get the bounding size of the text.
+        /// </summary>
+        /// <returns></returns>
+        public static Size GetBoundingSize(string text, double fontsize) {
+            var tb = new TextBlock { Text = text, FontSize = fontsize + 1 };
+            tb.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
+            Size boundSize = tb.DesiredSize;
+            return boundSize;
         }
     }
 }

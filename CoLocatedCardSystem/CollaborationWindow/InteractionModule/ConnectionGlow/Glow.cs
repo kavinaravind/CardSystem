@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
-namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule.ConnectionGlow
+namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
     class Glow :Canvas
     {
