@@ -17,7 +17,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.TableModule
 
         public static String filePath = @"Assets\titanic.csv";
 
-
         public TableController(CentralControllers ctrls)
         {
             this.controllers = ctrls;
@@ -102,12 +101,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.TableModule
                                 currentAttribute.type = ATTRIBUTETYPE.Categorical;
                             }
                             currentAttribute.values.Add(str);
-                            Cell cell = itemController.createCell(str, currentAttribute.type);
+                            Cell cell = createCell(str, currentAttribute.type);
                             cellList.Add(currentAttribute, cell);
                             counter++;
                         }
-                        Item item = itemController.createItem(cellList);
-                        itemController.itemList.AddItem(item);
+                        Item item = createItem(cellList);
+                        itemList.AddItem(item);
                     }
                     else
                     {
@@ -118,12 +117,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.TableModule
                             String column = attributes[counter];
                             Attribute currentAttribute = attributeList.attributeList[column];
                             currentAttribute.values.Add(str);
-                            Cell cell = itemController.createCell(str, currentAttribute.type);
+                            Cell cell = createCell(str, currentAttribute.type);
                             cellList.Add(currentAttribute, cell);
                             counter++;
                         }
-                        Item item = itemController.createItem(cellList);
-                        itemController.itemList.AddItem(item);
+                        Item item = createItem(cellList);
+                        itemList.AddItem(item);
                     }
                     row++;
                 }
@@ -152,6 +151,12 @@ namespace CoLocatedCardSystem.CollaborationWindow.TableModule
             return DateTime.TryParse(str, out dateTime);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         internal Cell createCell(String data, ATTRIBUTETYPE type)
         {
             Cell cell = new Cell();
@@ -160,6 +165,11 @@ namespace CoLocatedCardSystem.CollaborationWindow.TableModule
             return cell;
         }
 
+        /// <summary>
+        /// Creates an item and adds all cells into that item
+        /// </summary>
+        /// <param name="cellList"></param>
+        /// <returns></returns>
         internal Item createItem(Dictionary<Attribute, Cell> cellList)
         {
             Item item = new Item();
@@ -167,6 +177,10 @@ namespace CoLocatedCardSystem.CollaborationWindow.TableModule
             return item;
         }
 
+        /// <summary>
+        ///  Returns all items in the itemList
+        /// </summary>
+        /// <returns></returns>
         internal Item[] GetItem()
         {
             return itemList.getItem();

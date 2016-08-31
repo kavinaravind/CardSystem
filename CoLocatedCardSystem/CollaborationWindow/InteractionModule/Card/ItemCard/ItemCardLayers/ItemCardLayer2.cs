@@ -1,4 +1,4 @@
-﻿using CoLocatedCardSystem.CollaborationWindow.FileLoaderModule;
+﻿using CoLocatedCardSystem.CollaborationWindow.TableModule;
 using System;
 using System.Collections.Generic;
 using System.Linq;

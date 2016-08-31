@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CoLocatedCardSystem.CollaborationWindow.FileLoaderModule;
+using CoLocatedCardSystem.CollaborationWindow.TableModule;
 
 namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
@@ -13,7 +13,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         {
         }
 
-        internal Task<Card[]> Init(FileLoaderModule.Attribute[] attributes)
+        internal Task<Card[]> Init(TableModule.Attribute[] attributes)
         {
             throw new NotImplementedException();
         }

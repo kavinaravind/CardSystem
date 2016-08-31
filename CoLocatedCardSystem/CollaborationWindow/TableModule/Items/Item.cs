@@ -21,9 +21,19 @@ namespace CoLocatedCardSystem.CollaborationWindow.TableModule
             cellList = new Dictionary<Attribute, Cell>();
         }
 
-        public string getID()
+        public string GetID()
         {
-            return null;
+            return uuid;
+        }
+
+        public String GetAll()
+        {
+            String str = "";
+            foreach (Cell data in cellList.Values)
+            {
+                str.Insert(str.Length, data.data + "/n");
+            }
+            return str;
         }
 
     }

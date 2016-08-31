@@ -1,6 +1,6 @@
 ﻿using CoLocatedCardSystem.CollaborationWindow.ClusterModule;
 using CoLocatedCardSystem.CollaborationWindow.DocumentModule;
-using CoLocatedCardSystem.CollaborationWindow.FileLoaderModule;
+using CoLocatedCardSystem.CollaborationWindow.TableModule;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,7 +68,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
         /// </summary>
         /// <param name="docs"></param>
         /// <returns></returns>                
-        internal async Task<Card[]> InitAttributeCard(FileLoaderModule.Attribute[] attributes)
+        internal async Task<Card[]> InitAttributeCard(TableModule.Attribute[] attributes)
         {
             Card[] plotCards = null;
             if (attributes != null)

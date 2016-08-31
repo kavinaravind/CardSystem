@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Windows.UI.Input;
 using System.Collections.Generic;
 using CoLocatedCardSystem.CollaborationWindow.Layers;
-using CoLocatedCardSystem.CollaborationWindow.FileLoaderModule;
 using CoLocatedCardSystem.CollaborationWindow.ClusterModule;
+using CoLocatedCardSystem.CollaborationWindow.TableModule;
 
 namespace CoLocatedCardSystem.CollaborationWindow
 {
@@ -165,7 +165,6 @@ namespace CoLocatedCardSystem.CollaborationWindow
 
             //Load the documents, cards and add them to the card layer
             await documentController.Init(FilePath.NewsArticle);//Load the document
-            await tableController.Init(FilePath.CSVFile) ;
             cardController.Init();
             List<Card> allCards = new List<Card>();
             Card[] cards = await cardController.InitDocCard(documentController.GetDocument());
@@ -204,7 +203,7 @@ namespace CoLocatedCardSystem.CollaborationWindow
             cardController = null;
             documentController.Deinit();
             documentController = null;
-            tableController.Deinit();
+            tableController.DeInit();
             tableController = null;
             baseLayerController.Deinit();
             baseLayerController = null;
