@@ -28,12 +28,13 @@ namespace CoLocatedCardSystem.CollaborationWindow.TableModule
 
         public String GetAll()
         {
-            String str = "";
-            foreach (Cell data in cellList.Values)
+            StringBuilder strBuilder = new StringBuilder();
+            foreach (Attribute attr in cellList.Keys)
             {
-                str.Insert(str.Length, data.data + "\n");
+                strBuilder.Append(attr.name + ": " + cellList[attr].data + "\n");
             }
-            return str;
+
+            return strBuilder.ToString();
         }
 
     }
