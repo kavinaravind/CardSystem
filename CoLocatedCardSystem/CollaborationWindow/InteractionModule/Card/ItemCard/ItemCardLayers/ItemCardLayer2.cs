@@ -17,7 +17,6 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
     class ItemCardLayer2 : ItemCardLayerBase
     {
         StackPanel panel = new StackPanel();
-        TextBlock contentTextBlock = new TextBlock();
         
         public ItemCardLayer2(Card card) : base(card)
         {
@@ -34,19 +33,20 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 foreach (String itemName in items)
                 {
                     Button button = new Button();
-                    button.Name = itemName;
+                    button.Content = itemName;
+                    if (str.Length > 50)
+                    {
+                        button.FontSize = 6;
+
+                    }
+                    if (str.Length > 100)
+                    {
+                        button.FontSize = 4;
+                    }
+                    button.FontStretch = FontStretch.Normal;
+                    button.FontWeight = FontWeights.Bold;
+                    button.Foreground = new SolidColorBrush(Colors.Black);
                     panel.Children.Add(button);
-                }
-
-                contentTextBlock.Text = item.GetAll();
-                if (item.GetAll().Length > 50)
-                {
-                    contentTextBlock.FontSize = 6;
-
-                }
-                if (item.GetAll().Length > 100)
-                {
-                    contentTextBlock.FontSize = 4;
                 }
             });
         }
@@ -63,15 +63,13 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                     1,
                     new Size(this.Width, this.Height),
                     this);
-                contentTextBlock.Width = attachedCard.Width;
-                contentTextBlock.Foreground = new SolidColorBrush(Colors.Black);
-                contentTextBlock.LineHeight = 1;
-                contentTextBlock.TextWrapping = TextWrapping.Wrap;
-                contentTextBlock.FontSize = 8;
-                contentTextBlock.TextAlignment = TextAlignment.Left;
-                contentTextBlock.FontStretch = FontStretch.Normal;
-                contentTextBlock.FontWeight = FontWeights.Bold;
-                panel.Children.Add(contentTextBlock);
+
+                panel.Width = attachedCard.Width;
+
+                //contentTextBlock.LineHeight = 1;
+                //contentTextBlock.TextWrapping = TextWrapping.Wrap;
+                //contentTextBlock.TextAlignment = TextAlignment.Left;
+
                 ScrollViewer sv = new ScrollViewer();
                 sv.Width = attachedCard.Width;
                 sv.Height = attachedCard.Height;
