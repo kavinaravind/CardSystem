@@ -24,7 +24,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             list = new LiveItemCardList();
             foreach (User user in UserInfo.GetLiveUsers())
             {
-                int numberOfCards = items.Length / 10;
+                int numberOfCards = 10;
                 for (int i = 0; i < numberOfCards; i++)
                 {
                     await list.AddCard(items[i], user, this);

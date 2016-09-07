@@ -16,15 +16,28 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
 {
     class ItemCardLayer2 : ItemCardLayerBase
     {
+        StackPanel panel = new StackPanel();
         TextBlock contentTextBlock = new TextBlock();
+        
         public ItemCardLayer2(Card card) : base(card)
         {
+
         }
         internal override async Task SetItem(Item item)
         {
             await base.SetItem(item);
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
+                String str = item.GetAll();
+                String[] items = str.Split('\n');
+
+                foreach (String itemName in items)
+                {
+                    Button button = new Button();
+                    button.Name = itemName;
+                    panel.Children.Add(button);
+                }
+
                 contentTextBlock.Text = item.GetAll();
                 if (item.GetAll().Length > 50)
                 {
@@ -58,12 +71,13 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
                 contentTextBlock.TextAlignment = TextAlignment.Left;
                 contentTextBlock.FontStretch = FontStretch.Normal;
                 contentTextBlock.FontWeight = FontWeights.Bold;
+                panel.Children.Add(contentTextBlock);
                 ScrollViewer sv = new ScrollViewer();
                 sv.Width = attachedCard.Width;
                 sv.Height = attachedCard.Height;
                 sv.HorizontalAlignment = HorizontalAlignment.Center;
                 sv.VerticalAlignment = VerticalAlignment.Center;
-                sv.Content = contentTextBlock;
+                sv.Content = panel;
                 this.Children.Add(sv);
             });
         }

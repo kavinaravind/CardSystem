@@ -26,7 +26,7 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             {
                 foreach (Document doc in documents)
                 {
-                    await list.AddCard(doc, user, this);
+                   // await list.AddCard(doc, user, this);
                 }
                 Card[] cardsToBePlaced = GetCard(user);
                 CardLayoutGenerator.ApplyLayout(cardsToBePlaced, user);
