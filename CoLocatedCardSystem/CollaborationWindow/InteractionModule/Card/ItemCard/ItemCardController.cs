@@ -24,10 +24,16 @@ namespace CoLocatedCardSystem.CollaborationWindow.InteractionModule
             list = new LiveItemCardList();
             foreach (User user in UserInfo.GetLiveUsers())
             {
-                foreach (Item item in items)
+                int numberOfCards = items.Length / 10;
+                for (int i = 0; i < numberOfCards; i++)
                 {
-                    await list.AddCard(item, user, this);
+                    await list.AddCard(items[i], user, this);
                 }
+
+                //foreach (Item item in items)
+                //{
+                //    await list.AddCard(item, user, this);
+                //}
                 Card[] cardsToBePlaced = GetCard(user);
                 CardLayoutGenerator.ApplyLayout(cardsToBePlaced, user);
             }
